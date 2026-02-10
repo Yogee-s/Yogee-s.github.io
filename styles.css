@@ -365,11 +365,13 @@ p {
   font-weight: 600;
   font-size: 0.82rem;
   padding: 0.5rem 1.1rem;
+  min-height: 42px;
   border: 1px solid transparent;
   transition: all var(--transition);
   cursor: pointer;
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 0.35rem;
 }
 
@@ -680,10 +682,10 @@ p {
 }
 
 .teleco-layout {
-  --teleco-media-height: 400px;
+  --teleco-media-height: clamp(460px, 40vw, 560px);
   display: grid;
   gap: 0.65rem;
-  grid-template-columns: 0.78fr 1.22fr;
+  grid-template-columns: 0.7fr 1.3fr;
   align-items: stretch;
 }
 
@@ -718,6 +720,7 @@ p {
   height: 100%;
   min-height: 0;
   object-fit: cover;
+  object-position: center;
 }
 
 /* Links */
@@ -735,9 +738,13 @@ p {
   text-decoration: none;
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 0.3rem;
-  padding: 0.3rem 0;
-  border-bottom: 1px solid transparent;
+  min-height: 40px;
+  padding: 0.38rem 0.8rem;
+  border-radius: 999px;
+  border: 1px solid rgba(6, 182, 212, 0.24);
+  background: rgba(6, 182, 212, 0.08);
   transition: all var(--transition);
 }
 
@@ -747,7 +754,8 @@ p {
 }
 
 .links a:hover {
-  border-bottom-color: var(--accent-1);
+  background: rgba(6, 182, 212, 0.15);
+  border-color: rgba(6, 182, 212, 0.4);
 }
 
 .links a:hover::after {
@@ -1359,4 +1367,230 @@ figcaption {
   transition-delay: 500ms;
 }
 
-/* No responsive breakpoints — desktop layout on all devices */
+/* --- Responsive Layout --- */
+@media (max-width: 1120px) {
+  main {
+    width: min(1240px, calc(100% - 1rem));
+  }
+
+  .teleco-layout {
+    --teleco-media-height: clamp(420px, 52vw, 540px);
+  }
+}
+
+@media (max-width: 960px) {
+  .nav-toggle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 44px;
+    min-height: 44px;
+  }
+
+  #main-nav {
+    position: absolute;
+    top: calc(100% + 0.45rem);
+    left: 0.75rem;
+    right: 0.75rem;
+    display: none;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.35rem;
+    padding: 0.6rem;
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius-sm);
+    background: rgba(8, 8, 16, 0.96);
+    backdrop-filter: blur(16px);
+    box-shadow: var(--shadow);
+  }
+
+  #main-nav.open {
+    display: flex;
+  }
+
+  #main-nav a {
+    font-size: 0.84rem;
+    padding: 0.62rem 0.82rem;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 10px;
+  }
+
+  .hero-top,
+  .boxing-top,
+  .boxing-bottom,
+  .teleco-top,
+  .teleco-layout,
+  .idp-intro-row,
+  .media-layout-2,
+  .idp-pair-grid,
+  .support-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .hero-meta {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .project-head {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .teleco-layout {
+    --teleco-media-height: auto;
+  }
+
+  .teleco-video {
+    height: auto;
+  }
+
+  .teleco-video video {
+    height: clamp(360px, 78vw, 520px);
+  }
+
+  .teleco-photo-grid {
+    height: auto;
+    grid-template-rows: none;
+  }
+
+  .teleco-photo-grid img {
+    height: clamp(250px, 48vw, 360px);
+  }
+
+  .skill-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .poster-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .idp-iterations {
+    grid-template-columns: 1fr;
+  }
+
+  .idp-iterations video {
+    height: clamp(250px, 52vw, 360px);
+  }
+}
+
+@media (max-width: 680px) {
+  .topbar {
+    padding: 0.7rem 0.85rem;
+  }
+
+  main {
+    width: calc(100% - 0.85rem);
+    padding-top: 4.2rem;
+  }
+
+  .section {
+    margin-top: 2.1rem;
+  }
+
+  .hero {
+    padding-top: 0.2rem;
+  }
+
+  .hero-meta,
+  .skill-grid,
+  .poster-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .hero-photo img {
+    width: 190px;
+    height: 190px;
+  }
+
+  .project,
+  .idp-card {
+    padding: 0.72rem;
+  }
+
+  .tech-tag {
+    font-size: 0.72rem;
+    padding: 0.28rem 0.58rem;
+  }
+
+  .project-copy p,
+  .project-copy li {
+    font-size: 0.92rem;
+  }
+
+  .btn {
+    min-height: 46px;
+    font-size: 0.9rem;
+    padding: 0.56rem 1rem;
+  }
+
+  .cta-row {
+    gap: 0.45rem;
+  }
+
+  .links {
+    gap: 0.45rem;
+  }
+
+  .links a {
+    min-height: 46px;
+    font-size: 0.9rem;
+    flex: 1 1 160px;
+    padding: 0.5rem 0.95rem;
+  }
+
+  .teleco-side-photo {
+    width: 100%;
+  }
+
+  .teleco-side-photo img {
+    max-height: none;
+    height: clamp(280px, 72vw, 420px);
+    object-fit: cover;
+  }
+
+  .teleco-video video,
+  .boxing-video video,
+  .boxing-physical img,
+  .idp-first video {
+    height: clamp(260px, 72vw, 420px);
+  }
+
+  .teleco-photo-grid img,
+  .media-layout-primary img,
+  .media-layout-teleco img,
+  .idp-pair-grid img,
+  .boxing-side-media img {
+    height: clamp(240px, 62vw, 360px);
+    object-fit: cover;
+  }
+
+  .timeline-row {
+    grid-template-columns: 78px 20px 1fr;
+  }
+
+  .timeline-date {
+    font-size: 0.64rem;
+    padding-right: 0.45rem;
+  }
+}
+
+@media (max-width: 520px) {
+  #main-nav {
+    left: 0.55rem;
+    right: 0.55rem;
+  }
+
+  .pill {
+    font-size: 0.66rem;
+  }
+
+  .links a {
+    width: 100%;
+    flex-basis: 100%;
+  }
+
+  .timeline-row {
+    grid-template-columns: 70px 18px 1fr;
+  }
+}
