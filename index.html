@@ -1,101 +1,126 @@
 <!doctype html>
 <html lang="en">
+
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Robotics software portfolio of Muthukumaran Yogeeswaran: ROS systems, perception models, reinforcement learning, and embodied AI projects.">
+  <meta name="description"
+    content="Robotics software portfolio of Muthukumaran Yogeeswaran: ROS systems, perception models, reinforcement learning, and embodied AI projects.">
+  <meta name="theme-color" content="#06060b">
   <title>Yogee | Robotics Software Portfolio</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap"
+    rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
 </head>
+
 <body>
   <div class="bg-noise"></div>
 
-  <header class="topbar">
+  <header class="topbar" id="topbar">
     <a class="brand" href="#home">Yogee<span>.</span></a>
-    <nav>
-      <a href="#featured">Featured</a>
+    <button class="nav-toggle" id="nav-toggle" aria-label="Toggle navigation">☰</button>
+    <nav id="main-nav">
+      <a href="#featured">Projects</a>
       <a href="#idp">IDP</a>
       <a href="#posters">Posters</a>
-      <a href="#resume">Resume</a>
+      <a href="#resume">Experience</a>
       <a href="#contact">Contact</a>
     </nav>
   </header>
 
   <main>
+    <!-- ===== HERO ===== -->
     <section id="home" class="hero reveal">
       <div class="hero-top">
-        <div class="hero-content card">
-          <p class="eyebrow">Robotics Software and Embodied AI</p>
+        <div class="hero-content">
+          <p class="eyebrow">Robotics Software &amp; Embodied AI</p>
           <h1>Muthukumaran Yogeeswaran</h1>
+          <div class="hero-subtitle">
+            <span id="typed-text"></span><span class="typing-cursor"></span>
+          </div>
           <p class="lead">
-            I build software-first robotics systems across ROS architecture, perception and action models,
-            reinforcement learning, and human robot interaction.
+            Building software-first robotics — ROS architecture, perception models, RL, and human–robot interaction.
           </p>
 
           <div class="cta-row">
-            <a class="btn btn-primary" href="assets/resume.pdf" target="_blank" rel="noopener noreferrer">Resume (PDF)</a>
-            <a class="btn btn-ghost" href="https://www.linkedin.com/in/yogee-s" target="_blank" rel="noopener noreferrer">LinkedIn</a>
-            <a class="btn btn-ghost" href="https://github.com/Yogee-s" target="_blank" rel="noopener noreferrer">GitHub</a>
+            <a class="btn btn-primary" href="assets/resume.pdf" target="_blank" rel="noopener noreferrer">↓ Resume
+              PDF</a>
+            <a class="btn btn-ghost" href="https://www.linkedin.com/in/yogee-s" target="_blank"
+              rel="noopener noreferrer">LinkedIn</a>
+            <a class="btn btn-ghost" href="https://github.com/Yogee-s" target="_blank"
+              rel="noopener noreferrer">GitHub</a>
+          </div>
+
+          <div class="scroll-indicator">
+            <span class="arrow">↓</span> Scroll to explore
           </div>
         </div>
 
-        <figure class="hero-photo card">
-          <img class="js-lightbox" src="assets/personal_photo.jpg" alt="Portrait of Muthukumaran Yogeeswaran" loading="lazy">
+        <figure class="hero-photo">
+          <img src="assets/personal_photo.jpg" alt="Portrait of Muthukumaran Yogeeswaran" loading="eager">
         </figure>
       </div>
 
       <div class="hero-meta">
         <article class="meta-card">
-          <h3>Current Work</h3>
-          <p>NUS Immersive Reality Lab: AI social companion behaviors for eldercare and expressive robotic interaction.</p>
+          <h3>Current</h3>
+          <p>NUS Immersive Reality Lab — AI social companions for eldercare robotics</p>
         </article>
         <article class="meta-card">
-          <h3>Core Stack</h3>
-          <p>Python, ROS2, CV models, action recognition, MuJoCo, SLAM, Jetson, Linux, Git.</p>
+          <h3>Stack</h3>
+          <p>Python · ROS2 · YOLO · MuJoCo · SLAM · Jetson · Docker · Linux</p>
         </article>
         <article class="meta-card">
           <h3>Focus</h3>
-          <p>Building practical robot software pipelines that combine sensing, models, and feedback in real time.</p>
+          <p>End-to-end robot software — sensing, models, and real-time feedback</p>
         </article>
       </div>
     </section>
 
+    <!-- ===== FEATURED PROJECTS ===== -->
     <section id="featured" class="section reveal">
       <div class="section-head">
         <p class="eyebrow">Most Relevant Work</p>
-        <h2>Featured Robotics Projects</h2>
+        <h2>Featured Projects</h2>
       </div>
 
+      <!-- BoxBunny -->
       <article class="project card">
         <div class="project-head">
           <div>
-            <h3>BoxBunny: Intelligent Boxing Robot (Capstone)</h3>
-            <p class="meta">Software Lead | CDE4301 Innovation and Design Capstone | Aug 2025 - Present</p>
+            <h3>BoxBunny: Intelligent Boxing Robot</h3>
+            <p class="meta">Software Lead · CDE4301 Capstone · Aug 2025 – Present</p>
+            <div class="tech-tags">
+              <span class="tech-tag">ROS2</span>
+              <span class="tech-tag">YOLO</span>
+              <span class="tech-tag">Action Recognition</span>
+              <span class="tech-tag">Jetson</span>
+              <span class="tech-tag">LLM</span>
+              <span class="tech-tag">IMU</span>
+            </div>
           </div>
-          <span class="pill pill-wip">Work in Progress</span>
+          <span class="pill pill-wip">In Progress</span>
         </div>
 
         <div class="project-body boxing-body">
           <div class="boxing-top">
             <div class="project-copy">
-              <p>
-                Building a semi-autonomous boxing coach that combines robot actuation, perception models,
-                and AI feedback into one closed-loop training system.
-              </p>
+              <p>Semi-autonomous boxing coach — closed-loop perception, actuation, and AI feedback.</p>
               <ul>
-                <li>Designing the ROS-based software architecture for perception, decision, control, and feedback modules.</li>
-                <li>Running CV and action-recognition models on Jetson to interpret punch execution and body positioning.</li>
-                <li>Fusing IMU punch dynamics with vision outputs to quantify technique quality and consistency.</li>
-                <li>Using LLMs to generate coach-like, human-readable feedback from multimodal training metrics.</li>
-                <li>Building adaptive logic to personalize drill difficulty while keeping training safer than frequent sparring.</li>
+                <li>ROS architecture for perception → decision → control → feedback pipeline</li>
+                <li>CV + action recognition on Jetson for punch and posture analysis</li>
+                <li>IMU fusion with vision for technique quality scoring</li>
+                <li>LLM-generated coaching feedback from multimodal metrics</li>
+                <li>Adaptive drill difficulty to replace frequent sparring</li>
               </ul>
             </div>
             <div class="boxing-side-media">
               <figure>
-                <img class="js-lightbox" src="assets/boxbunny_capstone/concept_design.jpg" alt="BoxBunny concept design" loading="lazy">
+                <img class="js-lightbox" src="assets/boxbunny_capstone/concept_design.jpg" alt="BoxBunny concept design"
+                  loading="lazy">
                 <figcaption>Concept design</figcaption>
               </figure>
             </div>
@@ -106,21 +131,30 @@
               <video controls preload="metadata" playsinline>
                 <source src="assets/boxbunny_capstone/inference_trained_model_work_in_progress.mp4" type="video/mp4">
               </video>
-              <figcaption>Current inference pipeline demo</figcaption>
+              <figcaption>Inference pipeline demo</figcaption>
             </figure>
             <figure class="boxing-physical">
-              <img class="js-lightbox" src="assets/boxbunny_capstone/assembling_for_cde_ai_fair.jpg" alt="Assembling BoxBunny for CDE AI Fair" loading="lazy">
-              <figcaption>Physical integration for CDE AI Fair</figcaption>
+              <img class="js-lightbox" src="assets/boxbunny_capstone/assembling_for_cde_ai_fair.jpg"
+                alt="Assembling BoxBunny for CDE AI Fair" loading="lazy">
+              <figcaption>CDE AI Fair integration</figcaption>
             </figure>
           </div>
         </div>
       </article>
 
+      <!-- Teleco -->
       <article class="project card">
         <div class="project-head">
           <div>
-            <h3>Teleco Human Localization at Osaka Expo 2025</h3>
-            <p class="meta">Research Internship, The University of Osaka | May 2025 - Aug 2025</p>
+            <h3>Human Localization for Teleco Robot — Osaka Expo 2025</h3>
+            <p class="meta">Research Intern · University of Osaka · May – Aug 2025</p>
+            <div class="tech-tags">
+              <span class="tech-tag">YOLOv12</span>
+              <span class="tech-tag">SLAM</span>
+              <span class="tech-tag">Kabsch Solver</span>
+              <span class="tech-tag">MQTT</span>
+              <span class="tech-tag">Python</span>
+            </div>
           </div>
           <span class="pill">Deployed</span>
         </div>
@@ -128,22 +162,21 @@
         <div class="project-body teleco-body">
           <div class="teleco-top">
             <div class="project-copy">
-              <p>
-                Built a software pipeline to localize people from a third-person camera into the robot SLAM frame for socially aware gaze and interaction at deployment scale.
-              </p>
+              <p>Camera-to-SLAM localization pipeline for socially aware robot gaze at Expo scale.</p>
               <ul>
-                <li>Used the latest YOLO model (YOLOv12) for human keypoint and Teleco calibration detection.</li>
-                <li>Implemented camera-to-map coordinate transformation with Kabsch solver and MQTT integration.</li>
-                <li>Built pixel-to-height calibration for gaze control using Teleco as a reference object.</li>
-                <li>Achieved reported mapping errors mostly around 0.02m to 0.06m and height error under 10cm in most tests.</li>
-                <li>System deployed at the Yoshikawa Lab pavilion, Osaka Expo 2025.</li>
+                <li>YOLOv12 keypoint detection + Kabsch camera-to-map transform</li>
+                <li>Pixel-to-height calibration for gaze control via Teleco reference</li>
+                <li><strong>0.02–0.06 m</strong> mapping error, <strong>&lt;10 cm</strong> height error</li>
+                <li>Deployed at Yoshikawa Lab pavilion, Osaka Expo 2025</li>
               </ul>
               <div class="links">
-                <a href="assets/frontier/frontier_report.pdf" target="_blank" rel="noopener noreferrer">Frontier Report (PDF)</a>
+                <a href="assets/frontier/frontier_report.pdf" target="_blank" rel="noopener noreferrer">Frontier
+                  Report</a>
               </div>
             </div>
             <figure class="teleco-side-photo">
-              <img class="js-lightbox" src="assets/frontier/close_up_teleco_robot.jpg" alt="Close-up of Teleco robot" loading="lazy">
+              <img class="js-lightbox" src="assets/frontier/close_up_teleco_robot.jpg" alt="Close-up of Teleco robot"
+                loading="lazy">
               <figcaption>Teleco robot</figcaption>
             </figure>
           </div>
@@ -153,45 +186,53 @@
               <video controls preload="metadata" playsinline>
                 <source src="assets/frontier/expo_project.mp4" type="video/mp4">
               </video>
-              <figcaption>Expo deployment demo</figcaption>
+              <figcaption>Expo deployment</figcaption>
             </figure>
             <div class="teleco-photo-grid">
               <figure>
-                <img class="js-lightbox" src="assets/frontier/teleco_tracking.jpg" alt="Teleco tracking interface" loading="lazy">
-                <figcaption>Camera and map tracking interface</figcaption>
+                <img class="js-lightbox" src="assets/frontier/teleco_tracking.jpg" alt="Teleco tracking interface"
+                  loading="lazy">
+                <figcaption>Tracking interface</figcaption>
               </figure>
               <figure>
-                <img class="js-lightbox" src="assets/frontier/people_tracking.jpg" alt="People localization output" loading="lazy">
-                <figcaption>Human detection and localization view</figcaption>
+                <img class="js-lightbox" src="assets/frontier/people_tracking.jpg" alt="People localization output"
+                  loading="lazy">
+                <figcaption>Localization view</figcaption>
               </figure>
             </div>
           </div>
         </div>
       </article>
 
+      <!-- A*STAR -->
       <article class="project card">
         <div class="project-head">
           <div>
-            <h3>A*STAR Internship: RL for Inspire Dexterous Hand</h3>
-            <p class="meta">Research Internship, A*STAR ARTC | May 2024 - Aug 2024</p>
+            <h3>RL for Inspire Dexterous Hand</h3>
+            <p class="meta">Research Intern · A*STAR ARTC · May – Aug 2024</p>
+            <div class="tech-tags">
+              <span class="tech-tag">MuJoCo</span>
+              <span class="tech-tag">RL / DAPG</span>
+              <span class="tech-tag">URDF→MJCF</span>
+              <span class="tech-tag">Python</span>
+            </div>
           </div>
           <span class="pill">Research</span>
         </div>
 
         <div class="project-body">
           <div class="project-copy">
-            <p>
-              Adapted a dexterous manipulation RL pipeline from Adroit hand to Inspire hand, focusing on simulation compatibility, observation mapping, and reward-design stability.
-            </p>
+            <p>Porting a dexterous manipulation RL pipeline from Adroit to Inspire hand in simulation.</p>
             <ul>
-              <li>Converted Inspire hand URDF to MuJoCo XML and added missing constraints, damping, and collision parameters.</li>
-              <li>Mapped demonstration observations from Adroit (39D) to Inspire (21D) for DAPG training.</li>
-              <li>Grouped joints for a 6-actuator Inspire setup and tuned training behavior under time constraints.</li>
-              <li>Investigated local maxima and reward-shaping issues, then simplified task/object complexity to improve outcomes.</li>
+              <li>URDF → MuJoCo XML conversion with collision and damping fixes</li>
+              <li>Adroit 39D → Inspire 21D observation remapping for DAPG</li>
+              <li>6-actuator joint grouping and reward-shaping debugging</li>
             </ul>
             <div class="links">
-              <a href="assets/artc_internship/eg3612_final_report.pdf" target="_blank" rel="noopener noreferrer">Final Report (PDF)</a>
-              <a href="assets/artc_internship/internship_final_presentation.pdf" target="_blank" rel="noopener noreferrer">Final Presentation (PDF)</a>
+              <a href="assets/artc_internship/eg3612_final_report.pdf" target="_blank"
+                rel="noopener noreferrer">Report</a>
+              <a href="assets/artc_internship/internship_final_presentation.pdf" target="_blank"
+                rel="noopener noreferrer">Presentation</a>
             </div>
           </div>
 
@@ -200,22 +241,24 @@
               <video controls preload="metadata" playsinline>
                 <source src="assets/artc_internship/reinforcement_learning_model_trying.webm" type="video/webm">
               </video>
-              <figcaption>Training behavior (exploration)</figcaption>
+              <figcaption>Training exploration</figcaption>
             </figure>
             <figure>
               <video controls preload="metadata" playsinline>
-                <source src="assets/artc_internship/reinforcement_learning_model_succeeds_but_wrongly.mp4" type="video/mp4">
+                <source src="assets/artc_internship/reinforcement_learning_model_succeeds_but_wrongly.mp4"
+                  type="video/mp4">
               </video>
-              <figcaption>Policy reaches task with unintended strategy</figcaption>
+              <figcaption>Unintended strategy</figcaption>
             </figure>
           </div>
         </div>
       </article>
     </section>
 
+    <!-- ===== IDP ===== -->
     <section id="idp" class="section reveal">
       <div class="section-head">
-        <p class="eyebrow">Foundational Robotics Track</p>
+        <p class="eyebrow">Foundational Track</p>
         <h2>IDP: Balancing Robot Evolution</h2>
       </div>
 
@@ -223,18 +266,15 @@
         <div class="idp-intro-row">
           <div class="idp-intro-text">
             <p class="idp-intro">
-              IDP (Innovation and Design Programme at NUS) was my starting point in robotics and became a major turning point in my engineering direction.
-            </p>
-            <p class="idp-intro">
-              This track began with my first robotics project and evolved through three balancing chassis iterations. From there, I extended the system with a 3-axis gimbal and structural analysis to improve robustness and mechanical confidence in the final build.
+              NUS Innovation &amp; Design Programme — my entry point into robotics. Three chassis iterations evolved
+              from a first prototype into a full balancing system with gimbal stabilization and structural analysis.
             </p>
           </div>
-
           <figure class="idp-first">
             <video controls preload="metadata" playsinline>
               <source src="assets/idp_projects/eg2310_first_ever_project_idp.mp4" type="video/mp4">
             </video>
-            <figcaption>First robotics project video</figcaption>
+            <figcaption>First robotics project</figcaption>
           </figure>
         </div>
 
@@ -242,197 +282,237 @@
         <div class="idp-iterations">
           <figure>
             <video controls preload="metadata" playsinline>
-              <source src="assets/idp_projects/evolution_of_balancing_robot/eg2606_balancing_robot_1st_prototype.mp4" type="video/mp4">
+              <source src="assets/idp_projects/evolution_of_balancing_robot/eg2606_balancing_robot_1st_prototype.mp4"
+                type="video/mp4">
             </video>
-            <figcaption>Iteration 1</figcaption>
+            <figcaption>v1</figcaption>
           </figure>
           <figure>
             <video controls preload="metadata" playsinline>
-              <source src="assets/idp_projects/evolution_of_balancing_robot/eg3301r_2_legged_balancing_2nd_prototype.mp4" type="video/mp4">
+              <source
+                src="assets/idp_projects/evolution_of_balancing_robot/eg3301r_2_legged_balancing_2nd_prototype.mp4"
+                type="video/mp4">
             </video>
-            <figcaption>Iteration 2</figcaption>
+            <figcaption>v2</figcaption>
           </figure>
           <figure>
             <video controls preload="metadata" playsinline>
-              <source src="assets/idp_projects/evolution_of_balancing_robot/eg3301r_2_legged_balancing_final.mp4" type="video/mp4">
+              <source src="assets/idp_projects/evolution_of_balancing_robot/eg3301r_2_legged_balancing_final.mp4"
+                type="video/mp4">
             </video>
-            <figcaption>Iteration 3</figcaption>
+            <figcaption>v3 (final)</figcaption>
           </figure>
         </div>
 
         <details class="idp-extra">
-          <summary>Show initial prototype and 3-axis gimbal</summary>
+          <summary>Show prototype photos &amp; gimbal</summary>
           <div class="idp-pair-grid idp-pair-grid-extra">
             <figure>
-              <img class="js-lightbox" src="assets/idp_projects/initial_prototype.jpg" alt="IDP initial prototype" loading="lazy">
+              <img class="js-lightbox" src="assets/idp_projects/initial_prototype.jpg" alt="IDP initial prototype"
+                loading="lazy">
               <figcaption>Initial prototype</figcaption>
             </figure>
             <figure>
-              <img class="js-lightbox" src="assets/idp_projects/3_axis_gimbal.jpg" alt="3-axis gimbal extension" loading="lazy">
-              <figcaption>3-axis gimbal extension</figcaption>
+              <img class="js-lightbox" src="assets/idp_projects/3_axis_gimbal.jpg" alt="3-axis gimbal extension"
+                loading="lazy">
+              <figcaption>3-axis gimbal</figcaption>
             </figure>
           </div>
         </details>
 
         <div class="idp-pair-grid">
           <figure>
-            <img class="js-lightbox" src="assets/idp_projects/structural_analysis_chassis_final_balancing_robot.jpg" alt="Structural chassis analysis" loading="lazy">
-            <figcaption>Structural chassis analysis</figcaption>
+            <img class="js-lightbox" src="assets/idp_projects/structural_analysis_chassis_final_balancing_robot.jpg"
+              alt="Structural chassis analysis" loading="lazy">
+            <figcaption>Structural analysis</figcaption>
           </figure>
           <figure>
-            <img class="js-lightbox" src="assets/idp_projects/eg3301r_2_legged_balancing.jpg" alt="Final 2-legged balancing robot" loading="lazy">
-            <figcaption>Final balancing robot build</figcaption>
+            <img class="js-lightbox" src="assets/idp_projects/eg3301r_2_legged_balancing.jpg"
+              alt="Final 2-legged balancing robot" loading="lazy">
+            <figcaption>Final build</figcaption>
           </figure>
         </div>
       </article>
     </section>
 
+    <!-- ===== POSTERS ===== -->
     <section id="posters" class="section reveal">
       <div class="section-head">
-        <p class="eyebrow">Design Communication</p>
+        <p class="eyebrow">Visual Communication</p>
         <h2>Poster Gallery</h2>
       </div>
-      <p class="section-note">
-        I enjoy designing visual artifacts to communicate technical systems clearly, from concept framing to final project storytelling.
-      </p>
 
       <div class="poster-grid">
         <figure class="poster-card card">
-          <img class="js-lightbox" src="assets/idp_projects/balancing_robot_poster.png" alt="IDP balancing robot poster" loading="lazy">
-          <figcaption>IDP Balancing Robot Poster</figcaption>
+          <img class="js-lightbox" src="assets/idp_projects/balancing_robot_poster.png" alt="IDP balancing robot poster"
+            loading="lazy">
+          <figcaption>Balancing Robot</figcaption>
         </figure>
         <figure class="poster-card card">
-          <img class="js-lightbox" src="assets/orbital/orbital_first_poster.jpg" alt="Orbital first poster" loading="lazy">
-          <figcaption>Orbital First Poster</figcaption>
+          <img class="js-lightbox" src="assets/orbital/orbital_first_poster.jpg" alt="Orbital first poster"
+            loading="lazy">
+          <figcaption>Orbital v1</figcaption>
         </figure>
         <figure class="poster-card card">
-          <img class="js-lightbox" src="assets/orbital/orbital_final_poster.jpg" alt="Orbital final poster" loading="lazy">
-          <figcaption>Orbital Final Poster</figcaption>
+          <img class="js-lightbox" src="assets/orbital/orbital_final_poster.jpg" alt="Orbital final poster"
+            loading="lazy">
+          <figcaption>Orbital Final</figcaption>
         </figure>
       </div>
     </section>
 
+    <!-- ===== EXPERIENCE & SKILLS ===== -->
     <section id="resume" class="section reveal">
       <div class="section-head">
-        <p class="eyebrow">Software-Centered Resume View</p>
-        <h2>What I Am Doing</h2>
+        <p class="eyebrow">Professional Journey</p>
+        <h2>Experience &amp; Skills</h2>
       </div>
 
-      <article class="card resume-focus">
-        <h3>Current Focus</h3>
-        <ul class="focus-list">
-          <li><strong>NUS Immersive Reality Lab:</strong> Building AI social companion behaviors for eldercare-focused human robot interaction.</li>
-          <li><strong>BoxBunny Capstone:</strong> Leading robotics software architecture across perception, action recognition, control logic, and LLM coaching feedback.</li>
-          <li><strong>Engineering Direction:</strong> Software-first robotics systems using ROS2, computer vision models, multimodal sensing, and real-time feedback loops.</li>
-        </ul>
-      </article>
-
-      <div class="resume-timeline">
-        <article class="card track-item">
-          <p class="track-date">Aug 2025 - Present</p>
-          <h4>Research Student, NUS Immersive Reality Lab</h4>
-          <p>Designing an AI social companion for eldercare with expressive conversational robotic behavior design in collaboration with NUS Nursing.</p>
-        </article>
-        <article class="card track-item">
-          <p class="track-date">Aug 2025 - Present</p>
-          <h4>Software Lead, BoxBunny Capstone</h4>
-          <p>Driving end-to-end robotics software for perception and action understanding, with AI-generated real-time coaching feedback.</p>
-        </article>
-        <article class="card track-item">
-          <p class="track-date">Nov 2025 - Jan 2026</p>
-          <h4>Robot Operator, Cortex AI</h4>
-          <p>Teleoperated robotic systems for precision tasks and collected egocentric task data for iterative system improvement.</p>
-        </article>
-        <article class="card track-item">
-          <p class="track-date">May 2025 - Aug 2025</p>
-          <h4>Research Internship, The University of Osaka</h4>
-          <p>Built deployed human localization software using YOLO-based perception, SLAM frame mapping, and calibration pipelines.</p>
-        </article>
-        <article class="card track-item">
-          <p class="track-date">May 2024 - Aug 2024</p>
-          <h4>Research Internship, A*STAR ARTC</h4>
-          <p>Implemented and tuned dexterous-hand reinforcement learning workflows in MuJoCo using demonstration-based training.</p>
-        </article>
-        <article class="card track-item">
-          <p class="track-date">Aug 2023 - Dec 2024</p>
-          <h4>Software Team Member, NUS RoboMaster</h4>
-          <p>Contributed to balancing-robot development and CV-based aim-bot prototyping in a multidisciplinary robotics team.</p>
-        </article>
+      <!-- Compact horizontal timeline -->
+      <div class="timeline">
+        <div class="timeline-row">
+          <div class="timeline-date">Aug 2025 –<br>Present</div>
+          <div class="timeline-dot"></div>
+          <div class="timeline-content">
+            <strong>Research Student</strong> · NUS Immersive Reality Lab
+            <span class="timeline-desc">AI social companion for eldercare — expressive robotic behavior design</span>
+          </div>
+        </div>
+        <div class="timeline-row">
+          <div class="timeline-date">Aug 2025 –<br>Present</div>
+          <div class="timeline-dot"></div>
+          <div class="timeline-content">
+            <strong>Software Lead</strong> · BoxBunny Capstone
+            <span class="timeline-desc">End-to-end perception → action recognition → LLM coaching pipeline</span>
+          </div>
+        </div>
+        <div class="timeline-row">
+          <div class="timeline-date">Nov 2025 –<br>Jan 2026</div>
+          <div class="timeline-dot"></div>
+          <div class="timeline-content">
+            <strong>Robot Operator</strong> · Cortex AI
+            <span class="timeline-desc">Teleoperation for precision tasks + egocentric data collection</span>
+          </div>
+        </div>
+        <div class="timeline-row">
+          <div class="timeline-date">May – Aug<br>2025</div>
+          <div class="timeline-dot"></div>
+          <div class="timeline-content">
+            <strong>Research Intern</strong> · University of Osaka
+            <span class="timeline-desc">YOLO-based localization deployed at Expo 2025 — 0.02–0.06 m accuracy</span>
+          </div>
+        </div>
+        <div class="timeline-row">
+          <div class="timeline-date">May – Aug<br>2024</div>
+          <div class="timeline-dot"></div>
+          <div class="timeline-content">
+            <strong>Research Intern</strong> · A*STAR ARTC
+            <span class="timeline-desc">Dexterous hand RL in MuJoCo — URDF conversion + DAPG training</span>
+          </div>
+        </div>
+        <div class="timeline-row">
+          <div class="timeline-date">Aug 2023 –<br>Dec 2024</div>
+          <div class="timeline-dot"></div>
+          <div class="timeline-content">
+            <strong>Software Member</strong> · NUS RoboMaster
+            <span class="timeline-desc">Balancing robot dev + CV-based aim-bot prototyping</span>
+          </div>
+        </div>
       </div>
 
+      <!-- Skills Grid -->
       <div class="skill-block">
-        <h3>Technical Focus</h3>
+        <h3>Technical Stack</h3>
         <div class="skill-grid">
           <article class="card">
-            <h4>Robotics and Systems</h4>
-            <p>ROS2, SLAM, robot perception, mobile robotics, STM32</p>
+            <h4>Robotics</h4>
+            <p>ROS2 · SLAM · Perception · Mobile Robotics · STM32</p>
           </article>
           <article class="card">
-            <h4>Models and AI</h4>
-            <p>Computer vision, neural networks, action recognition, reinforcement learning</p>
+            <h4>AI / ML</h4>
+            <p>CV · Neural Nets · Action Recognition · RL</p>
           </article>
           <article class="card">
-            <h4>Simulation and Control</h4>
-            <p>MuJoCo, COMSOL, SolidWorks Simulation, PID/LQR, Simulink</p>
+            <h4>Simulation</h4>
+            <p>MuJoCo · COMSOL · SolidWorks · PID/LQR</p>
           </article>
           <article class="card">
-            <h4>Engineering Stack</h4>
-            <p>Python, C++, C, MATLAB, JavaScript, Docker, Linux, Git, Firebase</p>
+            <h4>Dev</h4>
+            <p>Python · C++ · C · MATLAB · JS · Docker · Git</p>
           </article>
         </div>
       </div>
     </section>
 
+    <!-- ===== ADDITIONAL ===== -->
     <section id="supporting" class="section reveal">
       <div class="section-head">
-        <p class="eyebrow">Additional Projects</p>
-        <h2>Software and AI Work</h2>
+        <p class="eyebrow">Other Work</p>
+        <h2>Software &amp; AI Projects</h2>
       </div>
 
       <div class="support-grid">
         <article class="card">
           <h3>LifeQuest (NUS Orbital)</h3>
-          <p class="meta">Project Co-Lead | May 2023 - Aug 2023</p>
-          <p>Built a gamified productivity app using React Native and Firebase with user auth, progress tracking, and social battle features.</p>
+          <p class="meta">Co-Lead · May – Aug 2023</p>
+          <div class="tech-tags">
+            <span class="tech-tag">React Native</span>
+            <span class="tech-tag">Firebase</span>
+          </div>
+          <p>Gamified productivity app with auth, progress tracking, and social battles.</p>
           <div class="links">
-            <a href="assets/orbital/milestone_3_submission.pdf" target="_blank" rel="noopener noreferrer">Milestone 3 Report (PDF)</a>
+            <a href="assets/orbital/milestone_3_submission.pdf" target="_blank" rel="noopener noreferrer">Report</a>
           </div>
         </article>
 
         <article class="card">
-          <h3>Breaking Bias: Robustness of LLM Judges</h3>
+          <h3>Breaking Bias: LLM Judge Robustness</h3>
           <p class="meta">ECE324 Team Project</p>
-          <p>Built an adversarial essay pipeline to test how different LLM judge committees react to manipulation strategies and scoring variance.</p>
+          <div class="tech-tags">
+            <span class="tech-tag">LLM</span>
+            <span class="tech-tag">NLP</span>
+            <span class="tech-tag">Adversarial</span>
+          </div>
+          <p>Adversarial essay pipeline testing LLM judge manipulation and scoring variance.</p>
           <div class="links">
-            <a href="assets/breaking_bias/breaking_bias_final_report.pdf" target="_blank" rel="noopener noreferrer">Final Report (PDF)</a>
-            <a href="assets/breaking_bias/breaking_bias_final_presentation.pdf" target="_blank" rel="noopener noreferrer">Final Presentation (PDF)</a>
+            <a href="assets/breaking_bias/breaking_bias_final_report.pdf" target="_blank"
+              rel="noopener noreferrer">Report</a>
+            <a href="assets/breaking_bias/breaking_bias_final_presentation.pdf" target="_blank"
+              rel="noopener noreferrer">Slides</a>
           </div>
         </article>
       </div>
     </section>
 
+    <!-- ===== CONTACT ===== -->
     <section id="contact" class="section reveal">
       <div class="section-head">
-        <p class="eyebrow">Contact</p>
+        <p class="eyebrow">Let's Connect</p>
         <h2>Open to Robotics Software Roles</h2>
       </div>
       <article class="card contact-card">
-        <p>If you are hiring for robotics software, ROS, perception, or embodied AI roles, I would like to connect.</p>
-        <p><strong>Email:</strong> <a href="mailto:yogeeswaran@u.nus.edu">yogeeswaran@u.nus.edu</a></p>
-        <p><strong>LinkedIn:</strong> <a href="https://www.linkedin.com/in/yogee-s" target="_blank" rel="noopener noreferrer">linkedin.com/in/yogee-s</a></p>
+        <p><strong>Email:</strong> <a href="mailto:yogeeswaran@u.nus.edu">yogeeswaran@u.nus.edu</a> ·
+          <strong>LinkedIn:</strong> <a href="https://www.linkedin.com/in/yogee-s" target="_blank"
+            rel="noopener noreferrer">yogee-s</a> · <strong>GitHub:</strong> <a href="https://github.com/Yogee-s"
+            target="_blank" rel="noopener noreferrer">Yogee-s</a></p>
+        <div class="availability">
+          <span class="availability-dot"></span>
+          Available for roles starting 2026
+        </div>
       </article>
     </section>
   </main>
 
   <footer class="footer">
-    <p>Last updated <span id="last-updated"></span></p>
+    <p>Built by Yogee · Last updated <span id="last-updated"></span></p>
   </footer>
 
   <div id="lightbox" class="lightbox" aria-hidden="true">
-    <button id="lightbox-close" class="lightbox-close" aria-label="Close image">Close</button>
+    <button id="lightbox-close" class="lightbox-close" aria-label="Close image">✕ Close</button>
     <img id="lightbox-image" alt="Expanded image">
   </div>
 
   <script src="script.js"></script>
 </body>
+
 </html>
