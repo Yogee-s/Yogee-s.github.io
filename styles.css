@@ -853,8 +853,15 @@ figcaption {
 
 .idp-subhead {
   margin-top: 0.9rem;
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.3rem;
   color: var(--text);
+}
+
+.idp-chassis-desc {
+  color: var(--text-muted);
+  font-size: 0.88rem;
+  margin-bottom: 0.65rem;
+  line-height: 1.5;
 }
 
 .idp-iterations {
