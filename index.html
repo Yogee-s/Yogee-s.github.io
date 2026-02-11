@@ -280,6 +280,9 @@
               <p><span class="signal-strong">Camera-to-SLAM localization pipeline</span> for socially aware robot gaze
                 at <span class="signal-event">Expo scale</span>.</p>
               <ul>
+                <li><span class="signal-strong">Hard problem:</span> image-plane camera detections had to be projected
+                  into the SLAM map in the <span class="signal-tech">robot perspective/frame</span>, despite view-angle
+                  changes, depth ambiguity, and detection noise</li>
                 <li><span class="signal-tech">YOLOv12 keypoint detection</span> + <span class="signal-tech">Kabsch
                     camera-to-map transform</span></li>
                 <li><span class="signal-tech">Pixel-to-height calibration</span> for gaze control via Teleco reference
@@ -406,8 +409,10 @@
         </figure>
 
         <h4 class="idp-subhead">Chassis Iterations</h4>
-        <p class="idp-chassis-desc">Three chassis iterations evolved from a first prototype into a full balancing system
-          with <span class="signal-tech">3-axis gimbal stabilization</span>.</p>
+        <p class="idp-chassis-desc">Three chassis iterations evolved from a first prototype into a full balancing system.
+          The key novelty was <span class="signal-tech">3-axis active gimbal stabilization</span>, which kept the
+          robot’s <span class="signal-strong">first-person camera view</span> steady so pilots could track opponents
+          and aim more reliably during competition.</p>
         <div class="idp-iterations">
           <figure>
             <video controls preload="metadata" playsinline muted>
