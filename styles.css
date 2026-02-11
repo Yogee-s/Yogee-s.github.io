@@ -330,8 +330,8 @@ p {
 }
 
 .hero-photo img {
-  width: 220px;
-  height: 220px;
+  width: 236px;
+  height: 236px;
   border-radius: 50%;
   object-fit: cover;
   border: 3px solid rgba(255, 255, 255, 0.1);
@@ -859,6 +859,16 @@ figcaption {
   margin-top: 0;
 }
 
+.idp-final-preview {
+  margin-top: 0.65rem;
+}
+
+.idp-final-preview img {
+  height: clamp(300px, 50vw, 430px);
+  object-fit: cover;
+  object-position: 50% 25%;
+}
+
 .idp-subhead {
   margin-top: 0.9rem;
   margin-bottom: 0.3rem;
@@ -872,15 +882,76 @@ figcaption {
   line-height: 1.5;
 }
 
+.idp-sim-grid {
+  margin-top: 0.35rem;
+  display: grid;
+  gap: 0.65rem;
+  grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+  align-items: stretch;
+}
+
+.idp-sim-panel {
+  display: flex;
+  flex-direction: column;
+  padding: 0.7rem;
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-sm);
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.idp-sim-title {
+  margin: 0;
+  font-size: 0.8rem;
+  font-family: var(--font-mono);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--accent-1);
+}
+
+.idp-sim-text {
+  margin: 0.45rem 0 0.65rem;
+  color: var(--text-secondary);
+  font-size: 0.86rem;
+  line-height: 1.55;
+}
+
+.idp-sim-panel img {
+  height: 190px;
+  object-fit: contain;
+}
+
+.idp-sim-videos {
+  display: grid;
+  gap: 0.65rem;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.idp-sim-videos video {
+  height: 190px;
+}
+
+.idp-sim-panel-fea img {
+  height: 175px;
+}
+
 .idp-iterations {
   display: grid;
   gap: 0.65rem;
   grid-template-columns: repeat(3, minmax(0, 1fr));
 }
 
+.idp-iterations-two {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
 .idp-iterations video {
   height: 250px;
   aspect-ratio: auto;
+  object-fit: contain;
+}
+
+.idp-iterations img {
+  height: 250px;
   object-fit: contain;
 }
 
@@ -1421,6 +1492,7 @@ figcaption {
   .teleco-top,
   .teleco-layout,
   .idp-intro-row,
+  .idp-sim-grid,
   .media-layout-2,
   .idp-pair-grid,
   .support-grid {
@@ -1472,6 +1544,18 @@ figcaption {
   .idp-iterations video {
     height: clamp(250px, 52vw, 360px);
   }
+
+  .idp-iterations img {
+    height: clamp(250px, 52vw, 360px);
+  }
+
+  .idp-sim-panel img {
+    height: clamp(210px, 42vw, 280px);
+  }
+
+  .idp-sim-videos video {
+    height: clamp(210px, 42vw, 280px);
+  }
 }
 
 @media (max-width: 680px) {
@@ -1499,8 +1583,8 @@ figcaption {
   }
 
   .hero-photo img {
-    width: 190px;
-    height: 190px;
+    width: 200px;
+    height: 200px;
   }
 
   .project,
@@ -1563,6 +1647,15 @@ figcaption {
   .boxing-side-media img {
     height: clamp(240px, 62vw, 360px);
     object-fit: cover;
+  }
+
+  .idp-sim-videos {
+    grid-template-columns: 1fr;
+  }
+
+  .idp-sim-panel img,
+  .idp-sim-videos video {
+    height: clamp(220px, 58vw, 320px);
   }
 
   .timeline-row {

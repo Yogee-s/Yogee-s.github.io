@@ -170,6 +170,24 @@
   });
 
   /* ========================================
+     FORCE MUTE ALL VIDEOS
+     ======================================== */
+  function enforceMute(video) {
+    video.defaultMuted = true;
+    video.muted = true;
+    video.volume = 0;
+  }
+
+  document.querySelectorAll('video').forEach((video) => {
+    enforceMute(video);
+    video.addEventListener('volumechange', () => {
+      if (!video.muted || video.volume !== 0) {
+        enforceMute(video);
+      }
+    });
+  });
+
+  /* ========================================
      FOOTER DATE
      ======================================== */
   const updated = document.getElementById('last-updated');

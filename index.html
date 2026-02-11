@@ -71,7 +71,7 @@
         </article>
         <article class="meta-card">
           <h3>Stack</h3>
-          <p>Python · ROS2 · YOLO · MuJoCo · SLAM · Jetson · Docker · Linux</p>
+          <p>Python · ROS2 · YOLO · MATLAB/Simulink · MuJoCo · FEA · Jetson · Docker</p>
         </article>
         <article class="meta-card">
           <h3>Focus</h3>
@@ -128,7 +128,7 @@
 
           <div class="boxing-bottom">
             <figure class="boxing-video">
-              <video controls preload="metadata" playsinline>
+              <video controls preload="metadata" playsinline muted>
                 <source src="assets/boxbunny_capstone/inference_trained_model_work_in_progress.mp4" type="video/mp4">
               </video>
               <figcaption>Inference pipeline demo</figcaption>
@@ -183,7 +183,7 @@
 
           <div class="teleco-layout">
             <figure class="teleco-video">
-              <video controls preload="metadata" playsinline>
+              <video controls preload="metadata" playsinline muted>
                 <source src="assets/frontier/expo_project.mp4" type="video/mp4">
               </video>
               <figcaption>Expo deployment</figcaption>
@@ -238,13 +238,13 @@
 
           <div class="media-layout media-layout-2">
             <figure>
-              <video controls preload="metadata" playsinline>
+              <video controls preload="metadata" playsinline muted>
                 <source src="assets/artc_internship/reinforcement_learning_model_trying.webm" type="video/webm">
               </video>
               <figcaption>Training exploration</figcaption>
             </figure>
             <figure>
-              <video controls preload="metadata" playsinline>
+              <video controls preload="metadata" playsinline muted>
                 <source src="assets/artc_internship/reinforcement_learning_model_succeeds_but_wrongly.mp4"
                   type="video/mp4">
               </video>
@@ -271,26 +271,32 @@
             </p>
           </div>
           <figure class="idp-first">
-            <video controls preload="metadata" playsinline>
+            <video controls preload="metadata" playsinline muted>
               <source src="assets/idp_projects/eg2310_first_ever_project_idp.mp4" type="video/mp4">
             </video>
             <figcaption>First robotics project</figcaption>
           </figure>
         </div>
 
+        <figure class="idp-final-preview">
+          <img class="js-lightbox" src="assets/idp_projects/eg3301r_2_legged_balancing.jpg"
+            alt="Final 2-legged balancing robot" loading="lazy">
+          <figcaption>Self-balancing 2-legged robot</figcaption>
+        </figure>
+
         <h4 class="idp-subhead">Chassis Iterations</h4>
         <p class="idp-chassis-desc">Three chassis iterations evolved from a first prototype into a full balancing system
           with 3-axis gimbal stabilization.</p>
         <div class="idp-iterations">
           <figure>
-            <video controls preload="metadata" playsinline>
+            <video controls preload="metadata" playsinline muted>
               <source src="assets/idp_projects/evolution_of_balancing_robot/eg2606_balancing_robot_1st_prototype.mp4"
                 type="video/mp4">
             </video>
             <figcaption>v1</figcaption>
           </figure>
           <figure>
-            <video controls preload="metadata" playsinline>
+            <video controls preload="metadata" playsinline muted>
               <source
                 src="assets/idp_projects/evolution_of_balancing_robot/eg3301r_2_legged_balancing_2nd_prototype.mp4"
                 type="video/mp4">
@@ -298,7 +304,7 @@
             <figcaption>v2</figcaption>
           </figure>
           <figure>
-            <video controls preload="metadata" playsinline>
+            <video controls preload="metadata" playsinline muted>
               <source src="assets/idp_projects/evolution_of_balancing_robot/eg3301r_2_legged_balancing_final.mp4"
                 type="video/mp4">
             </video>
@@ -322,16 +328,60 @@
           </div>
         </details>
 
-        <div class="idp-pair-grid">
+        <h4 class="idp-subhead">Simulation</h4>
+        <div class="idp-sim-grid">
+          <article class="idp-sim-panel idp-sim-panel-fea">
+            <h5 class="idp-sim-title">FEA &amp; Structural Analysis</h5>
+            <p class="idp-sim-text">
+              Experience using FEA workflows to evaluate chassis stiffness and stress distribution before fabrication,
+              helping de-risk mechanical choices early in the design cycle.
+            </p>
+            <figure>
+              <img class="js-lightbox"
+                src="assets/idp_projects/simulation/structural_analysis_chassis_final_balancing_robot.jpg"
+                alt="Structural chassis analysis" loading="lazy">
+              <figcaption>Chassis structural analysis</figcaption>
+            </figure>
+          </article>
+
+          <article class="idp-sim-panel idp-sim-panel-simulink">
+            <h5 class="idp-sim-title">MATLAB / Simulink for LQR</h5>
+            <p class="idp-sim-text">
+              Built and tested control models in MATLAB/Simulink, then iterated LQR tuning in simulation before
+              applying gains to hardware.
+            </p>
+            <div class="idp-sim-videos">
+              <figure>
+                <video controls preload="metadata" playsinline muted>
+                  <source src="assets/idp_projects/simulation/simulink_before_tuning.mp4" type="video/mp4">
+                </video>
+                <figcaption>Before LQR tuning</figcaption>
+              </figure>
+              <figure>
+                <video controls preload="metadata" playsinline muted>
+                  <source src="assets/idp_projects/simulation/simulink_after_tuning.mp4" type="video/mp4">
+                </video>
+                <figcaption>After LQR tuning</figcaption>
+              </figure>
+            </div>
+          </article>
+        </div>
+
+        <h4 class="idp-subhead">PID/LQR Tuning</h4>
+        <p class="idp-chassis-desc">Controller tuning progression from first prototype to final standing behavior.</p>
+        <div class="idp-iterations idp-iterations-two">
           <figure>
-            <img class="js-lightbox" src="assets/idp_projects/structural_analysis_chassis_final_balancing_robot.jpg"
-              alt="Structural chassis analysis" loading="lazy">
-            <figcaption>Structural analysis</figcaption>
+            <video controls preload="metadata" playsinline muted>
+              <source src="assets/idp_projects/tuning/prototype_pid_tuning.mp4" type="video/mp4">
+              <source src="assets/idp_projects/tuning/prototype_pid_tuning.MOV" type="video/quicktime">
+            </video>
+            <figcaption>First prototype PID/LQR tuning</figcaption>
           </figure>
           <figure>
-            <img class="js-lightbox" src="assets/idp_projects/eg3301r_2_legged_balancing.jpg"
-              alt="Final 2-legged balancing robot" loading="lazy">
-            <figcaption>Final build</figcaption>
+            <video controls preload="metadata" playsinline muted>
+              <source src="assets/idp_projects/tuning/standing_balancing.mp4" type="video/mp4">
+            </video>
+            <figcaption>Final prototype standing balance</figcaption>
           </figure>
         </div>
       </article>
@@ -432,15 +482,15 @@
           </article>
           <article class="card">
             <h4>AI / ML</h4>
-            <p>CV · Neural Nets · Action Recognition · RL</p>
+            <p>CV · Neural Nets · Action Recognition · RL · LLM</p>
           </article>
           <article class="card">
             <h4>Simulation</h4>
-            <p>MuJoCo · COMSOL · SolidWorks · PID/LQR</p>
+            <p>MATLAB/Simulink · FEA · COMSOL · MuJoCo · SolidWorks · PID/LQR</p>
           </article>
           <article class="card">
             <h4>Dev</h4>
-            <p>Python · C++ · C · MATLAB · JS · Docker · Git</p>
+            <p>Python · C++ · C · JavaScript · Docker · Git · Linux</p>
           </article>
         </div>
       </div>
@@ -500,7 +550,7 @@
         </p>
         <div class="availability">
           <span class="availability-dot"></span>
-          Available for roles starting 2026
+          Available for roles starting 2026 MAY onwards
         </div>
       </article>
     </section>
