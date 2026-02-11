@@ -637,12 +637,22 @@ p {
 .boxing-side-media {
   display: grid;
   gap: 0.65rem;
+  justify-items: center;
+}
+
+.boxing-side-media figure {
+  display: inline-block;
+  width: auto;
+  max-width: 100%;
 }
 
 .boxing-side-media img {
-  height: 200px;
+  width: auto;
+  max-width: 100%;
+  max-height: 260px;
+  height: auto;
   object-fit: contain;
-  background: rgba(0, 0, 0, 0.3);
+  background: transparent;
 }
 
 .boxing-bottom {
@@ -1643,10 +1653,18 @@ figcaption {
   .teleco-photo-grid img,
   .media-layout-primary img,
   .media-layout-teleco img,
-  .idp-pair-grid img,
-  .boxing-side-media img {
+  .idp-pair-grid img {
     height: clamp(240px, 62vw, 360px);
     object-fit: cover;
+  }
+
+  .boxing-side-media img {
+    width: auto;
+    max-width: 100%;
+    height: auto;
+    max-height: clamp(240px, 62vw, 360px);
+    object-fit: contain;
+    background: transparent;
   }
 
   .idp-sim-videos {
