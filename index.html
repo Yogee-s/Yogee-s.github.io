@@ -88,7 +88,7 @@
           </div>
           <p class="lead">
             Building <span class="signal-strong">software-first robotics</span> — ROS architecture, perception models,
-            <span class="signal-strong">RL</span>, and human–robot interaction.
+            Reinforcement Learning, and human–robot interaction.
           </p>
 
           <div class="cta-row">
@@ -145,11 +145,11 @@
             <p class="meta"><span class="signal-strong">Software Lead</span> · CDE4301 Capstone · Aug 2025 – Present</p>
             <div class="tech-tags">
               <span class="tech-tag">ROS2</span>
-              <span class="tech-tag">YOLO</span>
+              <span class="tech-tag">RGB-D</span>
               <span class="tech-tag">Action Recognition</span>
+              <span class="tech-tag">Causal Transformer</span>
+              <span class="tech-tag">Grad-CAM</span>
               <span class="tech-tag">Jetson</span>
-              <span class="tech-tag">LLM</span>
-              <span class="tech-tag">IMU</span>
             </div>
           </div>
           <span class="pill pill-wip">In Progress</span>
@@ -158,16 +158,20 @@
         <div class="project-body boxing-body">
           <div class="boxing-top">
             <div class="project-copy">
-              <p><span class="signal-strong">Semi-autonomous boxing coach</span> — closed-loop perception, actuation,
-                and AI feedback.</p>
+              <p><span class="signal-strong">Semi-autonomous boxing coach</span> — building a robust RGB-D action
+                recognition stack for real-time punch prediction.</p>
               <ul>
-                <li><span class="signal-tech">ROS architecture</span> for perception → decision → control → feedback
-                  pipeline</li>
-                <li><span class="signal-tech">CV + action recognition</span> on <span class="signal-tech">Jetson</span>
-                  for punch and posture analysis</li>
-                <li><span class="signal-tech">IMU fusion</span> with vision for technique quality scoring</li>
-                <li><span class="signal-tech">LLM-generated coaching feedback</span> from multimodal metrics</li>
-                <li><span class="signal-strong">Adaptive drill difficulty</span> to replace frequent sparring</li>
+                <li>Built a <span class="signal-tech">custom GUI</span> to annotate synchronized <span
+                    class="signal-tech">RGB-D boxing videos</span></li>
+                <li>Compared multiple pipelines: <span class="signal-tech">3D pose skeletons</span>, <span
+                    class="signal-tech">bounding-box RGB-D pixels</span>, and <span class="signal-tech">segmented
+                    inputs</span></li>
+                <li>Used <span class="signal-tech">Grad-CAM</span> for <span class="signal-strong">model
+                    interpretability</span> to validate what the model attends to during punch classification</li>
+                <li>Fine-tuning an <span class="signal-tech">LLM for boxing coaching feedback</span> to translate model
+                  outputs into actionable training cues</li>
+                <li>Currently collecting data and training a <span class="signal-tech">causal transformer</span> for
+                  <span class="signal-strong">real-time punch prediction</span> across fast and slow strikes</li>
               </ul>
             </div>
             <div class="boxing-side-media">
@@ -176,21 +180,78 @@
                   loading="lazy">
                 <figcaption>Concept design</figcaption>
               </figure>
+              <figure>
+                <img class="js-lightbox" src="assets/boxbunny_capstone/assembling_for_cde_ai_fair.jpg"
+                  alt="BoxBunny hardware integration for CDE AI Fair" loading="lazy">
+                <figcaption>Boxbunny prototype at CDE AI Fair</figcaption>
+              </figure>
             </div>
           </div>
 
-          <div class="boxing-bottom">
-            <figure class="boxing-video">
-              <video controls preload="metadata" playsinline muted>
-                <source src="assets/boxbunny_capstone/inference_trained_model_work_in_progress.mp4" type="video/mp4">
-              </video>
-              <figcaption>Inference pipeline demo</figcaption>
-            </figure>
-            <figure class="boxing-physical">
-              <img class="js-lightbox" src="assets/boxbunny_capstone/assembling_for_cde_ai_fair.jpg"
-                alt="Assembling BoxBunny for CDE AI Fair" loading="lazy">
-              <figcaption>CDE AI Fair integration</figcaption>
-            </figure>
+          <div class="boxing-flow">
+            <h4 class="boxing-flow-title">Action Recognition Development Flow</h4>
+            <div class="boxing-flow-columns">
+              <article class="boxing-column boxing-column-data">
+                <h5>Data + Annotation</h5>
+                <p>Built a custom annotation GUI for synchronized RGB-D clips, then generated cleaner labels for training.
+                </p>
+                <div class="boxing-column-media">
+                  <figure class="boxing-media-gui">
+                    <img class="js-lightbox media-fit-contain" src="assets/boxbunny_capstone/annotation_gui.png"
+                      alt="Custom GUI for RGB-D boxing video annotation" loading="lazy">
+                    <figcaption>RGB-D annotation GUI</figcaption>
+                  </figure>
+                  <figure class="boxing-media-pose">
+                    <img class="js-lightbox media-fit-contain" src="assets/boxbunny_capstone/3d_pose_estimation.png"
+                      alt="3D pose estimation result with missing body joints due to occlusions" loading="lazy">
+                    <figcaption>3D pose baseline (occlusion issues)</figcaption>
+                  </figure>
+                </div>
+              </article>
+
+              <article class="boxing-column boxing-column-model">
+                <h5>Model Exploration + Diagnostics</h5>
+                <ul class="boxing-mini-list">
+                  <li>Bounding-box RGB-D features gave a stronger proof-of-concept baseline.</li>
+                  <li><span class="signal-strong">Model interpretability:</span> Grad-CAM showed the model focusing on
+                    wrong regions instead of true motion.</li>
+                </ul>
+                <div class="boxing-column-media">
+                  <figure class="boxing-media-poc">
+                    <video controls preload="metadata" playsinline muted>
+                      <source src="assets/boxbunny_capstone/inference_trained_model_work_in_progress.mp4" type="video/mp4">
+                    </video>
+                    <figcaption>Bounding-box RGB-D inference (PoC)</figcaption>
+                  </figure>
+                  <figure class="boxing-media-gradcam">
+                    <video controls preload="metadata" playsinline muted>
+                      <source src="assets/boxbunny_capstone/freestyle_gradcam.mp4" type="video/mp4">
+                    </video>
+                    <figcaption>Grad-CAM attention diagnosis</figcaption>
+                  </figure>
+                </div>
+              </article>
+
+              <article class="boxing-column boxing-column-current">
+                <h5>Current Track</h5>
+                <p>Training with segmented inputs and scaling data collection for a causal transformer to handle real-time,
+                  non-linear punch dynamics (fast/slow punches).</p>
+                <div class="boxing-column-media">
+                  <figure class="boxing-media-segmented">
+                    <img class="js-lightbox media-fit-contain" src="assets/boxbunny_capstone/segmented_data.png"
+                      alt="Segmented boxing input data for model training" loading="lazy">
+                    <figcaption>Segmented data pipeline</figcaption>
+                  </figure>
+                  <figure class="boxing-media-llm">
+                    <img class="js-lightbox media-fit-contain" src="assets/boxbunny_capstone/llm_finetuned_for_boxing.jpg"
+                      alt="LLM fine-tuning workflow for boxing coaching feedback" loading="lazy">
+                    <figcaption>LLM fine-tuning for coaching feedback</figcaption>
+                  </figure>
+                </div>
+                <p class="boxing-stage-note">Parallel track: fine-tuning an LLM to turn recognition outputs into concise,
+                  personalized coaching cues.</p>
+              </article>
+            </div>
           </div>
         </div>
       </article>
@@ -266,7 +327,7 @@
       <article class="project card">
         <div class="project-head">
           <div>
-            <h3><span class="signal-tech">Reinforcement Learning</span> for Inspire Dexterous Hand</h3>
+            <h3><span class="signal-tech">RL</span> for Inspire Dexterous Hand</h3>
             <p class="meta"><span class="signal-strong">Research Intern</span> · A*STAR ARTC · May – Aug 2024</p>
             <div class="tech-tags">
               <span class="tech-tag">MuJoCo</span>
