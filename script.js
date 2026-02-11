@@ -96,15 +96,14 @@
      NAVBAR SCROLL EFFECT
      ======================================== */
   const topbar = document.getElementById('topbar');
-  let lastScroll = 0;
-
-  window.addEventListener('scroll', () => {
-    const currentScroll = window.scrollY;
+  const syncTopbarState = () => {
     if (topbar) {
-      topbar.classList.toggle('scrolled', currentScroll > 50);
+      topbar.classList.toggle('scrolled', window.scrollY > 50);
     }
-    lastScroll = currentScroll;
-  }, { passive: true });
+  };
+
+  syncTopbarState();
+  window.addEventListener('scroll', syncTopbarState, { passive: true });
 
   /* ========================================
      MOBILE NAV TOGGLE
