@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=1280">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description"
     content="Robotics software portfolio of Muthukumaran Yogeeswaran: ROS systems, perception models, reinforcement learning, and embodied AI projects.">
   <meta name="robots" content="index,follow,max-image-preview:large">
@@ -134,95 +134,146 @@
       <div class="section-head">
         <p class="eyebrow">Selected Works</p>
         <h2>Featured Projects</h2>
+        <p class="featured-intro">I am passionate about embodied robotics. Through my projects, I have built hands-on experience in perception, reasoning, manipulation, and legged balance. My long-term dream is to contribute to a humanoid robot that brings all of these capabilities into one integrated system.</p>
       </div>
 
       <div class="constellation-wrap">
-        <!-- SVG for connecting lines only -->
-        <svg id="constellation-lines" aria-hidden="true"></svg>
+        <svg id="robot-link-layer" aria-hidden="true"></svg>
 
-        <!-- Center hub removed -->
-
-        <!-- Card nodes positioned by JS -->
-        <div class="card-node" data-project="boxbunny">
-          <div class="node-visual">
-            <img src="assets/boxbunny_capstone/concept_design.jpg" alt="BoxBunny Robot" loading="lazy">
-            <div class="node-overlay"></div>
+        <article class="robot-stage" id="robot-stage" aria-live="polite">
+          <div class="robot-stage-head">
+            <p id="robot-focus-desc">Select a project to see the subsystem it targets.</p>
           </div>
-          <div class="node-content">
-            <span class="card-node-pill pill-wip">In Progress</span>
-            <h3>BoxBunny</h3>
-            <p class="card-node-role">Software Lead · Capstone</p>
-            <p class="card-node-summary">Intelligent boxing robot with RGB-D action recognition and RL coaching.</p>
-            <div class="card-node-tags">
-              <span>ROS2</span><span>RGB-D</span><span>Neural Networks</span>
+
+          <div class="robot-model-shell">
+            <model-viewer id="humanoid-model" src="assets/models/humanoid_mannequin.glb"
+              alt="High-fidelity humanoid mannequin used as an interactive project-to-body-part map" camera-controls disable-pan
+              interaction-prompt="none" interpolation-decay="120" camera-orbit="0deg 88deg 4.1m"
+              min-camera-orbit="auto auto 2.45m" max-camera-orbit="auto auto 4.8m"
+              camera-target="0m 0m 0m" shadow-intensity="0.18" exposure="1.2" environment-image="neutral">
+              <button class="robot-hotspot" slot="hotspot-fullbody" data-project="boxbunny"
+                data-position="-0.58m 0.18m 0.02m"
+                data-normal="0m 1m 0m">
+                <span class="hotspot-dot"></span><span class="hotspot-label">BoxBunny</span>
+              </button>
+              <button class="robot-hotspot" slot="hotspot-eyes" data-project="teleco" data-position="0.07m 0.79m 0.12m"
+                data-normal="0m 0m 1m">
+                <span class="hotspot-dot"></span><span class="hotspot-label">Teleco</span>
+              </button>
+              <button class="robot-hotspot" slot="hotspot-head" data-project="breaking-bias" data-position="0.02m 0.88m 0.08m"
+                data-normal="0m 1m 0m">
+                <span class="hotspot-dot"></span><span class="hotspot-label">Breaking Bias</span>
+              </button>
+              <button class="robot-hotspot" slot="hotspot-hand" data-project="astar-rl" data-position="0.48m 0.38m 0m"
+                data-normal="1m 0m 0m">
+                <span class="hotspot-dot"></span><span class="hotspot-label">RL Hand</span>
+              </button>
+              <button class="robot-hotspot" slot="hotspot-legs" data-project="idp" data-position="-0.34m -0.72m 0.04m"
+                data-normal="0m -1m 0m">
+                <span class="hotspot-dot"></span><span class="hotspot-label">Legged Balance</span>
+              </button>
+            </model-viewer>
+          </div>
+
+          <div class="robot-stage-meta">
+            <span class="robot-stage-part" id="robot-part-label">Hover a project to preview subsystem focus.</span>
+            <span class="robot-stage-project" id="robot-project-label">Click a project to lock focus and open details.</span>
+          </div>
+          <p class="robot-model-credit">3D model: <a href="https://poly.pizza/m/qbDLeTtb8K" target="_blank"
+              rel="noopener noreferrer">Character Base</a> by madtrollstudio (CC-BY 3.0).</p>
+        </article>
+
+        <div class="robot-project-grid" id="robot-project-grid">
+          <article class="card-node" data-project="boxbunny" tabindex="0" role="button" aria-controls="detail-panel"
+            aria-label="Open BoxBunny project details">
+            <div class="node-visual">
+              <img src="assets/boxbunny_capstone/concept_design.jpg" alt="BoxBunny Robot" loading="lazy">
+              <div class="node-overlay"></div>
             </div>
-          </div>
-        </div>
-
-        <div class="card-node" data-project="teleco">
-          <div class="node-visual">
-            <img src="assets/frontier/close_up_teleco_robot.jpg" alt="Teleco Robot" loading="lazy">
-            <div class="node-overlay"></div>
-          </div>
-          <div class="node-content">
-            <span class="card-node-pill">Deployed</span>
-            <h3>Teleco Localization</h3>
-            <p class="card-node-role">Research Intern · Osaka</p>
-            <p class="card-node-summary">deployed at Osaka Expo 2025. YOLOv12 + SLAM for social robot gaze.</p>
-            <div class="card-node-tags">
-              <span>YOLOv12</span><span>SLAM</span><span>Kabsch</span>
+            <div class="node-content">
+              <span class="card-node-pill pill-wip">In Progress</span>
+              <h3>BoxBunny</h3>
+              <p class="card-node-role">Software Lead · Capstone</p>
+              <p class="card-node-summary">Intelligent boxing robot with RGB-D action recognition and RL coaching.</p>
+              <div class="card-node-tags">
+                <span>ROS2</span><span>RGB-D</span><span>Neural Nets</span>
+              </div>
+              <button class="card-node-open" type="button">Open Project</button>
             </div>
-          </div>
-        </div>
+          </article>
 
-        <div class="card-node" data-project="astar-rl">
-          <div class="node-visual">
-            <img src="assets/artc_internship/RL_node.png" alt="RL Dexterous Hand" loading="lazy">
-            <div class="node-overlay"></div>
-          </div>
-          <div class="node-content">
-            <span class="card-node-pill">Research</span>
-            <h3>RL Dexterous Hand</h3>
-            <p class="card-node-role">Research Intern · A*STAR</p>
-            <p class="card-node-summary">Sim-to-real reinforcement learning for dexterous manipulation.</p>
-            <div class="card-node-tags">
-              <span>MuJoCo</span><span>RL / DAPG</span><span>URDF</span>
+          <article class="card-node" data-project="teleco" tabindex="0" role="button" aria-controls="detail-panel"
+            aria-label="Open Teleco project details">
+            <div class="node-visual">
+              <img src="assets/frontier/close_up_teleco_robot.jpg" alt="Teleco Robot" loading="lazy">
+              <div class="node-overlay"></div>
             </div>
-          </div>
-        </div>
-
-        <div class="card-node" data-project="breaking-bias">
-          <div class="node-visual">
-            <img src="assets/breaking_bias/Breaking_bias_node.png" alt="Breaking Bias" loading="lazy">
-            <div class="node-overlay"></div>
-          </div>
-          <div class="node-content">
-            <span class="card-node-pill">LLM Research</span>
-            <h3>Breaking Bias</h3>
-            <p class="card-node-role">AI Safety Research</p>
-            <p class="card-node-summary">Analyzing and mitigating bias in Large Language Models.</p>
-            <div class="card-node-tags">
-              <span>LLMs</span><span>Python</span><span>PyTorch</span>
+            <div class="node-content">
+              <span class="card-node-pill">Deployed</span>
+              <h3>Teleco Localization</h3>
+              <p class="card-node-role">Research Intern · Osaka</p>
+              <p class="card-node-summary">Deployed at Osaka Expo 2025. YOLOv12 + SLAM for social robot gaze.</p>
+              <div class="card-node-tags">
+                <span>YOLOv12</span><span>SLAM</span><span>Kabsch</span>
+              </div>
+              <button class="card-node-open" type="button">Open Project</button>
             </div>
-          </div>
-        </div>
+          </article>
 
-        <div class="card-node" data-project="idp">
-          <div class="node-visual">
-            <img src="assets/idp_projects/eg3301r_2_legged_balancing.jpg" alt="Balancing Robot" loading="lazy">
-            <div class="node-overlay"></div>
-          </div>
-          <div class="node-content">
-            <span class="card-node-pill">Foundation</span>
-            <h3>Innovation Design</h3>
-            <p class="card-node-role">NUS IDP · 2022–2024</p>
-            <p class="card-node-summary">Self-balancing robot with 3-axis stabilized gimbal.</p>
-            <div class="card-node-tags">
-              <span>PID/LQR</span><span>SolidWorks</span><span>STM32</span>
+          <article class="card-node" data-project="breaking-bias" tabindex="0" role="button"
+            aria-controls="detail-panel" aria-label="Open Breaking Bias project details">
+            <div class="node-visual">
+              <img src="assets/breaking_bias/Breaking_bias_node.png" alt="Breaking Bias" loading="lazy">
+              <div class="node-overlay"></div>
             </div>
-          </div>
-        </div>
+            <div class="node-content">
+              <span class="card-node-pill">LLM Research</span>
+              <h3>Breaking Bias</h3>
+              <p class="card-node-role">AI Safety Research</p>
+              <p class="card-node-summary">Analyzing and mitigating bias in Large Language Models.</p>
+              <div class="card-node-tags">
+                <span>LLMs</span><span>Python</span><span>PyTorch</span>
+              </div>
+              <button class="card-node-open" type="button">Open Project</button>
+            </div>
+          </article>
 
+          <article class="card-node" data-project="astar-rl" tabindex="0" role="button" aria-controls="detail-panel"
+            aria-label="Open RL Dexterous Hand project details">
+            <div class="node-visual">
+              <img src="assets/artc_internship/RL_node.png" alt="RL Dexterous Hand" loading="lazy">
+              <div class="node-overlay"></div>
+            </div>
+            <div class="node-content">
+              <span class="card-node-pill">Research</span>
+              <h3>RL Dexterous Hand</h3>
+              <p class="card-node-role">Research Intern · A*STAR</p>
+              <p class="card-node-summary">Sim-to-real reinforcement learning for dexterous manipulation.</p>
+              <div class="card-node-tags">
+                <span>MuJoCo</span><span>RL / DAPG</span><span>URDF</span>
+              </div>
+              <button class="card-node-open" type="button">Open Project</button>
+            </div>
+          </article>
+
+          <article class="card-node" data-project="idp" tabindex="0" role="button" aria-controls="detail-panel"
+            aria-label="Open Legged Balancing Robot project details">
+            <div class="node-visual">
+              <img src="assets/idp_projects/eg3301r_2_legged_balancing.jpg" alt="Balancing Robot" loading="lazy">
+              <div class="node-overlay"></div>
+            </div>
+            <div class="node-content">
+              <span class="card-node-pill">Foundation</span>
+              <h3>Legged Balancing Robot</h3>
+              <p class="card-node-role">NUS IDP · 2022-2024</p>
+              <p class="card-node-summary">Self-balancing robot with 3-axis stabilized gimbal.</p>
+              <div class="card-node-tags">
+                <span>PID/LQR</span><span>SolidWorks</span><span>STM32</span>
+              </div>
+              <button class="card-node-open" type="button">Open Project</button>
+            </div>
+          </article>
+        </div>
       </div>
 
       <!-- Poster Gallery -->
@@ -505,19 +556,26 @@
           <span class="pill">LLM Research</span>
         </div>
         <div class="project-body">
-          <div class="project-copy">
-            <p>Evaluating and mitigating <span class="signal-strong">social biases</span> (gender, race, religion) in
-              state-of-the-art Large Language Models.
-            </p>
-            <ul>
-              <li>Developed a <span class="signal-tech">comprehensive evaluation framework</span> using standard
-                benchmarks (CrowS-Pairs, StereoSet).</li>
-              <li>Analyzed bias propagation in <span class="signal-tech">Llama 2</span> and <span
-                  class="signal-tech">GPT-3.5</span>.</li>
-              <li>Proposed mitigation strategies involving <span class="signal-strong">prompt engineering</span> and
-                <span class="signal-strong">fine-tuning checks</span>.
-              </li>
-            </ul>
+          <div class="bias-top">
+            <div class="project-copy">
+              <p>Evaluating and mitigating <span class="signal-strong">social biases</span> (gender, race, religion) in
+                state-of-the-art Large Language Models.
+              </p>
+              <ul>
+                <li>Developed a <span class="signal-tech">comprehensive evaluation framework</span> using standard
+                  benchmarks (CrowS-Pairs, StereoSet).</li>
+                <li>Analyzed bias propagation in <span class="signal-tech">Llama 2</span> and <span
+                    class="signal-tech">GPT-3.5</span>.</li>
+                <li>Proposed mitigation strategies involving <span class="signal-strong">prompt engineering</span> and
+                  <span class="signal-strong">fine-tuning checks</span>.
+                </li>
+              </ul>
+            </div>
+            <figure class="bias-side-node">
+              <img class="js-lightbox" src="assets/breaking_bias/Breaking_bias_node.png"
+                alt="Breaking Bias project node visual" loading="lazy">
+              <figcaption>Project node visual</figcaption>
+            </figure>
           </div>
 
           <!-- Embedded PDF Section -->
@@ -806,6 +864,8 @@
   <div id="detail-overlay" class="detail-overlay"></div>
 
   <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.2/lib/anime.min.js"></script>
+  <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
+  <script nomodule src="https://unpkg.com/@google/model-viewer/dist/model-viewer-legacy.js"></script>
   <script src="script.js"></script>
 </body>
 

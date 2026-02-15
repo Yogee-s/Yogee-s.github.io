@@ -512,18 +512,25 @@
         lightbox.setAttribute('aria-hidden', 'true');
         lightboxImage.removeAttribute('src');
         lightboxImage.removeAttribute('alt');
-        document.body.style.overflow = '';
+        const detailPanel = document.getElementById('detail-panel');
+        const panelOpen = detailPanel && detailPanel.getAttribute('aria-hidden') === 'false';
+        document.body.style.overflow = panelOpen ? 'hidden' : '';
     }
 
-    document.querySelectorAll('.js-lightbox').forEach((img) => {
-        img.addEventListener('click', () => {
-            lightboxImage.src = img.currentSrc || img.src;
-            lightboxImage.alt = img.alt || 'Expanded image';
+    if (lightbox && lightboxImage) {
+        document.addEventListener('click', (event) => {
+            const target = event.target;
+            if (!(target instanceof Element)) return;
+            const image = target.closest('.js-lightbox');
+            if (!(image instanceof HTMLImageElement)) return;
+
+            lightboxImage.src = image.currentSrc || image.src;
+            lightboxImage.alt = image.alt || 'Expanded image';
             lightbox.classList.add('open');
             lightbox.setAttribute('aria-hidden', 'false');
             document.body.style.overflow = 'hidden';
         });
-    });
+    }
 
     if (lightbox) {
         lightbox.addEventListener('click', (event) => {
@@ -604,292 +611,459 @@
 })();
 
 /* ========================================================
-   PROJECT CONSTELLATION — STAGGERED LIST LAYOUT
+   FEATURED PROJECTS — ROBOT BODY MAP
    ======================================================== */
 
-(function initConstellation() {
-    const wrap = document.querySelector('.constellation-wrap');
-    if (!wrap) return;
+(function initHumanoidMap() {
+    const section = document.getElementById('featured');
+    if (!section) return;
 
-    const svg = document.getElementById('constellation-lines');
-    const cards = Array.from(wrap.querySelectorAll('.card-node'));
+    const wrap = section.querySelector('.constellation-wrap');
+    const linkLayer = document.getElementById('robot-link-layer');
+    const cards = Array.from(section.querySelectorAll('.robot-project-grid .card-node'));
+    if (!cards.length) return;
+
+    const model = document.getElementById('humanoid-model');
+    const stage = document.getElementById('robot-stage');
+    const hotspots = Array.from(section.querySelectorAll('.robot-hotspot'));
+
+    const focusTitle = document.getElementById('robot-focus-title');
+    const focusDesc = document.getElementById('robot-focus-desc');
+    const partLabel = document.getElementById('robot-part-label');
+    const projectLabel = document.getElementById('robot-project-label');
+
     const panel = document.getElementById('detail-panel');
     const panelContent = document.getElementById('detail-content');
-    const panelClose = document.getElementById('detail-close');
+    const panelTitle = document.getElementById('bar-project-title');
+    const panelPill = document.getElementById('bar-project-pill');
     const overlay = document.getElementById('detail-overlay');
 
-    /* ---- Color per project ---- */
-    const COLORS = {
-        'boxbunny': '#f59e0b',
-        'teleco': '#06b6d4',
-        'astar-rl': '#8b5cf6',
-        'breaking-bias': '#f43f5e',
-        'idp': '#fca5a5'
+    const PROJECTS = {
+        'boxbunny': {
+            panelTitle: 'BoxBunny: Intelligent Boxing Robot',
+            panelPill: 'In Progress',
+            focusTitle: 'BoxBunny → Full-Body Integration',
+            focusDesc: 'Full-body integration across perception, control, and feedback.',
+            partLabel: 'Scope: Full-body system integration',
+            projectLabel: 'BoxBunny - vision, reasoning, and control integrated into one stack',
+            cameraOrbit: '0deg 88deg 3.9m',
+            cameraTarget: '0m 0.02m 0m',
+            color: '#f59e0b',
+            template: 'tpl-boxbunny'
+        },
+        'teleco': {
+            panelTitle: 'Teleco Localization',
+            panelPill: 'Deployed',
+            focusTitle: 'Teleco Localization → Eyes / Visual Attention',
+            focusDesc: 'Vision + localization for gaze and visual attention.',
+            partLabel: 'Targeted part: Eyes and visual focus',
+            projectLabel: 'Teleco - camera-to-map localization and social gaze control',
+            cameraOrbit: '8deg 74deg 2.78m',
+            cameraTarget: '0.07m 0.79m 0.08m',
+            color: '#06b6d4',
+            template: 'tpl-teleco'
+        },
+        'breaking-bias': {
+            panelTitle: 'Breaking Bias in LLMs',
+            panelPill: 'LLM Research',
+            focusTitle: 'Breaking Bias → Head / Reasoning Layer',
+            focusDesc: 'Reasoning-layer safety through bias analysis and mitigation.',
+            partLabel: 'Targeted part: Head and cognition',
+            projectLabel: 'Breaking Bias - safer language reasoning and mitigation workflows',
+            cameraOrbit: '20deg 66deg 2.88m',
+            cameraTarget: '0.02m 0.87m 0.07m',
+            color: '#f43f5e',
+            template: 'tpl-breaking-bias'
+        },
+        'astar-rl': {
+            panelTitle: 'RL Dexterous Hand',
+            panelPill: 'Research',
+            focusTitle: 'RL Dexterous Hand → Manipulation Hand',
+            focusDesc: 'Dexterous hand control for grasping and manipulation.',
+            partLabel: 'Targeted part: Hand dexterity',
+            projectLabel: 'A*STAR RL - dexterous grasping and control adaptation',
+            cameraOrbit: '52deg 86deg 2.74m',
+            cameraTarget: '0.4m 0.35m 0m',
+            color: '#8b5cf6',
+            template: 'tpl-astar-rl'
+        },
+        'idp': {
+            panelTitle: 'Legged Balancing Robot (IDP)',
+            panelPill: 'Foundation',
+            focusTitle: 'Legged Balancing Robot → Legs / Locomotion Base',
+            focusDesc: 'Simulation-based LQR tuning and kinematic modeling for legged balance and locomotion stability.',
+            partLabel: 'Targeted part: Legs, balance, and locomotion base',
+            projectLabel: 'Legged Balancing Robot - MATLAB/Simulink LQR tuning, kinematic analysis, and locomotion stability iteration.',
+            cameraOrbit: '-12deg 104deg 2.86m',
+            cameraTarget: '-0.24m -0.7m 0.02m',
+            color: '#fca5a5',
+            template: 'tpl-idp'
+        }
+    };
+    const neutralState = {
+        focusTitle: focusTitle ? focusTitle.textContent : '',
+        focusDesc: focusDesc ? focusDesc.textContent : 'Select a project to see the subsystem it targets.',
+        partLabel: partLabel ? partLabel.textContent : 'Hover a project to preview subsystem focus.',
+        projectLabel: projectLabel ? projectLabel.textContent : 'Click a project to lock focus and open details.',
+        color: '#9ca3af',
+        cameraOrbit: model ? (model.getAttribute('camera-orbit') || '0deg 88deg 4.1m') : '0deg 88deg 4.1m',
+        cameraTarget: model ? (model.getAttribute('camera-target') || '0m 0m 0m') : '0m 0m 0m'
     };
 
-    /* ---- Vertical Staggered Layout ---- */
-    function layout() {
-        const W = wrap.offsetWidth;
-        const center = W / 2;
+    let selectedProject = null;
+    let activeProject = null;
+    let connectorPath = null;
+    let connectorDot = null;
 
-        // Config: Compact Vertical Scroll Spacing
-        const startY = 180;  // Increased to 180 to clear title
-        const yStep = 240;  // Tighter gap (was 320)
-        const xOffset = Math.min(W * 0.25, 200); // Horizontal zigzag offset
+    function ensureConnector() {
+        if (!linkLayer || connectorPath) return;
+        connectorPath = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+        connectorPath.setAttribute('fill', 'none');
+        connectorPath.setAttribute('stroke-width', '2.2');
+        connectorPath.setAttribute('stroke-linecap', 'round');
+        connectorPath.setAttribute('stroke-linejoin', 'round');
+        connectorPath.classList.add('robot-link-path');
+        linkLayer.appendChild(connectorPath);
 
-        // Desired Order:
-        // 1. BoxBunny
-        // 2. Teleco
-        // 3. Breaking Bias
-        // 4. RL Hand
-        // 5. IDP
-        const orderMap = ['boxbunny', 'teleco', 'breaking-bias', 'astar-rl', 'idp'];
+        connectorDot = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+        connectorDot.setAttribute('r', '4.5');
+        connectorDot.classList.add('robot-link-dot');
+        linkLayer.appendChild(connectorDot);
+    }
 
-        // Map DOM elements to this order
-        const orderedCards = orderMap.map(id =>
-            cards.find(c => c.dataset.project === id)
-        ).filter(Boolean);
+    function updateConnector() {
+        if (!wrap || !linkLayer) return;
+        ensureConnector();
 
-        // Calculate Coordinates
-        const coords = orderedCards.map((card, i) => {
-            // Zig-zag: Even = Left, Odd = Right
-            const dir = (i % 2 === 0) ? -1 : 1;
-            const x = center + (dir * xOffset);
-            const y = startY + (i * yStep);
-            return { x, y, card, id: card.dataset.project };
-        });
-
-        // Clear and Resize SVG
-        const totalHeight = startY + (orderedCards.length * yStep) + 100;
-        wrap.style.height = totalHeight + 'px'; // Enforce container height
-        svg.innerHTML = '';
-        svg.setAttribute('viewBox', `0 0 ${W} ${totalHeight}`);
-
-        // Draw Connector Lines (1 -> 2 -> ... -> 5)
-        for (let i = 0; i < coords.length - 1; i++) {
-            const p1 = coords[i];
-            const p2 = coords[i + 1];
-
-            const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
-            line.setAttribute('x1', p1.x);
-            line.setAttribute('y1', p1.y);
-            line.setAttribute('x2', p2.x);
-            line.setAttribute('y2', p2.y);
-            line.setAttribute('stroke', COLORS[p1.id] || '#555'); // Use color of source node
-            line.setAttribute('stroke-width', '2');
-            line.setAttribute('stroke-opacity', '0.3');
-            line.classList.add('constellation-line');
-            svg.appendChild(line);
+        if (!activeProject) {
+            if (connectorPath) connectorPath.setAttribute('d', '');
+            if (connectorDot) connectorDot.setAttribute('display', 'none');
+            return;
         }
 
-        // Position Cards
-        coords.forEach(pt => {
-            const cardW = pt.card.offsetWidth;
-            const cardH = pt.card.offsetHeight;
-            pt.card.style.left = (pt.x - cardW / 2) + 'px';
-            pt.card.style.top = (pt.y - cardH / 2) + 'px';
-        });
+        const card = cards.find((node) => node.dataset.project === activeProject);
+        const hotspot = hotspots.find((node) => node.dataset.project === activeProject);
+        if (!card || !hotspot || !connectorPath || !connectorDot) return;
+
+        const wrapRect = wrap.getBoundingClientRect();
+        const cardRect = card.getBoundingClientRect();
+        const hotspotRect = hotspot.getBoundingClientRect();
+
+        const x1 = cardRect.left + cardRect.width / 2 - wrapRect.left;
+        const y1 = cardRect.top + cardRect.height / 2 - wrapRect.top;
+        const x2 = hotspotRect.left + hotspotRect.width / 2 - wrapRect.left;
+        const y2 = hotspotRect.top + hotspotRect.height / 2 - wrapRect.top;
+
+        const c1x = x1 + (x2 - x1) * 0.35;
+        const c1y = y1 - 68;
+        const c2x = x1 + (x2 - x1) * 0.7;
+        const c2y = y2 - 28;
+
+        const width = wrap.clientWidth;
+        const height = wrap.clientHeight;
+        linkLayer.setAttribute('viewBox', `0 0 ${width} ${height}`);
+        linkLayer.setAttribute('width', String(width));
+        linkLayer.setAttribute('height', String(height));
+
+        connectorPath.setAttribute('d', `M ${x1} ${y1} C ${c1x} ${c1y}, ${c2x} ${c2y}, ${x2} ${y2}`);
+        connectorDot.setAttribute('cx', String(x2));
+        connectorDot.setAttribute('cy', String(y2));
+        connectorDot.removeAttribute('display');
     }
 
-    /* ---- Entrance animation ---- */
-    function animateEntrance() {
-        // Simple fade up for cards
+    function syncConnectorFor(durationMs = 700) {
+        const startedAt = performance.now();
+        const tick = (now) => {
+            updateConnector();
+            if (now - startedAt < durationMs) requestAnimationFrame(tick);
+        };
+        requestAnimationFrame(tick);
+    }
+
+    function setNeutralState(options = {}) {
+        const shouldMoveCamera = options.moveCamera !== false;
+        activeProject = null;
+
+        cards.forEach(card => card.classList.remove('active'));
+        hotspots.forEach(hotspot => hotspot.classList.remove('active'));
+
+        if (focusTitle) focusTitle.textContent = neutralState.focusTitle;
+        if (focusDesc) focusDesc.textContent = neutralState.focusDesc;
+        if (partLabel) partLabel.textContent = neutralState.partLabel;
+        if (projectLabel) projectLabel.textContent = neutralState.projectLabel;
+        if (stage) {
+            stage.style.setProperty('--robot-accent', neutralState.color);
+            stage.classList.remove('has-active');
+            stage.removeAttribute('data-active-project');
+        }
+
+        if (model && shouldMoveCamera) {
+            model.cameraOrbit = neutralState.cameraOrbit;
+            model.cameraTarget = neutralState.cameraTarget;
+        }
+        if (model) model.classList.remove('fullbody-focus');
+
+        updateConnector();
+        syncConnectorFor(shouldMoveCamera ? 520 : 160);
+    }
+
+    function selectProject(projectId, options = {}) {
+        if (!PROJECTS[projectId]) return;
+        selectedProject = projectId;
+        setActiveProject(projectId, options);
+    }
+
+    function previewProject(projectId, options = {}) {
+        if (!PROJECTS[projectId]) return;
+        setActiveProject(projectId, options);
+    }
+
+    function clearPreview() {
+        if (selectedProject) {
+            if (activeProject === selectedProject) return;
+            setActiveProject(selectedProject);
+            return;
+        }
+        if (activeProject !== null) setNeutralState();
+    }
+
+    function clearSelection(options = {}) {
+        if (!selectedProject) {
+            if (activeProject !== null) setNeutralState(options);
+            return;
+        }
+        selectedProject = null;
+        setNeutralState(options);
+    }
+
+    function setActiveProject(projectId, options = {}) {
+        const config = PROJECTS[projectId];
+        if (!config) return;
+
+        const shouldMoveCamera = options.moveCamera !== false;
+        activeProject = projectId;
+
+        cards.forEach(card => card.classList.toggle('active', card.dataset.project === projectId));
+        hotspots.forEach(hotspot => hotspot.classList.toggle('active', hotspot.dataset.project === projectId));
+
+        if (focusTitle) focusTitle.textContent = neutralState.focusTitle;
+        if (focusDesc) focusDesc.textContent = config.focusDesc;
+        if (partLabel) partLabel.textContent = config.partLabel;
+        if (projectLabel) projectLabel.textContent = config.projectLabel;
+        if (stage) {
+            stage.style.setProperty('--robot-accent', config.color);
+            stage.classList.add('has-active');
+            stage.dataset.activeProject = projectId;
+        }
+        if (connectorPath) connectorPath.setAttribute('stroke', config.color);
+        if (connectorDot) connectorDot.setAttribute('fill', config.color);
+
+        if (model) {
+            if (shouldMoveCamera) {
+                model.cameraOrbit = config.cameraOrbit;
+                model.cameraTarget = config.cameraTarget;
+            }
+            model.classList.toggle('fullbody-focus', projectId === 'boxbunny');
+        }
+
+        updateConnector();
+        syncConnectorFor(shouldMoveCamera ? 760 : 260);
+    }
+
+    function openDetailPanel(projectId) {
+        const config = PROJECTS[projectId];
+        if (!config || !panel || !panelContent || !overlay) return;
+
+        const template = document.getElementById(config.template);
+        if (!template) return;
+
+        if (panelTitle) panelTitle.textContent = config.panelTitle;
+        if (panelPill) panelPill.textContent = config.panelPill;
+
+        panelContent.innerHTML = '';
+        panelContent.appendChild(template.content.cloneNode(true));
+        panel.scrollTop = 0;
+
+        panel.setAttribute('aria-hidden', 'false');
+        overlay.classList.add('active');
+        document.body.style.overflow = 'hidden';
+
+        panelContent.style.opacity = '0';
+        panelContent.style.transform = 'translateY(18px)';
         anime({
-            targets: '.card-node',
+            targets: panelContent,
             opacity: [0, 1],
-            translateY: [50, 0],
-            delay: anime.stagger(150, { start: 300 }),
-            duration: 800,
-            easing: 'easeOutCubic',
-            complete() {
-                cards.forEach(c => c.classList.add('visible'));
-            }
+            translateY: [18, 0],
+            duration: 520,
+            easing: 'easeOutCubic'
         });
 
-        // Draw lines
-        const lines = svg.querySelectorAll('line');
-        lines.forEach((line, i) => {
-            const len = Math.sqrt(
-                Math.pow(line.getAttribute('x2') - line.getAttribute('x1'), 2) +
-                Math.pow(line.getAttribute('y2') - line.getAttribute('y1'), 2)
-            );
-            line.style.strokeDasharray = len;
-            line.style.strokeDashoffset = len;
+    }
 
-            anime({
-                targets: line,
-                strokeDashoffset: [len, 0],
-                delay: 400 + (i * 200),
-                duration: 1000,
-                easing: 'easeOutCubic'
-            });
+    function closeDetailPanel() {
+        if (!panel || !overlay) return;
+        if (panel.getAttribute('aria-hidden') === 'true') return;
+
+        const videos = panel.querySelectorAll('video');
+        videos.forEach(video => {
+            video.pause();
+            video.currentTime = 0;
+        });
+
+        panel.setAttribute('aria-hidden', 'true');
+        overlay.classList.remove('active');
+        document.body.style.overflow = '';
+    }
+
+    function normalizeModelMaterials() {
+        if (!model || !model.model || !Array.isArray(model.model.materials)) return;
+        model.model.materials.forEach((material) => {
+            if (!material) return;
+            if (typeof material.setDoubleSided === 'function') {
+                material.setDoubleSided(true);
+            }
+            if (typeof material.setAlphaMode === 'function') {
+                material.setAlphaMode('OPAQUE');
+            }
+            const pbr = material.pbrMetallicRoughness;
+            if (pbr && typeof pbr.setMetallicFactor === 'function') {
+                pbr.setMetallicFactor(0.04);
+            }
+            if (pbr && typeof pbr.setRoughnessFactor === 'function') {
+                pbr.setRoughnessFactor(0.92);
+            }
         });
     }
 
-    /* ---- Project display names & pills ---- */
-    const PROJECT_INFO = {
-        'boxbunny': { name: 'BoxBunny: Intelligent Boxing Robot', pill: 'In Progress' },
-        'teleco': { name: 'Teleco Localization', pill: 'Deployed' },
-        'astar-rl': { name: 'RL Dexterous Hand', pill: 'Research' },
-        'breaking-bias': { name: 'Breaking Bias in LLMs', pill: 'LLM Research' },
-        'idp': { name: 'Innovation Design Programme', pill: 'Foundation' }
-    };
+        cards.forEach((card) => {
+            const projectId = card.dataset.project;
+            if (!PROJECTS[projectId]) return;
 
-    /* ---- Morphing Transition (FLIP-like Overlay Expansion) ---- */
-    cards.forEach(card => {
-        card.addEventListener('click', () => {
-            const projId = card.dataset.project;
-            const tplMap = {
-                'boxbunny': 'tpl-boxbunny',
-                'teleco': 'tpl-teleco',
-                'astar-rl': 'tpl-astar-rl',
-                'breaking-bias': 'tpl-breaking-bias',
-                'idp': 'tpl-idp'
-            };
-
-            const tpl = document.getElementById(tplMap[projId]);
-            if (!tpl) return;
-
-            // 1. Prepare Detail Panel Content
-            const info = PROJECT_INFO[projId] || { name: '', pill: '' };
-            document.getElementById('bar-project-title').textContent = info.name;
-            document.getElementById('bar-project-pill').textContent = info.pill;
-            panelContent.innerHTML = '';
-            panelContent.appendChild(tpl.content.cloneNode(true));
-            panel.scrollTop = 0;
-
-            // 2. Create Expanding Overlay (Dark container)
-            const rect = card.getBoundingClientRect();
-            const morphOverlay = document.createElement('div');
-            morphOverlay.style.position = 'fixed';
-            morphOverlay.style.top = rect.top + 'px';
-            morphOverlay.style.left = rect.left + 'px';
-            morphOverlay.style.width = rect.width + 'px';
-            morphOverlay.style.height = rect.height + 'px';
-            morphOverlay.style.backgroundColor = 'hsl(240 12% 8%)'; // Match detail panel bg
-            morphOverlay.style.borderRadius = '16px';
-            morphOverlay.style.zIndex = '1002'; // High z-index
-            morphOverlay.style.transformOrigin = 'center';
-
-            document.body.appendChild(morphOverlay);
-
-            // 3. Reveal Backdrop Overlay
-            overlay.classList.add('active');
-            document.body.style.overflow = 'hidden';
-
-            // ** SHOW FLOATING CLOSE BUTTON (Class Toggle + Inline Safety) **
-            const floatClose = document.getElementById('floating-close');
-            if (floatClose) {
-                floatClose.style.display = 'block';
-                requestAnimationFrame(() => floatClose.classList.add('visible'));
+        const openButton = card.querySelector('.card-node-open');
+            if (openButton) {
+                openButton.addEventListener('click', (event) => {
+                    event.stopPropagation();
+                    selectProject(projectId);
+                    openDetailPanel(projectId);
+                });
             }
 
-            // 4. Animate Overlay to Full Screen
-            anime({
-                targets: morphOverlay,
-                top: 0,
-                left: 0,
-                width: window.innerWidth,
-                height: window.innerHeight,
-                borderRadius: '0px',
-                duration: 400,
-                easing: 'cubicBezier(0.4, 0, 0.2, 1)',
-                complete: () => {
-                    // 5. Show Actual Panel & Remove Overlay
-                    panel.setAttribute('aria-hidden', 'false');
-                    panel.style.opacity = '1';
-                    panel.style.transform = 'translateY(0)';
+            card.addEventListener('mouseenter', () => {
+                previewProject(projectId);
+            });
 
-                    morphOverlay.remove();
+            card.addEventListener('mouseleave', clearPreview);
+
+            card.addEventListener('focusin', () => {
+                previewProject(projectId);
+            });
+
+            card.addEventListener('focusout', () => {
+                requestAnimationFrame(() => {
+                    const stillInside = card.contains(document.activeElement);
+                    if (!stillInside) clearPreview();
+                });
+            });
+
+            card.addEventListener('keydown', (event) => {
+                if (event.key === ' ') {
+                    event.preventDefault();
+                    selectProject(projectId);
+                }
+                if (event.key === 'Enter') {
+                    event.preventDefault();
+                    selectProject(projectId);
+                    openDetailPanel(projectId);
                 }
             });
 
-            // 6. Animate Panel Content In
-            panelContent.style.opacity = '0';
-            panelContent.style.transform = 'translateY(20px)';
+            card.addEventListener('click', () => {
+                selectProject(projectId);
+            });
+        });
 
-            anime({
-                targets: panelContent,
-                opacity: [0, 1],
-                translateY: [20, 0],
-                delay: 200,
-                duration: 500,
-                easing: 'easeOutCubic'
+        hotspots.forEach((hotspot) => {
+            const projectId = hotspot.dataset.project;
+            if (!PROJECTS[projectId]) return;
+
+            hotspot.addEventListener('mouseenter', () => {
+                previewProject(projectId);
             });
 
-            initLightboxInPanel();
-            window.activeCard = card;
+            hotspot.addEventListener('mouseleave', clearPreview);
+
+            hotspot.addEventListener('focusin', () => {
+                previewProject(projectId);
+            });
+
+            hotspot.addEventListener('focusout', () => {
+                requestAnimationFrame(() => {
+                    const stillInside = hotspot.contains(document.activeElement);
+                    if (!stillInside) clearPreview();
+                });
+            });
+
+            hotspot.addEventListener('click', (event) => {
+                event.preventDefault();
+                selectProject(projectId);
+                const card = cards.find((node) => node.dataset.project === projectId);
+                if (card) card.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            });
+
+            hotspot.addEventListener('keydown', (event) => {
+                if (event.key !== 'Enter' && event.key !== ' ') return;
+                event.preventDefault();
+                selectProject(projectId);
+                const card = cards.find((node) => node.dataset.project === projectId);
+                if (card) card.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            });
         });
+
+    if (overlay) overlay.addEventListener('click', closeDetailPanel);
+
+    document.querySelectorAll('.bar-close').forEach((button) => {
+        button.addEventListener('click', closeDetailPanel);
     });
 
-    /* ---- Close panel function ---- */
-    function closePanel() {
-        panel.style.opacity = '0';
-        panel.style.transform = 'translateY(20px)';
-
-        // ** HIDE FLOATING CLOSE BUTTON (Class Toggle) **
-        const floatClose = document.getElementById('floating-close');
-        if (floatClose) {
-            floatClose.classList.remove('visible');
+    document.addEventListener('keydown', (event) => {
+        if (event.key !== 'Escape') return;
+        if (panel && panel.getAttribute('aria-hidden') === 'false') {
+            closeDetailPanel();
+            return;
         }
-
-        // ** RESET VIDEOS ON CLOSE **
-        const videos = panel.querySelectorAll('video');
-        videos.forEach(v => {
-            v.pause();
-            v.currentTime = 0;
-        });
-
-        setTimeout(() => {
-            panel.setAttribute('aria-hidden', 'true');
-            overlay.classList.remove('active');
-            document.body.style.overflow = '';
-        }, 300);
-    }
-
-    /* ---- Bind close events ---- */
-    document.querySelectorAll('.detail-close, .bar-close').forEach(btn => {
-        btn.addEventListener('click', closePanel);
+        clearSelection();
     });
 
-    overlay.addEventListener('click', closePanel);
-    document.addEventListener('keydown', e => {
-        if (e.key === 'Escape') closePanel();
+    document.addEventListener('click', (event) => {
+        const target = event.target;
+        if (!(target instanceof Element)) return;
+        if (panel && panel.getAttribute('aria-hidden') === 'false') return;
+        if (target.closest('.card-node, .robot-hotspot, #humanoid-model, .card-node-open')) return;
+        clearSelection();
     });
 
-    /* ---- Lightbox for detail panel images ---- */
-    function initLightboxInPanel() {
-        const lightbox = document.getElementById('lightbox');
-        const lightboxImg = document.getElementById('lightbox-image');
-        if (!lightbox) return;
-
-        panelContent.querySelectorAll('.js-lightbox').forEach(img => {
-            img.style.cursor = 'zoom-in';
-            img.addEventListener('click', e => {
-                e.stopPropagation();
-                lightboxImg.src = img.src;
-                lightbox.setAttribute('aria-hidden', 'false');
-                lightbox.style.display = 'flex';
-            });
-        });
+    if (model) {
+        model.addEventListener('load', () => {
+            normalizeModelMaterials();
+            setNeutralState({ moveCamera: false });
+            updateConnector();
+        }, { once: true });
+        model.addEventListener('camera-change', updateConnector);
     }
 
-    /* ---- Resize handler ---- */
-    let resizeTimeout;
     window.addEventListener('resize', () => {
-        clearTimeout(resizeTimeout);
-        resizeTimeout = setTimeout(() => {
-            layout();
-            cards.forEach(card => {
-                card.style.opacity = '1';
-                card.style.transform = 'translateY(0)';
-            });
-        }, 300);
+        updateConnector();
+        syncConnectorFor(180);
     });
+    window.addEventListener('scroll', updateConnector, { passive: true });
 
-    /* ---- Init ---- */
-    requestAnimationFrame(() => {
-        layout();
-        animateEntrance();
+    setNeutralState({ moveCamera: false });
+
+    anime({
+        targets: '#featured .robot-project-grid .card-node',
+        opacity: [0, 1],
+        delay: anime.stagger(90, { start: 140 }),
+        duration: 580,
+        easing: 'easeOutCubic'
     });
 })();
