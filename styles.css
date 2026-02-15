@@ -3398,6 +3398,30 @@ figcaption {
 }
 
 @media (max-width: 760px) {
+  .boxing-side-media,
+  .boxing-column-data .boxing-column-media,
+  .boxing-column-model .boxing-column-media,
+  .boxing-column-current .boxing-column-media {
+    grid-template-columns: 1fr;
+  }
+
+  .boxing-column .boxing-column-media img,
+  .boxing-column .boxing-column-media video {
+    height: auto;
+    max-height: none;
+    aspect-ratio: auto;
+  }
+
+  .boxing-column .boxing-column-media video {
+    object-fit: cover;
+    background: transparent;
+  }
+
+  .boxing-column .boxing-column-media .media-fit-contain {
+    object-fit: cover;
+    background: transparent;
+  }
+
   .other-projects-grid {
     grid-template-columns: minmax(0, 1fr);
     gap: 0.6rem;
