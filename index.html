@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=1280">
   <meta name="description"
     content="Robotics software portfolio of Muthukumaran Yogeeswaran: ROS systems, perception models, reinforcement learning, and embodied AI projects.">
   <meta name="robots" content="index,follow,max-image-preview:large">
@@ -69,8 +69,6 @@
       aria-controls="main-nav">☰</button>
     <nav id="main-nav">
       <a href="#featured">Projects</a>
-      <a href="#idp">IDP</a>
-      <a href="#posters">Posters</a>
       <a href="#resume">Experience</a>
       <a href="#contact">Contact</a>
     </nav>
@@ -82,7 +80,7 @@
       <canvas id="particle-canvas"></canvas>
       <div class="hero-top">
         <div class="hero-content">
-          <p class="eyebrow" data-anim="hero">Robotics Software &amp; Embodied AI</p>
+          <p class="eyebrow" data-anim="hero">Robotics Software & Embodied AI</p>
           <h1 data-anim="hero">Muthukumaran Yogeeswaran</h1>
           <div class="hero-subtitle" data-anim="hero">
             <span id="typed-text"></span><span class="typing-cursor"></span>
@@ -131,31 +129,162 @@
       </div>
     </section>
 
-    <!-- ===== FEATURED PROJECTS ===== -->
+    <!-- ===== PROJECT CONSTELLATION ===== -->
     <section id="featured" class="section reveal">
       <div class="section-head">
-        <p class="eyebrow">Most Relevant Work</p>
+        <p class="eyebrow">Selected Works</p>
         <h2>Featured Projects</h2>
       </div>
 
-      <!-- BoxBunny -->
-      <article class="project card">
+      <div class="constellation-wrap">
+        <!-- SVG for connecting lines only -->
+        <svg id="constellation-lines" aria-hidden="true"></svg>
+
+        <!-- Center hub removed -->
+
+        <!-- Card nodes positioned by JS -->
+        <div class="card-node" data-project="boxbunny">
+          <div class="node-visual">
+            <img src="assets/boxbunny_capstone/concept_design.jpg" alt="BoxBunny Robot" loading="lazy">
+            <div class="node-overlay"></div>
+          </div>
+          <div class="node-content">
+            <span class="card-node-pill pill-wip">In Progress</span>
+            <h3>BoxBunny</h3>
+            <p class="card-node-role">Software Lead · Capstone</p>
+            <p class="card-node-summary">Intelligent boxing robot with RGB-D action recognition and RL coaching.</p>
+            <div class="card-node-tags">
+              <span>ROS2</span><span>RGB-D</span><span>Neural Networks</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="card-node" data-project="teleco">
+          <div class="node-visual">
+            <img src="assets/frontier/close_up_teleco_robot.jpg" alt="Teleco Robot" loading="lazy">
+            <div class="node-overlay"></div>
+          </div>
+          <div class="node-content">
+            <span class="card-node-pill">Deployed</span>
+            <h3>Teleco Localization</h3>
+            <p class="card-node-role">Research Intern · Osaka</p>
+            <p class="card-node-summary">deployed at Osaka Expo 2025. YOLOv12 + SLAM for social robot gaze.</p>
+            <div class="card-node-tags">
+              <span>YOLOv12</span><span>SLAM</span><span>Kabsch</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="card-node" data-project="astar-rl">
+          <div class="node-visual">
+            <img src="assets/artc_internship/RL_node.png" alt="RL Dexterous Hand" loading="lazy">
+            <div class="node-overlay"></div>
+          </div>
+          <div class="node-content">
+            <span class="card-node-pill">Research</span>
+            <h3>RL Dexterous Hand</h3>
+            <p class="card-node-role">Research Intern · A*STAR</p>
+            <p class="card-node-summary">Sim-to-real reinforcement learning for dexterous manipulation.</p>
+            <div class="card-node-tags">
+              <span>MuJoCo</span><span>RL / DAPG</span><span>URDF</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="card-node" data-project="breaking-bias">
+          <div class="node-visual">
+            <img src="assets/breaking_bias/Breaking_bias_node.png" alt="Breaking Bias" loading="lazy">
+            <div class="node-overlay"></div>
+          </div>
+          <div class="node-content">
+            <span class="card-node-pill">LLM Research</span>
+            <h3>Breaking Bias</h3>
+            <p class="card-node-role">AI Safety Research</p>
+            <p class="card-node-summary">Analyzing and mitigating bias in Large Language Models.</p>
+            <div class="card-node-tags">
+              <span>LLMs</span><span>Python</span><span>PyTorch</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="card-node" data-project="idp">
+          <div class="node-visual">
+            <img src="assets/idp_projects/eg3301r_2_legged_balancing.jpg" alt="Balancing Robot" loading="lazy">
+            <div class="node-overlay"></div>
+          </div>
+          <div class="node-content">
+            <span class="card-node-pill">Foundation</span>
+            <h3>Innovation Design</h3>
+            <p class="card-node-role">NUS IDP · 2022–2024</p>
+            <p class="card-node-summary">Self-balancing robot with 3-axis stabilized gimbal.</p>
+            <div class="card-node-tags">
+              <span>PID/LQR</span><span>SolidWorks</span><span>STM32</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Poster Gallery -->
+      <div class="poster-section">
+        <h3 class="poster-section-title">Poster Gallery</h3>
+        <div class="poster-grid">
+          <figure class="poster-card card">
+            <img class="js-lightbox" src="assets/idp_projects/balancing_robot_poster.png"
+              alt="IDP balancing robot poster" loading="lazy">
+            <figcaption>Balancing Robot</figcaption>
+          </figure>
+          <figure class="poster-card card">
+            <img class="js-lightbox" src="assets/orbital/orbital_first_poster.jpg" alt="Orbital first poster"
+              loading="lazy">
+            <figcaption>Orbital v1</figcaption>
+          </figure>
+          <figure class="poster-card card">
+            <img class="js-lightbox" src="assets/orbital/orbital_final_poster.jpg" alt="Orbital final poster"
+              loading="lazy">
+            <figcaption>Orbital Final</figcaption>
+          </figure>
+        </div>
+      </div>
+
+      <!-- Other Projects row -->
+      <div class="other-projects">
+        <h3 class="other-projects-title">Other Projects</h3>
+        <div class="other-projects-grid">
+          <article class="card other-card">
+            <h4>LifeQuest (NUS Orbital)</h4>
+            <p class="meta">Co-Lead · May – Aug 2023</p>
+            <div class="tech-tags">
+              <span class="tech-tag">React Native</span>
+              <span class="tech-tag">Firebase</span>
+            </div>
+            <p>Gamified productivity app with auth, progress tracking, and social battles.</p>
+            <div class="links">
+              <a href="assets/orbital/milestone_3_submission.pdf" target="_blank" rel="noopener noreferrer">Report</a>
+            </div>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+
+
+    <!-- ===== PROJECT TEMPLATES ===== -->
+    <template id="tpl-boxbunny">
+      <article class="detail-project">
         <div class="project-head">
           <div>
-            <h3>BoxBunny: Intelligent Boxing Robot</h3>
+            <h2>BoxBunny: Intelligent Boxing Robot</h2>
             <p class="meta"><span class="signal-strong">Software Lead</span> · CDE4301 Capstone · Aug 2025 – Present</p>
             <div class="tech-tags">
-              <span class="tech-tag">ROS2</span>
-              <span class="tech-tag">RGB-D</span>
-              <span class="tech-tag">Action Recognition</span>
-              <span class="tech-tag">Causal Transformer</span>
-              <span class="tech-tag">Grad-CAM</span>
-              <span class="tech-tag">Jetson</span>
+              <span class="tech-tag">ROS2</span><span class="tech-tag">RGB-D</span>
+              <span class="tech-tag">Action Recognition</span><span class="tech-tag">Causal Transformer</span>
+              <span class="tech-tag">Grad-CAM</span><span class="tech-tag">Jetson</span>
             </div>
           </div>
           <span class="pill pill-wip">In Progress</span>
         </div>
-
         <div class="project-body boxing-body">
           <div class="boxing-top">
             <div class="project-copy">
@@ -172,7 +301,8 @@
                 <li>Fine-tuning an <span class="signal-tech">LLM for boxing coaching feedback</span> to translate model
                   outputs into actionable training cues</li>
                 <li>Currently collecting data and training a <span class="signal-tech">causal transformer</span> for
-                  <span class="signal-strong">real-time punch prediction</span> across fast and slow strikes</li>
+                  <span class="signal-strong">real-time punch prediction</span> across fast and slow strikes
+                </li>
               </ul>
             </div>
             <div class="boxing-side-media">
@@ -183,33 +313,29 @@
               </figure>
               <figure>
                 <img class="js-lightbox" src="assets/boxbunny_capstone/assembling_for_cde_ai_fair.jpg"
-                  alt="BoxBunny hardware integration for CDE AI Fair" loading="lazy">
+                  alt="BoxBunny prototype at CDE AI Fair" loading="lazy">
                 <figcaption>Boxbunny prototype at CDE AI Fair</figcaption>
               </figure>
             </div>
           </div>
-
           <div class="boxing-flow">
             <h4 class="boxing-flow-title">Action Recognition Development Flow</h4>
             <div class="boxing-flow-columns">
               <article class="boxing-column boxing-column-data">
                 <h5>Data + Annotation</h5>
-                <p>Built a custom annotation GUI for synchronized RGB-D clips, then generated cleaner labels for training.
-                </p>
+                <p>Built a custom annotation GUI for synchronized RGB-D clips, then generated cleaner labels for
+                  training.</p>
                 <div class="boxing-column-media">
-                  <figure class="boxing-media-gui">
-                    <img class="js-lightbox media-fit-contain" src="assets/boxbunny_capstone/annotation_gui.png"
-                      alt="Custom GUI for RGB-D boxing video annotation" loading="lazy">
+                  <figure class="boxing-media-gui"><img class="js-lightbox media-fit-contain"
+                      src="assets/boxbunny_capstone/annotation_gui.png" alt="RGB-D annotation GUI" loading="lazy">
                     <figcaption>RGB-D annotation GUI</figcaption>
                   </figure>
-                  <figure class="boxing-media-pose">
-                    <img class="js-lightbox media-fit-contain" src="assets/boxbunny_capstone/3d_pose_estimation.png"
-                      alt="3D pose estimation result with missing body joints due to occlusions" loading="lazy">
+                  <figure class="boxing-media-pose"><img class="js-lightbox media-fit-contain"
+                      src="assets/boxbunny_capstone/3d_pose_estimation.png" alt="3D pose estimation" loading="lazy">
                     <figcaption>3D pose baseline (occlusion issues)</figcaption>
                   </figure>
                 </div>
               </article>
-
               <article class="boxing-column boxing-column-model">
                 <h5>Model Exploration + Diagnostics</h5>
                 <ul class="boxing-mini-list">
@@ -218,63 +344,59 @@
                     wrong regions instead of true motion.</li>
                 </ul>
                 <div class="boxing-column-media">
-                  <figure class="boxing-media-poc">
-                    <video controls preload="metadata" playsinline muted>
-                      <source src="assets/boxbunny_capstone/inference_trained_model_work_in_progress.mp4" type="video/mp4">
+                  <figure class="boxing-media-poc"><video controls autoplay loop muted playsinline preload="metadata">
+                      <source src="assets/boxbunny_capstone/inference_trained_model_work_in_progress.mp4"
+                        type="video/mp4">
                     </video>
                     <figcaption>Bounding-box RGB-D inference (PoC)</figcaption>
                   </figure>
-                  <figure class="boxing-media-gradcam">
-                    <video controls preload="metadata" playsinline muted>
+                  <figure class="boxing-media-gradcam"><video controls autoplay loop muted playsinline
+                      preload="metadata">
                       <source src="assets/boxbunny_capstone/freestyle_gradcam.mp4" type="video/mp4">
                     </video>
                     <figcaption>Grad-CAM attention diagnosis</figcaption>
                   </figure>
                 </div>
               </article>
-
               <article class="boxing-column boxing-column-current">
                 <h5>Current Track</h5>
-                <p>Training with segmented inputs and scaling data collection for a causal transformer to handle real-time,
-                  non-linear punch dynamics (fast/slow punches).</p>
+                <p>Training with segmented inputs and scaling data collection for a causal transformer to handle
+                  real-time, non-linear punch dynamics.</p>
                 <div class="boxing-column-media">
-                  <figure class="boxing-media-segmented">
-                    <img class="js-lightbox media-fit-contain" src="assets/boxbunny_capstone/segmented_data.png"
-                      alt="Segmented boxing input data for model training" loading="lazy">
+                  <figure class="boxing-media-segmented"><img class="js-lightbox media-fit-contain"
+                      src="assets/boxbunny_capstone/segmented_data.png" alt="Segmented data pipeline" loading="lazy">
                     <figcaption>Segmented data pipeline</figcaption>
                   </figure>
-                  <figure class="boxing-media-llm">
-                    <img class="js-lightbox media-fit-contain" src="assets/boxbunny_capstone/llm_finetuned_for_boxing.jpg"
-                      alt="LLM fine-tuning workflow for boxing coaching feedback" loading="lazy">
+                  <figure class="boxing-media-llm"><img class="js-lightbox media-fit-contain"
+                      src="assets/boxbunny_capstone/llm_finetuned_for_boxing.jpg" alt="LLM boxing coaching"
+                      loading="lazy">
                     <figcaption>LLM fine-tuning for coaching feedback</figcaption>
                   </figure>
                 </div>
-                <p class="boxing-stage-note">Parallel track: fine-tuning an LLM to turn recognition outputs into concise,
-                  personalized coaching cues.</p>
+                <p class="boxing-stage-note">Parallel track: fine-tuning an LLM to turn recognition outputs into
+                  concise, personalized coaching cues.</p>
               </article>
             </div>
           </div>
         </div>
       </article>
+    </template>
 
-      <!-- Teleco -->
-      <article class="project card">
+    <template id="tpl-teleco">
+      <article class="detail-project">
         <div class="project-head">
           <div>
-            <h3>Human Localization for Teleco Robot — <span class="signal-event">Osaka Expo 2025</span></h3>
+            <h2>Human Localization for Teleco Robot — <br><span class="signal-event">Osaka Expo 2025</span></h2>
             <p class="meta"><span class="signal-strong">Research Intern</span> · University of Osaka · May – Aug 2025
             </p>
             <div class="tech-tags">
-              <span class="tech-tag">YOLOv12</span>
-              <span class="tech-tag">SLAM</span>
-              <span class="tech-tag">Kabsch Solver</span>
-              <span class="tech-tag">MQTT</span>
-              <span class="tech-tag">Python</span>
+              <span class="tech-tag">YOLOv12</span><span class="tech-tag">SLAM</span>
+              <span class="tech-tag">Kabsch Solver</span><span class="tech-tag">MQTT</span><span
+                class="tech-tag">Python</span>
             </div>
           </div>
           <span class="pill">Deployed</span>
         </div>
-
         <div class="project-body teleco-body">
           <div class="teleco-top">
             <div class="project-copy">
@@ -288,37 +410,31 @@
                     camera-to-map transform</span></li>
                 <li><span class="signal-tech">Pixel-to-height calibration</span> for gaze control via Teleco reference
                 </li>
-                <li><span class="signal-metric">0.02–0.06 m</span> mapping error, <span
-                    class="signal-metric">&lt;10 cm</span> height error</li>
+                <li><span class="signal-metric">0.02–0.06 m</span> mapping error, <span class="signal-metric">&lt;10
+                    cm</span> height error</li>
                 <li>Deployed at Yoshikawa Lab pavilion, <span class="signal-event">Osaka Expo 2025</span></li>
               </ul>
-              <div class="links">
-                <a href="assets/frontier/frontier_report.pdf" target="_blank" rel="noopener noreferrer">Frontier
-                  Report</a>
-              </div>
+              <div class="links"><a href="assets/frontier/frontier_report.pdf" target="_blank"
+                  rel="noopener noreferrer">Frontier Report</a></div>
             </div>
             <figure class="teleco-side-photo">
-              <img class="js-lightbox" src="assets/frontier/close_up_teleco_robot.jpg" alt="Close-up of Teleco robot"
+              <img class="js-lightbox" src="assets/frontier/close_up_teleco_robot.jpg" alt="Teleco robot"
                 loading="lazy">
               <figcaption>Teleco robot</figcaption>
             </figure>
           </div>
-
           <div class="teleco-layout">
-            <figure class="teleco-video">
-              <video controls preload="metadata" playsinline muted>
+            <figure class="teleco-video"><video controls autoplay loop muted playsinline preload="metadata">
                 <source src="assets/frontier/expo_project.mp4" type="video/mp4">
               </video>
               <figcaption>Expo deployment</figcaption>
             </figure>
             <div class="teleco-photo-grid">
-              <figure>
-                <img class="js-lightbox" src="assets/frontier/teleco_tracking.jpg" alt="Teleco tracking interface"
+              <figure><img class="js-lightbox" src="assets/frontier/teleco_tracking.jpg" alt="Tracking interface"
                   loading="lazy">
                 <figcaption>Tracking interface</figcaption>
               </figure>
-              <figure>
-                <img class="js-lightbox" src="assets/frontier/people_tracking.jpg" alt="People localization output"
+              <figure><img class="js-lightbox" src="assets/frontier/people_tracking.jpg" alt="Localization view"
                   loading="lazy">
                 <figcaption>Localization view</figcaption>
               </figure>
@@ -326,23 +442,21 @@
           </div>
         </div>
       </article>
+    </template>
 
-      <!-- A*STAR -->
-      <article class="project card">
+    <template id="tpl-astar-rl">
+      <article class="detail-project">
         <div class="project-head">
           <div>
-            <h3><span class="signal-tech">RL</span> for Inspire Dexterous Hand</h3>
+            <h2><span class="signal-tech">RL</span> for Inspire Dexterous Hand</h2>
             <p class="meta"><span class="signal-strong">Research Intern</span> · A*STAR ARTC · May – Aug 2024</p>
             <div class="tech-tags">
-              <span class="tech-tag">MuJoCo</span>
-              <span class="tech-tag">RL / DAPG</span>
-              <span class="tech-tag">URDF→MJCF</span>
-              <span class="tech-tag">Python</span>
+              <span class="tech-tag">MuJoCo</span><span class="tech-tag">RL / DAPG</span>
+              <span class="tech-tag">URDF→MJCF</span><span class="tech-tag">Python</span>
             </div>
           </div>
           <span class="pill">Research</span>
         </div>
-
         <div class="project-body">
           <div class="project-copy">
             <p>Porting a <span class="signal-tech">dexterous manipulation RL pipeline</span> from Adroit to Inspire hand
@@ -360,16 +474,13 @@
                 rel="noopener noreferrer">Presentation</a>
             </div>
           </div>
-
           <div class="media-layout media-layout-2">
-            <figure>
-              <video controls preload="metadata" playsinline muted>
+            <figure><video controls autoplay loop muted playsinline preload="metadata">
                 <source src="assets/artc_internship/reinforcement_learning_model_trying.webm" type="video/webm">
               </video>
               <figcaption>Training exploration</figcaption>
             </figure>
-            <figure>
-              <video controls preload="metadata" playsinline muted>
+            <figure><video controls autoplay loop muted playsinline preload="metadata">
                 <source src="assets/artc_internship/reinforcement_learning_model_succeeds_but_wrongly.mp4"
                   type="video/mp4">
               </video>
@@ -378,169 +489,185 @@
           </div>
         </div>
       </article>
-    </section>
+    </template>
 
-    <!-- ===== IDP ===== -->
-    <section id="idp" class="section reveal">
-      <div class="section-head">
-        <p class="eyebrow">Foundational Track</p>
-        <h2>Innovation Design Programme</h2>
-      </div>
+    <template id="tpl-breaking-bias">
+      <article class="detail-project">
+        <div class="project-head">
+          <div>
+            <h2>Breaking Bias in LLMs</h2>
+            <p class="meta"><span class="signal-strong">AI Safety Research</span> · Jan – May 2024</p>
+            <div class="tech-tags">
+              <span class="tech-tag">Large Language Models</span><span class="tech-tag">Python</span>
+              <span class="tech-tag">PyTorch</span><span class="tech-tag">Bias Analysis</span>
+            </div>
+          </div>
+          <span class="pill">LLM Research</span>
+        </div>
+        <div class="project-body">
+          <div class="project-copy">
+            <p>Evaluating and mitigating <span class="signal-strong">social biases</span> (gender, race, religion) in
+              state-of-the-art Large Language Models.
+            </p>
+            <ul>
+              <li>Developed a <span class="signal-tech">comprehensive evaluation framework</span> using standard
+                benchmarks (CrowS-Pairs, StereoSet).</li>
+              <li>Analyzed bias propagation in <span class="signal-tech">Llama 2</span> and <span
+                  class="signal-tech">GPT-3.5</span>.</li>
+              <li>Proposed mitigation strategies involving <span class="signal-strong">prompt engineering</span> and
+                <span class="signal-strong">fine-tuning checks</span>.
+              </li>
+            </ul>
+          </div>
 
-      <article class="card idp-card">
-        <div class="idp-intro-row">
-          <div class="idp-intro-text">
-            <p class="idp-intro">
-              NUS Innovation &amp; Design Programme — my entry point into robotics. Where I first learned to design,
+          <!-- Embedded PDF Section -->
+          <div class="pdf-section">
+            <h4 class="pdf-title">Final Presentation</h4>
+            <div class="pdf-embed-container">
+              <embed src="assets/breaking_bias/breaking_bias_final_presentation.pdf#toolbar=0&navpanes=0&scrollbar=0"
+                type="application/pdf" width="100%" height="100%">
+            </div>
+
+            <h4 class="pdf-title" style="margin-top: 2rem;">Research Report</h4>
+            <div class="pdf-embed-container">
+              <embed src="assets/breaking_bias/breaking_bias_final_report.pdf#toolbar=0&navpanes=0&scrollbar=0"
+                type="application/pdf" width="100%" height="100%">
+            </div>
+          </div>
+
+        </div>
+      </article>
+    </template>
+
+    <template id="tpl-idp">
+      <article class="detail-project">
+        <div class="project-head">
+          <div>
+            <h2>Innovation Design Programme</h2>
+            <p class="meta">NUS IDP · 2022–2024</p>
+            <div class="tech-tags">
+              <span class="tech-tag">PID/LQR</span><span class="tech-tag">SolidWorks</span>
+              <span class="tech-tag">MATLAB/Simulink</span><span class="tech-tag">STM32</span><span
+                class="tech-tag">COMSOL</span>
+            </div>
+          </div>
+          <span class="pill">Foundation</span>
+        </div>
+        <div class="project-body">
+          <div class="project-copy">
+            <p>NUS Innovation &amp; Design Programme — my entry point into robotics. Where I first learned to design,
               <span class="signal-strong">build, and program physical systems</span> from scratch.
             </p>
           </div>
-          <figure class="idp-first">
-            <video controls preload="metadata" playsinline muted>
-              <source src="assets/idp_projects/eg2310_first_ever_project_idp.mp4" type="video/mp4">
-            </video>
-            <figcaption>First robotics project</figcaption>
-          </figure>
-        </div>
 
-        <figure class="idp-final-preview">
-          <img class="js-lightbox" src="assets/idp_projects/eg3301r_2_legged_balancing.jpg"
-            alt="Final 2-legged balancing robot" loading="lazy">
-          <figcaption>Self-balancing 2-legged robot</figcaption>
-        </figure>
-
-        <h4 class="idp-subhead">Chassis Iterations</h4>
-        <p class="idp-chassis-desc">Three chassis iterations evolved from a first prototype into a full balancing system.
-          The key novelty was <span class="signal-tech">3-axis active gimbal stabilization</span>, which kept the
-          robot’s <span class="signal-strong">first-person camera view</span> steady so pilots could track opponents
-          and aim more reliably during competition.</p>
-        <div class="idp-iterations">
-          <figure>
-            <video controls preload="metadata" playsinline muted>
-              <source src="assets/idp_projects/evolution_of_balancing_robot/eg2606_balancing_robot_1st_prototype.mp4"
-                type="video/mp4">
-            </video>
-            <figcaption>v1</figcaption>
-          </figure>
-          <figure>
-            <video controls preload="metadata" playsinline muted>
-              <source
-                src="assets/idp_projects/evolution_of_balancing_robot/eg3301r_2_legged_balancing_2nd_prototype.mp4"
-                type="video/mp4">
-            </video>
-            <figcaption>v2</figcaption>
-          </figure>
-          <figure>
-            <video controls preload="metadata" playsinline muted>
-              <source src="assets/idp_projects/evolution_of_balancing_robot/eg3301r_2_legged_balancing_final.mp4"
-                type="video/mp4">
-            </video>
-            <figcaption>v3 (final)</figcaption>
-          </figure>
-        </div>
-
-        <details class="idp-extra">
-          <summary>Show prototype photos &amp; gimbal</summary>
-          <div class="idp-pair-grid idp-pair-grid-extra">
-            <figure>
-              <img class="js-lightbox" src="assets/idp_projects/initial_prototype.jpg" alt="IDP initial prototype"
-                loading="lazy">
-              <figcaption>Initial prototype</figcaption>
+          <div class="idp-intro-row">
+            <figure class="idp-first">
+              <video controls autoplay loop muted playsinline preload="metadata">
+                <source src="assets/idp_projects/eg2310_first_ever_project_idp.mp4" type="video/mp4">
+              </video>
+              <figcaption>First robotics project</figcaption>
             </figure>
-            <figure>
-              <img class="js-lightbox" src="assets/idp_projects/3_axis_gimbal.jpg" alt="3-axis gimbal extension"
-                loading="lazy">
-              <figcaption>3-axis gimbal</figcaption>
+            <figure class="idp-final-preview">
+              <img class="js-lightbox" src="assets/idp_projects/eg3301r_2_legged_balancing.jpg"
+                alt="Self-balancing 2-legged robot" loading="lazy">
+              <figcaption>Self-balancing 2-legged robot</figcaption>
             </figure>
           </div>
-        </details>
 
-        <h4 class="idp-subhead">Simulation</h4>
-        <div class="idp-sim-grid">
-          <article class="idp-sim-panel idp-sim-panel-fea">
-            <h5 class="idp-sim-title">FEA &amp; Structural Analysis</h5>
-            <p class="idp-sim-text">
-              Experience using <span class="signal-tech">FEA workflows</span> to evaluate <span
-                class="signal-tech">chassis stiffness</span> and stress distribution before fabrication, helping de-risk
-              mechanical choices early in the design cycle.
-            </p>
-            <figure>
-              <img class="js-lightbox"
-                src="assets/idp_projects/simulation/structural_analysis_chassis_final_balancing_robot.jpg"
-                alt="Structural chassis analysis" loading="lazy">
-              <figcaption>Chassis structural analysis</figcaption>
+          <h4 class="idp-subhead">Chassis Iterations</h4>
+          <p class="idp-chassis-desc">Three chassis iterations evolved from a first prototype into a full balancing
+            system. The key novelty was <span class="signal-tech">3-axis active gimbal stabilization</span>, which kept
+            the robot's <span class="signal-strong">first-person camera view</span> steady so pilots could track
+            opponents and aim more reliably during competition.</p>
+          <div class="idp-iterations">
+            <figure><video controls autoplay loop muted playsinline preload="metadata">
+                <source src="assets/idp_projects/evolution_of_balancing_robot/eg2606_balancing_robot_1st_prototype.mp4"
+                  type="video/mp4">
+              </video>
+              <figcaption>v1</figcaption>
             </figure>
-          </article>
+            <figure><video controls autoplay loop muted playsinline preload="metadata">
+                <source
+                  src="assets/idp_projects/evolution_of_balancing_robot/eg3301r_2_legged_balancing_2nd_prototype.mp4"
+                  type="video/mp4">
+              </video>
+              <figcaption>v2</figcaption>
+            </figure>
+            <figure><video controls autoplay loop muted playsinline preload="metadata">
+                <source src="assets/idp_projects/evolution_of_balancing_robot/eg3301r_2_legged_balancing_final.mp4"
+                  type="video/mp4">
+              </video>
+              <figcaption>v3 (final)</figcaption>
+            </figure>
+          </div>
 
-          <article class="idp-sim-panel idp-sim-panel-simulink">
-            <h5 class="idp-sim-title">MATLAB / Simulink for LQR</h5>
-            <p class="idp-sim-text">
-              Built and tested control models in <span class="signal-tech">MATLAB/Simulink</span>, then iterated <span
-                class="signal-tech">LQR tuning</span> in simulation before applying gains to hardware.
-            </p>
-            <div class="idp-sim-videos">
-              <figure>
-                <video controls preload="metadata" playsinline muted>
-                  <source src="assets/idp_projects/simulation/simulink_before_tuning.mp4" type="video/mp4">
-                </video>
-                <figcaption>Before LQR tuning</figcaption>
+          <details class="idp-extra">
+            <summary>Show prototype photos &amp; gimbal</summary>
+            <div class="idp-pair-grid idp-pair-grid-extra">
+              <figure><img class="js-lightbox" src="assets/idp_projects/initial_prototype.jpg" alt="Initial prototype"
+                  loading="lazy">
+                <figcaption>Initial prototype</figcaption>
               </figure>
-              <figure>
-                <video controls preload="metadata" playsinline muted>
-                  <source src="assets/idp_projects/simulation/simulink_after_tuning.mp4" type="video/mp4">
-                </video>
-                <figcaption>After LQR tuning</figcaption>
+              <figure><img class="js-lightbox" src="assets/idp_projects/3_axis_gimbal.jpg" alt="3-axis gimbal"
+                  loading="lazy">
+                <figcaption>3-axis gimbal</figcaption>
               </figure>
             </div>
-          </article>
-        </div>
+          </details>
 
-        <h4 class="idp-subhead">PID/LQR Tuning</h4>
-        <p class="idp-chassis-desc">Controller tuning progression from first prototype to <span
-            class="signal-strong">final standing behavior</span>.</p>
-        <div class="idp-iterations idp-iterations-two">
-          <figure>
-            <video controls preload="metadata" playsinline muted>
-              <source src="assets/idp_projects/tuning/prototype_pid_tuning.mp4" type="video/mp4">
-              <source src="assets/idp_projects/tuning/prototype_pid_tuning.MOV" type="video/quicktime">
-            </video>
-            <figcaption>First prototype PID/LQR tuning</figcaption>
-          </figure>
-          <figure>
-            <video controls preload="metadata" playsinline muted>
-              <source src="assets/idp_projects/tuning/standing_balancing.mp4" type="video/mp4">
-            </video>
-            <figcaption>Final prototype standing balance</figcaption>
-          </figure>
+          <h4 class="idp-subhead">Simulation</h4>
+          <div class="idp-sim-grid">
+            <article class="idp-sim-panel idp-sim-panel-fea">
+              <h5 class="idp-sim-title">FEA &amp; Structural Analysis</h5>
+              <p class="idp-sim-text">Experience using <span class="signal-tech">FEA workflows</span> to evaluate <span
+                  class="signal-tech">chassis stiffness</span> and stress distribution before fabrication.</p>
+              <figure><img class="js-lightbox"
+                  src="assets/idp_projects/simulation/structural_analysis_chassis_final_balancing_robot.jpg"
+                  alt="Chassis structural analysis" loading="lazy">
+                <figcaption>Chassis structural analysis</figcaption>
+              </figure>
+            </article>
+            <article class="idp-sim-panel idp-sim-panel-simulink">
+              <h5 class="idp-sim-title">MATLAB / Simulink for LQR</h5>
+              <p class="idp-sim-text">Built and tested control models in <span
+                  class="signal-tech">MATLAB/Simulink</span>, then iterated <span class="signal-tech">LQR tuning</span>
+                in simulation before applying gains to hardware.</p>
+              <div class="idp-sim-videos">
+                <figure><video controls autoplay loop muted playsinline preload="metadata">
+                    <source src="assets/idp_projects/simulation/simulink_before_tuning.mp4" type="video/mp4">
+                  </video>
+                  <figcaption>Before LQR tuning</figcaption>
+                </figure>
+                <figure><video controls autoplay loop muted playsinline preload="metadata">
+                    <source src="assets/idp_projects/simulation/simulink_after_tuning.mp4" type="video/mp4">
+                  </video>
+                  <figcaption>After LQR tuning</figcaption>
+                </figure>
+              </div>
+            </article>
+          </div>
+
+          <h4 class="idp-subhead">PID/LQR Tuning</h4>
+          <p class="idp-chassis-desc">Controller tuning progression from first prototype to <span
+              class="signal-strong">final standing behavior</span>.</p>
+          <div class="idp-iterations idp-iterations-two">
+            <figure><video controls autoplay loop muted playsinline preload="metadata">
+                <source src="assets/idp_projects/tuning/prototype_pid_tuning.mp4" type="video/mp4">
+                <source src="assets/idp_projects/tuning/prototype_pid_tuning.MOV" type="video/quicktime">
+              </video>
+              <figcaption>First prototype PID/LQR tuning</figcaption>
+            </figure>
+            <figure><video controls autoplay loop muted playsinline preload="metadata">
+                <source src="assets/idp_projects/tuning/standing_balancing.mp4" type="video/mp4">
+              </video>
+              <figcaption>Final prototype standing balance</figcaption>
+            </figure>
+          </div>
         </div>
       </article>
-    </section>
+    </template>
 
-    <!-- ===== POSTERS ===== -->
-    <section id="posters" class="section reveal">
-      <div class="section-head">
-        <p class="eyebrow">Visual Communication</p>
-        <h2>Poster Gallery</h2>
-      </div>
 
-      <div class="poster-grid">
-        <figure class="poster-card card">
-          <img class="js-lightbox" src="assets/idp_projects/balancing_robot_poster.png" alt="IDP balancing robot poster"
-            loading="lazy">
-          <figcaption>Balancing Robot</figcaption>
-        </figure>
-        <figure class="poster-card card">
-          <img class="js-lightbox" src="assets/orbital/orbital_first_poster.jpg" alt="Orbital first poster"
-            loading="lazy">
-          <figcaption>Orbital v1</figcaption>
-        </figure>
-        <figure class="poster-card card">
-          <img class="js-lightbox" src="assets/orbital/orbital_final_poster.jpg" alt="Orbital final poster"
-            loading="lazy">
-          <figcaption>Orbital Final</figcaption>
-        </figure>
-      </div>
-    </section>
 
     <!-- ===== EXPERIENCE & SKILLS ===== -->
     <section id="resume" class="section reveal">
@@ -583,7 +710,8 @@
           <div class="timeline-dot"></div>
           <div class="timeline-content">
             <strong>Research Intern</strong> · University of Osaka
-            <span class="timeline-desc">YOLO-based localization deployed at <span class="signal-event">Osaka Expo 2025</span>
+            <span class="timeline-desc">YOLO-based localization deployed at <span class="signal-event">Osaka Expo
+                2025</span>
               — <span class="signal-metric">0.02–0.06 m accuracy</span></span>
           </div>
         </div>
@@ -631,47 +759,6 @@
       </div>
     </section>
 
-    <!-- ===== ADDITIONAL ===== -->
-    <section id="supporting" class="section reveal">
-      <div class="section-head">
-        <p class="eyebrow">Other Work</p>
-        <h2>Software &amp; AI Projects</h2>
-      </div>
-
-      <div class="support-grid">
-        <article class="card">
-          <h3>LifeQuest (NUS Orbital)</h3>
-          <p class="meta">Co-Lead · May – Aug 2023</p>
-          <div class="tech-tags">
-            <span class="tech-tag">React Native</span>
-            <span class="tech-tag">Firebase</span>
-          </div>
-          <p>Gamified productivity app with auth, progress tracking, and social battles.</p>
-          <div class="links">
-            <a href="assets/orbital/milestone_3_submission.pdf" target="_blank" rel="noopener noreferrer">Report</a>
-          </div>
-        </article>
-
-        <article class="card">
-          <h3>Breaking Bias: LLM Judge Robustness</h3>
-          <p class="meta">ECE324 Team Project</p>
-          <div class="tech-tags">
-            <span class="tech-tag">LLM</span>
-            <span class="tech-tag">NLP</span>
-            <span class="tech-tag">Adversarial</span>
-          </div>
-          <p>Adversarial essay pipeline testing <span class="signal-tech">LLM judge manipulation</span> and scoring
-            variance.</p>
-          <div class="links">
-            <a href="assets/breaking_bias/breaking_bias_final_report.pdf" target="_blank"
-              rel="noopener noreferrer">Report</a>
-            <a href="assets/breaking_bias/breaking_bias_final_presentation.pdf" target="_blank"
-              rel="noopener noreferrer">Slides</a>
-          </div>
-        </article>
-      </div>
-    </section>
-
     <!-- ===== CONTACT ===== -->
     <section id="contact" class="section reveal">
       <div class="section-head">
@@ -700,6 +787,23 @@
     <button id="lightbox-close" class="lightbox-close" aria-label="Close image">✕ Close</button>
     <img id="lightbox-image" alt="Expanded image">
   </div>
+
+  <!-- ===== DETAIL PANEL (Moved to root) ===== -->
+  <aside id="detail-panel" class="detail-panel" aria-hidden="true">
+    <div class="detail-header-bar">
+      <div style="display:flex;align-items:center">
+        <span class="bar-title" id="bar-project-title"></span>
+        <span class="bar-pill" id="bar-project-pill"></span>
+      </div>
+      <button id="detail-close" class="bar-close" aria-label="Close">✕ Close</button>
+    </div>
+    <div class="detail-content" id="detail-content"></div>
+  </aside>
+
+  <!-- Floating Close Button (Global) -->
+
+
+  <div id="detail-overlay" class="detail-overlay"></div>
 
   <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.2/lib/anime.min.js"></script>
   <script src="script.js"></script>
