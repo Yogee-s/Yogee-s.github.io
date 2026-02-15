@@ -736,6 +736,12 @@ p {
   box-decoration-break: clone;
 }
 
+.signal-event-purple {
+  color: #c4b5fd;
+  background: rgba(139, 92, 246, 0.16);
+  border-color: rgba(139, 92, 246, 0.34);
+}
+
 .signal-metric {
   color: #7dd3fc;
   font-weight: 700;
