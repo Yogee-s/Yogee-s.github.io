@@ -1099,7 +1099,8 @@ figcaption {
 }
 
 .idp-first video {
-  height: 200px;
+  height: clamp(300px, 50vw, 430px);
+  object-fit: cover;
 }
 
 .idp-first {
