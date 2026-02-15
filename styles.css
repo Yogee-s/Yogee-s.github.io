@@ -202,6 +202,19 @@ main {
 /* --- Hero Section --- */
 .hero {
   padding: 0.5rem 0 1.5rem;
+  position: relative;
+  overflow: hidden;
+}
+
+#particle-canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.7;
 }
 
 .hero-top {
@@ -209,10 +222,24 @@ main {
   gap: 1rem;
   grid-template-columns: 1.15fr 0.85fr;
   align-items: center;
+  position: relative;
+  z-index: 1;
+}
+
+.hero-meta {
+  position: relative;
+  z-index: 1;
 }
 
 .hero-content {
   padding: 0;
+}
+
+/* Project cards 3D tilt */
+.project.card,
+.idp-card {
+  transform-style: preserve-3d;
+  will-change: transform;
 }
 
 .eyebrow {
@@ -240,23 +267,21 @@ h1 {
   font-size: clamp(2.2rem, 5vw, 3.8rem);
   font-weight: 900;
   letter-spacing: -0.03em;
-  background: linear-gradient(135deg, #ffffff 0%, #c4b5fd 40%, #06b6d4 70%, #f472b6 100%);
-  background-size: 200% 200%;
+  background: linear-gradient(90deg, #ffffff 0%, #c4b5fd 25%, #06b6d4 50%, #f472b6 75%, #ffffff 100%);
+  background-size: 300% 100%;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-  animation: gradientText 6s ease-in-out infinite;
+  animation: shimmerText 4s ease-in-out infinite;
 }
 
-@keyframes gradientText {
-
-  0%,
-  100% {
-    background-position: 0% 50%;
+@keyframes shimmerText {
+  0% {
+    background-position: 100% 50%;
   }
 
-  50% {
-    background-position: 100% 50%;
+  100% {
+    background-position: -100% 50%;
   }
 }
 
@@ -504,6 +529,40 @@ p {
 .section {
   margin-top: 2.5rem;
   scroll-margin-top: 4rem;
+  position: relative;
+}
+
+.section::before {
+  content: '';
+  position: absolute;
+  top: -1.25rem;
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(80%, 500px);
+  height: 1px;
+  background: linear-gradient(90deg,
+      transparent 0%,
+      rgba(6, 182, 212, 0.3) 25%,
+      rgba(139, 92, 246, 0.4) 50%,
+      rgba(244, 114, 182, 0.3) 75%,
+      transparent 100%);
+  animation: sectionLineShimmer 3s ease-in-out infinite;
+}
+
+.hero.section::before {
+  display: none;
+}
+
+@keyframes sectionLineShimmer {
+
+  0%,
+  100% {
+    opacity: 0.4;
+  }
+
+  50% {
+    opacity: 1;
+  }
 }
 
 .section-head {
@@ -521,14 +580,52 @@ p {
   border-radius: var(--radius);
   background: var(--surface);
   backdrop-filter: blur(12px);
-  transition: all var(--transition);
+  transition: all 400ms cubic-bezier(0.4, 0, 0.2, 1);
   position: relative;
   overflow: hidden;
 }
 
+.card::after {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border-radius: var(--radius);
+  padding: 1px;
+  background: conic-gradient(from var(--card-gradient-angle, 0deg),
+      transparent 0%,
+      rgba(6, 182, 212, 0.5) 10%,
+      rgba(139, 92, 246, 0.5) 20%,
+      transparent 30%);
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  opacity: 0;
+  transition: opacity 400ms ease;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.card:hover::after {
+  opacity: 1;
+  animation: rotateGradient 3s linear infinite;
+}
+
+@keyframes rotateGradient {
+  to {
+    --card-gradient-angle: 360deg;
+  }
+}
+
+@property --card-gradient-angle {
+  syntax: '<angle>';
+  initial-value: 0deg;
+  inherits: false;
+}
+
 .card:hover {
-  border-color: rgba(255, 255, 255, 0.12);
-  box-shadow: var(--shadow-glow);
+  border-color: rgba(255, 255, 255, 0.15);
+  box-shadow: 0 0 30px rgba(6, 182, 212, 0.12), 0 0 60px rgba(139, 92, 246, 0.06), 0 8px 32px rgba(0, 0, 0, 0.3);
 }
 
 /* --- Project Cards --- */
@@ -1504,88 +1601,18 @@ figcaption {
   border-color: rgba(6, 182, 212, 0.3);
 }
 
-/* --- Scroll Reveal Animations --- */
+/* --- Scroll Reveal (anime.js driven) --- */
 .reveal {
   opacity: 0;
-  transform: translateY(24px);
-  transition: opacity 600ms cubic-bezier(0.4, 0, 0.2, 1), transform 600ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .reveal.visible {
   opacity: 1;
-  transform: translateY(0);
 }
 
-/* Staggered delays for child cards */
-.reveal .card:nth-child(1) {
-  transition-delay: 0ms;
-}
-
-.reveal .card:nth-child(2) {
-  transition-delay: 80ms;
-}
-
-.reveal .card:nth-child(3) {
-  transition-delay: 160ms;
-}
-
-.reveal .card:nth-child(4) {
-  transition-delay: 240ms;
-}
-
-.reveal .card:nth-child(5) {
-  transition-delay: 320ms;
-}
-
-.reveal .card:nth-child(6) {
-  transition-delay: 400ms;
-}
-
-/* Stagger for meta cards and grid items */
-.hero-meta .meta-card,
-.resume-timeline .track-item,
-.skill-grid .card,
-.support-grid .card,
-.poster-grid .poster-card {
-  opacity: 0;
-  transform: translateY(16px);
-  transition: opacity 500ms cubic-bezier(0.4, 0, 0.2, 1), transform 500ms cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.visible .meta-card,
-.visible .track-item,
-.visible .skill-grid .card,
-.visible .support-grid .card,
-.visible .poster-card {
+/* Hero section becomes visible immediately (anime.js handles children) */
+.hero.reveal.visible {
   opacity: 1;
-  transform: translateY(0);
-}
-
-.visible .meta-card:nth-child(1),
-.visible .track-item:nth-child(1) {
-  transition-delay: 0ms;
-}
-
-.visible .meta-card:nth-child(2),
-.visible .track-item:nth-child(2) {
-  transition-delay: 100ms;
-}
-
-.visible .meta-card:nth-child(3),
-.visible .track-item:nth-child(3) {
-  transition-delay: 200ms;
-}
-
-.visible .meta-card:nth-child(4) {
-  transition-delay: 300ms;
-}
-
-.visible .meta-card:nth-child(5) {
-  transition-delay: 400ms;
-}
-
-.visible .meta-card:nth-child(6) {
-  transition-delay: 500ms;
 }
 
 /* --- Responsive Layout --- */
