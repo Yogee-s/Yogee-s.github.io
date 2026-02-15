@@ -3097,9 +3097,8 @@ figcaption {
 
 @media (max-width: 980px) {
   #featured .constellation-wrap {
-    display: grid;
-    gap: 0.9rem;
-    min-height: 0;
+    display: block;
+    min-height: 780px;
   }
 
   #robot-link-layer {
@@ -3107,79 +3106,497 @@ figcaption {
   }
 
   #featured .robot-stage {
-    position: relative;
-    left: auto;
-    top: auto;
-    width: 100%;
-    height: auto;
-    padding: 0.3rem 0;
-    transform: none;
+    position: absolute;
+    left: 50%;
+    top: 52%;
+    width: min(330px, 55vw);
+    height: 540px;
+    padding: 0;
+    transform: translate(-50%, -50%);
   }
 
   #featured .robot-stage-head,
   #featured .robot-stage-meta,
   #featured .robot-model-credit {
-    position: relative;
-    top: auto;
-    left: auto;
-    bottom: auto;
-    width: 100%;
-    transform: none;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    width: min(90vw, 500px);
   }
 
   #featured .robot-stage-head {
-    margin-bottom: 0.35rem;
+    top: 8px;
+    margin-bottom: 0;
+  }
+
+  #featured .robot-stage-head p {
+    max-width: 42ch;
+    font-size: 0.78rem;
+    line-height: 1.34;
+    padding: 0.28rem 0.5rem;
   }
 
   #featured .robot-model-shell {
-    height: auto;
+    height: 100%;
   }
 
   #humanoid-model {
-    width: 100%;
-    height: clamp(380px, 58vh, 520px);
+    width: 82%;
+    height: 82%;
     max-height: none;
+    transform: translateY(18px);
+  }
+
+  #featured .robot-stage-meta {
+    bottom: 6px;
+    width: min(86vw, 360px);
+  }
+
+  #featured .robot-model-credit {
+    bottom: -16px;
+    width: 86vw;
+    white-space: normal;
+    font-size: 0.64rem;
+    text-align: center;
   }
 
   #featured .robot-project-grid {
-    position: relative;
-    inset: auto;
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 0.78rem;
-    pointer-events: auto;
+    position: absolute;
+    inset: 0;
+    display: block;
+    pointer-events: none;
   }
 
   #featured .robot-project-grid .card-node {
-    position: relative;
-    left: auto !important;
-    right: auto !important;
-    top: auto !important;
-    bottom: auto !important;
-    width: 100%;
+    position: absolute;
+    left: auto;
+    right: auto;
+    top: auto;
+    bottom: auto;
+    width: clamp(128px, 19vw, 160px);
+    min-height: 142px;
+    pointer-events: auto;
     --card-transform: translate3d(0, 0, 0);
+  }
+
+  #featured .robot-project-grid .card-node[data-project="breaking-bias"],
+  #featured .robot-project-grid .card-node[data-project="teleco"],
+  #featured .robot-project-grid .card-node[data-project="astar-rl"] {
+    width: clamp(128px, 19vw, 160px);
+    min-height: 142px;
+  }
+
+  #featured .robot-project-grid .card-node[data-project="boxbunny"],
+  #featured .robot-project-grid .card-node[data-project="idp"] {
+    min-height: 154px;
+  }
+
+  #featured .robot-project-grid .card-node[data-project="boxbunny"] {
+    left: 2.8%;
+    top: 20%;
+    width: clamp(136px, 21vw, 170px);
+  }
+
+  #featured .robot-project-grid .card-node[data-project="idp"] {
+    left: 2.8%;
+    top: 63%;
+    width: clamp(136px, 21vw, 170px);
+  }
+
+  #featured .robot-project-grid .card-node[data-project="breaking-bias"] {
+    right: 2.8%;
+    top: 9%;
+  }
+
+  #featured .robot-project-grid .card-node[data-project="teleco"] {
+    right: 2.8%;
+    top: 35%;
+  }
+
+  #featured .robot-project-grid .card-node[data-project="astar-rl"] {
+    right: 2.8%;
+    top: 64%;
+  }
+
+  #featured .robot-project-grid .node-visual {
+    height: 62px;
+  }
+
+  #featured .robot-project-grid .card-node[data-project="breaking-bias"] .node-visual,
+  #featured .robot-project-grid .card-node[data-project="teleco"] .node-visual,
+  #featured .robot-project-grid .card-node[data-project="astar-rl"] .node-visual {
+    height: 62px;
+  }
+
+  #featured .robot-project-grid .card-node[data-project="boxbunny"] .node-visual,
+  #featured .robot-project-grid .card-node[data-project="idp"] .node-visual {
+    height: 74px;
+  }
+
+  #featured .robot-project-grid .node-content {
+    padding: 0.34rem 0.48rem 0.42rem;
+  }
+
+  #featured .robot-project-grid .card-node[data-project="breaking-bias"] .node-content,
+  #featured .robot-project-grid .card-node[data-project="teleco"] .node-content,
+  #featured .robot-project-grid .card-node[data-project="astar-rl"] .node-content {
+    padding: 0.34rem 0.48rem 0.42rem;
+  }
+
+  #featured .robot-project-grid .card-node h3 {
+    font-size: 0.74rem;
+  }
+
+  #featured .robot-project-grid .card-node-role {
+    font-size: 0.52rem;
+    margin-bottom: 0.16rem;
+  }
+
+  #featured .robot-project-grid .card-node-summary {
+    font-size: 0.58rem;
+    margin-bottom: 0.16rem;
+  }
+
+  #featured .robot-project-grid .card-node-tags span {
+    font-size: 0.46rem;
+  }
+
+  #featured .card-node-open {
+    font-size: 0.5rem;
+    padding: 0.28rem 0.34rem;
   }
 }
 
 @media (max-width: 760px) {
-  #humanoid-model {
-    height: clamp(330px, 58vh, 540px);
+  #featured.section {
+    padding-top: 1.6rem;
+    padding-bottom: 1.2rem;
+  }
+
+  #featured .section-head {
+    margin-bottom: 0.55rem;
+  }
+
+  #featured .featured-intro {
+    font-size: 0.82rem;
+    line-height: 1.34;
+    margin-top: 0.08rem;
+  }
+
+  #featured .constellation-wrap {
+    min-height: 560px;
   }
 
   #featured .robot-stage {
-    padding: 0.8rem;
+    top: 51%;
+    width: min(268px, 76vw);
+    height: 440px;
   }
 
-  #featured .robot-project-grid {
-    grid-template-columns: 1fr;
+  #featured .robot-stage-head {
+    display: none;
+  }
+
+  #humanoid-model {
+    width: 84%;
+    height: 80%;
+    transform: translateY(8px);
+  }
+
+  #featured .robot-stage-meta {
+    display: grid;
+    top: calc(100% + 6px);
+    bottom: auto;
+    width: min(88vw, 300px);
+    gap: 0.04rem;
+  }
+
+  #featured .robot-stage.has-active[data-active-project="breaking-bias"] .robot-stage-meta,
+  #featured .robot-stage.has-active[data-active-project="teleco"] .robot-stage-meta,
+  #featured .robot-stage.has-active[data-active-project="astar-rl"] .robot-stage-meta {
+    top: calc(100% + 6px);
+    bottom: auto;
+  }
+
+  #featured .robot-stage-part {
+    font-size: 0.62rem;
+  }
+
+  #featured .robot-stage-project {
+    font-size: 0.58rem;
+  }
+
+  #featured .robot-model-credit {
+    display: none;
+  }
+
+  #featured .robot-project-grid .card-node {
+    width: clamp(102px, 34vw, 120px);
+    min-height: 96px;
+    border-radius: 11px;
+  }
+
+  #featured .robot-project-grid .card-node[data-project="breaking-bias"],
+  #featured .robot-project-grid .card-node[data-project="teleco"],
+  #featured .robot-project-grid .card-node[data-project="astar-rl"] {
+    width: clamp(102px, 34vw, 120px);
+    min-height: 96px;
+  }
+
+  #featured .robot-project-grid .card-node[data-project="boxbunny"],
+  #featured .robot-project-grid .card-node[data-project="idp"] {
+    width: clamp(112px, 36vw, 132px);
+    min-height: 124px;
+  }
+
+  #featured .robot-project-grid .card-node[data-project="boxbunny"] {
+    left: 2.5%;
+    top: 20%;
+    min-height: 146px;
+  }
+
+  #featured .robot-project-grid .card-node[data-project="idp"] {
+    left: 2.5%;
+    top: 53%;
+  }
+
+  #featured .robot-project-grid .card-node[data-project="breaking-bias"] {
+    right: 2.5%;
+    top: 9%;
+  }
+
+  #featured .robot-project-grid .card-node[data-project="teleco"] {
+    right: 2.5%;
+    top: 35%;
+    min-height: 118px;
+  }
+
+  #featured .robot-project-grid .card-node[data-project="astar-rl"] {
+    right: 2.5%;
+    top: 61%;
   }
 
   #featured .robot-project-grid .node-visual {
-    height: 142px;
+    height: 32px;
+  }
+
+  #featured .robot-project-grid .card-node[data-project="breaking-bias"] .node-visual,
+  #featured .robot-project-grid .card-node[data-project="teleco"] .node-visual,
+  #featured .robot-project-grid .card-node[data-project="astar-rl"] .node-visual {
+    height: 32px;
+  }
+
+  #featured .robot-project-grid .card-node[data-project="boxbunny"] .node-visual,
+  #featured .robot-project-grid .card-node[data-project="idp"] .node-visual {
+    height: 64px;
+  }
+
+  #featured .robot-project-grid .card-node[data-project="boxbunny"] .node-visual {
+    height: 80px;
+  }
+
+  #featured .robot-project-grid .card-node[data-project="teleco"] .node-visual {
+    height: 46px;
+  }
+
+  #featured .robot-project-grid .card-node[data-project="boxbunny"] .node-visual img,
+  #featured .robot-project-grid .card-node[data-project="idp"] .node-visual img {
+    object-fit: cover;
+    object-position: center;
+    background: transparent;
+  }
+
+  #featured .robot-project-grid .node-content {
+    padding: 0.2rem 0.26rem 0.26rem;
+  }
+
+  #featured .robot-project-grid .card-node-pill {
+    margin-bottom: 0.12rem;
+    font-size: 0.42rem;
+    padding: 0.09rem 0.24rem;
+  }
+
+  #featured .robot-project-grid .card-node h3 {
+    font-size: 0.61rem;
+    line-height: 1.2;
+    margin-bottom: 0.1rem;
+  }
+
+  #featured .robot-project-grid .card-node-role,
+  #featured .robot-project-grid .card-node-summary,
+  #featured .robot-project-grid .card-node-tags {
+    display: none;
+  }
+
+  #featured .card-node-open {
+    font-size: 0.5rem;
+    padding: 0.26rem 0.28rem;
+    min-height: 30px;
   }
 
   #featured .robot-hotspot .hotspot-label {
+    display: none;
+  }
+
+  #featured .robot-stage.has-active .robot-hotspot.active .hotspot-label {
+    display: inline-flex;
+    font-size: 0.5rem;
+    letter-spacing: 0.05em;
+    padding: 0.14rem 0.28rem;
+  }
+
+  .detail-header-bar {
+    padding: 0.66rem 0.86rem;
+  }
+
+  .detail-header-bar .bar-title {
+    font-size: 0.74rem;
+  }
+
+  .detail-header-bar .bar-pill {
+    font-size: 0.5rem;
+    padding: 2px 8px;
+    margin-left: 8px;
+  }
+
+  .detail-header-bar .bar-close {
+    font-size: 0.64rem;
+    padding: 5px 12px;
+    border-radius: 7px;
+    gap: 4px;
+    box-shadow: 0 3px 8px rgba(220, 38, 38, 0.28);
+  }
+
+  .lightbox-close {
+    top: 0.55rem;
+    right: 0.55rem;
+    padding: 0.32rem 0.68rem;
+    font-size: 0.66rem;
+  }
+}
+
+@media (max-width: 520px) {
+  #featured .constellation-wrap {
+    min-height: 520px;
+  }
+
+  #featured .robot-stage {
+    top: 50%;
+    width: min(236px, 80vw);
+    height: 360px;
+  }
+
+  #humanoid-model {
+    width: 86%;
+    height: 80%;
+    transform: translateY(8px);
+  }
+
+  #featured .robot-project-grid .card-node {
+    width: clamp(94px, 35vw, 110px);
+    min-height: 92px;
+  }
+
+  #featured .robot-project-grid .card-node[data-project="breaking-bias"],
+  #featured .robot-project-grid .card-node[data-project="teleco"],
+  #featured .robot-project-grid .card-node[data-project="astar-rl"] {
+    width: clamp(94px, 35vw, 110px);
+    min-height: 92px;
+  }
+
+  #featured .robot-project-grid .card-node[data-project="boxbunny"],
+  #featured .robot-project-grid .card-node[data-project="idp"] {
+    width: clamp(102px, 37vw, 118px);
+    min-height: 118px;
+  }
+
+  #featured .robot-project-grid .card-node[data-project="boxbunny"] {
+    top: 20%;
+    min-height: 140px;
+  }
+
+  #featured .robot-project-grid .card-node[data-project="idp"] {
+    top: 50%;
+  }
+
+  #featured .robot-project-grid .card-node[data-project="breaking-bias"] {
+    top: 8%;
+  }
+
+  #featured .robot-project-grid .card-node[data-project="teleco"] {
+    top: 34%;
+    min-height: 112px;
+  }
+
+  #featured .robot-project-grid .card-node[data-project="astar-rl"] {
+    top: 60%;
+  }
+
+  #featured .robot-project-grid .card-node[data-project="boxbunny"] .node-visual,
+  #featured .robot-project-grid .card-node[data-project="idp"] .node-visual {
+    height: 60px;
+  }
+
+  #featured .robot-project-grid .card-node[data-project="boxbunny"] .node-visual {
+    height: 74px;
+  }
+
+  #featured .robot-project-grid .card-node[data-project="teleco"] .node-visual {
+    height: 44px;
+  }
+
+  #featured .robot-stage-meta {
+    width: min(90vw, 260px);
+    top: calc(100% + 4px);
+    bottom: auto;
+  }
+
+  #featured .robot-stage.has-active[data-active-project="breaking-bias"] .robot-stage-meta,
+  #featured .robot-stage.has-active[data-active-project="teleco"] .robot-stage-meta,
+  #featured .robot-stage.has-active[data-active-project="astar-rl"] .robot-stage-meta {
+    top: calc(100% + 4px);
+    bottom: auto;
+  }
+
+  #featured .robot-stage-part {
+    font-size: 0.58rem;
+  }
+
+  #featured .robot-stage-project {
+    font-size: 0.54rem;
+  }
+
+  #featured .card-node-open {
+    font-size: 0.48rem;
+    padding: 0.24rem 0.24rem;
+    min-height: 28px;
+  }
+
+  .detail-header-bar {
+    padding: 0.54rem 0.62rem;
+  }
+
+  .detail-header-bar .bar-title {
+    font-size: 0.68rem;
+  }
+
+  .detail-header-bar .bar-pill {
+    font-size: 0.46rem;
+    padding: 2px 7px;
+    margin-left: 6px;
+  }
+
+  .detail-header-bar .bar-close {
+    font-size: 0.58rem;
+    padding: 4px 10px;
+    border-radius: 6px;
+    gap: 3px;
+  }
+
+  .lightbox-close {
+    top: 0.42rem;
+    right: 0.42rem;
+    padding: 0.26rem 0.56rem;
     font-size: 0.6rem;
-    letter-spacing: 0.06em;
   }
 }
