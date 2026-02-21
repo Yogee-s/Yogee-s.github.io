@@ -1090,6 +1090,10 @@ video {
   object-fit: cover;
 }
 
+.idp-gimbal-img {
+  object-position: center top;
+}
+
 .media-large video {
   height: 380px;
 }
@@ -1273,6 +1277,21 @@ figcaption {
 
 .idp-pair-grid-extra {
   margin-top: 1rem;
+}
+
+/* Force show details content on desktop, hide the toggle summary */
+@media (min-width: 768px) {
+  .idp-extra summary {
+    display: none !important;
+  }
+
+  .idp-extra> :not(summary) {
+    display: block !important;
+  }
+
+  .idp-extra .idp-pair-grid-extra {
+    display: grid !important;
+  }
 }
 
 /* --- Poster Gallery --- */
@@ -3154,6 +3173,7 @@ figcaption {
 #featured .robot-project-grid .card-node-role {
   font-size: 0.58rem;
   margin: 0 0 0.2rem;
+  color: rgba(255, 255, 255, 0.75);
 }
 
 #featured .robot-project-grid .card-node-summary {
@@ -3163,10 +3183,14 @@ figcaption {
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
+  color: rgba(255, 255, 255, 0.9);
 }
 
 #featured .robot-project-grid .card-node-tags span {
   font-size: 0.5rem;
+  color: rgba(255, 255, 255, 0.95);
+  background: rgba(255, 255, 255, 0.12);
+  border-color: rgba(255, 255, 255, 0.2);
 }
 
 #featured .robot-project-grid .card-node[data-project="boxbunny"] {

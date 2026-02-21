@@ -898,6 +898,10 @@
             easing: 'easeOutCubic'
         });
 
+        // Trigger IDP toggle logic if applicable
+        if (typeof handleIdpDetailsToggle === 'function' && typeof mediaQuery !== 'undefined') {
+            handleIdpDetailsToggle(mediaQuery);
+        }
     }
 
     function closeDetailPanel() {
@@ -935,89 +939,89 @@
         });
     }
 
-        cards.forEach((card) => {
-            const projectId = card.dataset.project;
-            if (!PROJECTS[projectId]) return;
+    cards.forEach((card) => {
+        const projectId = card.dataset.project;
+        if (!PROJECTS[projectId]) return;
 
         const openButton = card.querySelector('.card-node-open');
-            if (openButton) {
-                openButton.addEventListener('click', (event) => {
-                    event.stopPropagation();
-                    selectProject(projectId);
-                    openDetailPanel(projectId);
-                });
+        if (openButton) {
+            openButton.addEventListener('click', (event) => {
+                event.stopPropagation();
+                selectProject(projectId);
+                openDetailPanel(projectId);
+            });
+        }
+
+        card.addEventListener('mouseenter', () => {
+            previewProject(projectId);
+        });
+
+        card.addEventListener('mouseleave', clearPreview);
+
+        card.addEventListener('focusin', () => {
+            previewProject(projectId);
+        });
+
+        card.addEventListener('focusout', () => {
+            requestAnimationFrame(() => {
+                const stillInside = card.contains(document.activeElement);
+                if (!stillInside) clearPreview();
+            });
+        });
+
+        card.addEventListener('keydown', (event) => {
+            if (event.key === ' ') {
+                event.preventDefault();
+                selectProject(projectId);
             }
-
-            card.addEventListener('mouseenter', () => {
-                previewProject(projectId);
-            });
-
-            card.addEventListener('mouseleave', clearPreview);
-
-            card.addEventListener('focusin', () => {
-                previewProject(projectId);
-            });
-
-            card.addEventListener('focusout', () => {
-                requestAnimationFrame(() => {
-                    const stillInside = card.contains(document.activeElement);
-                    if (!stillInside) clearPreview();
-                });
-            });
-
-            card.addEventListener('keydown', (event) => {
-                if (event.key === ' ') {
-                    event.preventDefault();
-                    selectProject(projectId);
-                }
-                if (event.key === 'Enter') {
-                    event.preventDefault();
-                    selectProject(projectId);
-                    openDetailPanel(projectId);
-                }
-            });
-
-            card.addEventListener('click', () => {
+            if (event.key === 'Enter') {
+                event.preventDefault();
                 selectProject(projectId);
+                openDetailPanel(projectId);
+            }
+        });
+
+        card.addEventListener('click', () => {
+            selectProject(projectId);
+        });
+    });
+
+    hotspots.forEach((hotspot) => {
+        const projectId = hotspot.dataset.project;
+        if (!PROJECTS[projectId]) return;
+
+        hotspot.addEventListener('mouseenter', () => {
+            previewProject(projectId);
+        });
+
+        hotspot.addEventListener('mouseleave', clearPreview);
+
+        hotspot.addEventListener('focusin', () => {
+            previewProject(projectId);
+        });
+
+        hotspot.addEventListener('focusout', () => {
+            requestAnimationFrame(() => {
+                const stillInside = hotspot.contains(document.activeElement);
+                if (!stillInside) clearPreview();
             });
         });
 
-        hotspots.forEach((hotspot) => {
-            const projectId = hotspot.dataset.project;
-            if (!PROJECTS[projectId]) return;
-
-            hotspot.addEventListener('mouseenter', () => {
-                previewProject(projectId);
-            });
-
-            hotspot.addEventListener('mouseleave', clearPreview);
-
-            hotspot.addEventListener('focusin', () => {
-                previewProject(projectId);
-            });
-
-            hotspot.addEventListener('focusout', () => {
-                requestAnimationFrame(() => {
-                    const stillInside = hotspot.contains(document.activeElement);
-                    if (!stillInside) clearPreview();
-                });
-            });
-
-            hotspot.addEventListener('click', (event) => {
-                event.preventDefault();
-                selectProject(projectId);
-                const card = cards.find((node) => node.dataset.project === projectId);
-                if (card) card.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-            });
-
-            hotspot.addEventListener('keydown', (event) => {
-                if (event.key !== 'Enter' && event.key !== ' ') return;
-                event.preventDefault();
-                selectProject(projectId);
-                const card = cards.find((node) => node.dataset.project === projectId);
-                if (card) card.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-            });
+        hotspot.addEventListener('click', (event) => {
+            event.preventDefault();
+            selectProject(projectId);
+            const card = cards.find((node) => node.dataset.project === projectId);
+            if (card) card.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
         });
+
+        hotspot.addEventListener('keydown', (event) => {
+            if (event.key !== 'Enter' && event.key !== ' ') return;
+            event.preventDefault();
+            selectProject(projectId);
+            const card = cards.find((node) => node.dataset.project === projectId);
+            if (card) card.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        });
+    });
 
     if (overlay) overlay.addEventListener('click', closeDetailPanel);
 
@@ -1087,7 +1091,7 @@
     document.addEventListener('mousemove', (e) => {
         const mouseX = e.clientX;
         const mouseY = e.clientY;
-        
+
         // Set global variables for spotlight / glowing background
         document.body.style.setProperty('--mouse-x', `${mouseX}px`);
         document.body.style.setProperty('--mouse-y', `${mouseY}px`);
@@ -1100,9 +1104,30 @@
             const rect = card.getBoundingClientRect();
             const x = e.clientX - rect.left;
             const y = e.clientY - rect.top;
-            
+
             card.style.setProperty('--mouse-x', `${x}px`);
             card.style.setProperty('--mouse-y', `${y}px`);
         });
     });
+
+    /* --- IDP Responsive Details Toggle --- */
+    const mediaQuery = window.matchMedia('(min-width: 768px)');
+
+    function handleIdpDetailsToggle(e) {
+        const idpDetails = document.querySelectorAll('.idp-extra');
+        idpDetails.forEach(detail => {
+            if (e.matches) {
+                // Desktop: force open
+                detail.setAttribute('open', '');
+            } else {
+                // Mobile: let it close
+                detail.removeAttribute('open');
+            }
+        });
+    }
+
+    // Run once on load
+    handleIdpDetailsToggle(mediaQuery);
+    // Listen for window resizes
+    mediaQuery.addEventListener('change', handleIdpDetailsToggle);
 })();
