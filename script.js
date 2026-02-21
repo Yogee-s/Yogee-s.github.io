@@ -1344,10 +1344,12 @@
     const featuredOtherZone = featuredSection ? featuredSection.querySelector('.other-projects') : null;
     const reducedMotionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
     const desktopQuery = window.matchMedia('(min-width: 981px)');
+    const mobileGuideQuery = window.matchMedia('(max-width: 980px)');
     const SESSION_KEY = 'portfolio_robot_sidekick_dismissed';
     const GUIDE_TOUR_EVENT = 'robot-guide:request-tour';
     const GUIDE_VISUAL_CUE_EVENT = 'robot-guide:visual-cue';
     const INTRO_PROMPT = 'Want quick highlights? Press Guide Me!';
+    const INTRO_PROMPT_MOBILE = 'Open the menu and tap Guide Me for quick project highlights.';
     const GUIDE_ME_MAX_STEPS = 7;
 
     const messagePools = {
@@ -1637,7 +1639,8 @@
     function canShow(options = {}) {
         const ignoreDismissed = options.ignoreDismissed === true;
         const panelOpen = detailPanel && detailPanel.getAttribute('aria-hidden') === 'false';
-        return desktopQuery.matches && !reducedMotionQuery.matches && (ignoreDismissed || !dismissed) && !panelOpen && !document.hidden;
+        const guideViewportActive = desktopQuery.matches || mobileGuideQuery.matches;
+        return guideViewportActive && !reducedMotionQuery.matches && (ignoreDismissed || !dismissed) && !panelOpen && !document.hidden;
     }
 
     function getFocusBandBounds() {
@@ -1919,7 +1922,15 @@
         const topbar = document.getElementById('topbar');
         const titleAnchor = document.getElementById('robot-focus-title');
         const stageAnchor = document.getElementById('robot-stage');
-        const anchor = titleAnchor || stageAnchor || featuredSection;
+        const isMobileViewport = window.matchMedia('(max-width: 980px)').matches;
+        const anchorCandidates = isMobileViewport
+            ? [featuredSection, stageAnchor, titleAnchor]
+            : [titleAnchor, stageAnchor, featuredSection];
+        const anchor = anchorCandidates.find((candidate) => {
+            if (!(candidate instanceof Element)) return false;
+            const rect = candidate.getBoundingClientRect();
+            return candidate.getClientRects().length > 0 && rect.height > 0 && rect.width > 0;
+        }) || featuredSection || stageAnchor || titleAnchor;
         if (!anchor) return;
 
         const topbarHeight = topbar ? topbar.getBoundingClientRect().height : 0;
@@ -2048,6 +2059,7 @@
     }
 
     bindMediaChange(desktopQuery, handleEnvironmentChange);
+    bindMediaChange(mobileGuideQuery, handleEnvironmentChange);
     bindMediaChange(reducedMotionQuery, handleEnvironmentChange);
     document.addEventListener('visibilitychange', handleEnvironmentChange);
     window.addEventListener('resize', handleEnvironmentChange);
@@ -2057,7 +2069,8 @@
         introPromptTimer = window.setTimeout(() => {
             introPromptTimer = null;
             if (!canShow() || guideSequenceActive) return;
-            const shown = showMessage(INTRO_PROMPT, 5600);
+            const introMessage = desktopQuery.matches ? INTRO_PROMPT : INTRO_PROMPT_MOBILE;
+            const shown = showMessage(introMessage, 5600);
             if (shown) showGuideTriggerCue(5600);
         }, 2500);
     } else {

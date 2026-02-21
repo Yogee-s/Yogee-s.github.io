@@ -1823,7 +1823,9 @@ figcaption {
   }
 
   #main-nav .robot-guide-trigger {
-    display: none;
+    display: inline-flex;
+    width: 100%;
+    justify-content: center;
   }
 
   .hero-top,
@@ -2942,7 +2944,7 @@ figcaption {
 #featured .constellation-wrap {
   position: relative;
   min-height: 980px;
-  margin-top: -0.5rem;
+  margin-top: -0.85rem;
 }
 
 #robot-link-layer {
@@ -4848,7 +4850,135 @@ body::before {
 
 @media (max-width: 980px) {
   .robot-sidekick {
+    left: 50%;
+    right: auto;
+    width: min(calc(100vw - 1.3rem), 520px);
+    bottom: 0.65rem;
+    display: grid;
+    grid-template-columns: 72px minmax(0, 1fr);
+    grid-template-rows: auto auto;
+    column-gap: 0.42rem;
+    row-gap: 0.08rem;
+    align-items: center;
+    padding: 0.88rem 0.62rem 0.56rem;
+    border-radius: 10px;
+    border: 1px solid rgba(103, 232, 249, 0.26);
+    background: var(--sidekick-bg);
+    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.44), 0 0 22px rgba(6, 182, 212, 0.11);
+    backdrop-filter: blur(10px);
+    transform: translate3d(-50%, 18px, 0) scale(0.98);
+  }
+
+  .robot-sidekick.is-visible {
+    transform: translate3d(-50%, 0, 0) scale(1);
+  }
+
+  .robot-sidekick-bubble {
+    display: contents;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    box-shadow: none;
+    backdrop-filter: none;
+  }
+
+  .robot-sidekick-bubble::after {
     display: none;
+  }
+
+  .robot-sidekick-avatar {
+    grid-column: 1;
+    grid-row: 1;
+    display: grid;
+    width: 58px;
+    height: 58px;
+    animation: none;
+    align-self: center;
+    justify-self: center;
+  }
+
+  .robot-sidekick-avatar::before {
+    inset: 4px;
+  }
+
+  .guide-bot-shell {
+    width: 50px;
+    height: 44px;
+    border-radius: 16px;
+  }
+
+  .guide-bot-faceplate {
+    left: 5px;
+    right: 5px;
+    top: 6px;
+    bottom: 6px;
+  }
+
+  .guide-bot-eye {
+    top: 7px;
+    width: 8px;
+    height: 8px;
+  }
+
+  .guide-bot-eye-left {
+    left: 9px;
+  }
+
+  .guide-bot-eye-right {
+    right: 9px;
+  }
+
+  .guide-bot-smile {
+    width: 12px;
+    height: 5px;
+    bottom: 5px;
+  }
+
+  .robot-sidekick-text {
+    grid-column: 2;
+    grid-row: 1 / span 2;
+    align-self: center;
+    font-size: 0.7rem;
+    line-height: 1.4;
+    text-align: left;
+    padding-right: 1.2rem;
+  }
+
+  .robot-sidekick-dismiss {
+    position: absolute;
+    top: 0.34rem;
+    right: 0.34rem;
+    width: 23px;
+    min-width: 23px;
+    height: 23px;
+    margin: 0;
+    padding: 0;
+    border-radius: 6px;
+    border: 1px solid rgba(248, 113, 113, 0.58);
+    background: rgba(220, 38, 38, 0.9);
+    color: transparent;
+    font-size: 0;
+    line-height: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 10px rgba(220, 38, 38, 0.35);
+  }
+
+  .robot-sidekick-dismiss::before {
+    content: '×';
+    color: #fff;
+    font-size: 0.82rem;
+    line-height: 1;
+    font-weight: 700;
+    letter-spacing: 0;
+    text-transform: none;
+  }
+
+  .robot-sidekick-dismiss:hover {
+    transform: translateY(0);
+    background: rgba(239, 68, 68, 0.95);
+    border-color: rgba(252, 165, 165, 0.72);
   }
 }
 
@@ -4876,6 +5006,7 @@ body::before {
     min-height: 460px;
     display: block;
     gap: 0;
+    margin-top: -1rem;
   }
 
   #featured .robot-stage {
