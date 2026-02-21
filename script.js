@@ -2068,8 +2068,9 @@
         introPromptTimer = window.setTimeout(() => {
             introPromptTimer = null;
             if (!canShow({ ignoreDismissed: true }) || guideSequenceActive) return;
-            const shown = showMessage(INTRO_PROMPT, 5600, { ignoreDismissed: true });
-            if (shown) showGuideTriggerCue(5600);
+            const introTtlMs = mobileGuideQuery.matches ? 3200 : 5600;
+            const shown = showMessage(INTRO_PROMPT, introTtlMs, { ignoreDismissed: true });
+            if (shown) showGuideTriggerCue(introTtlMs);
         }, 2500);
     } else {
         clearGuideTriggerCue();
