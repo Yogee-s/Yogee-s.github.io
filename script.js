@@ -1349,7 +1349,6 @@
     const GUIDE_TOUR_EVENT = 'robot-guide:request-tour';
     const GUIDE_VISUAL_CUE_EVENT = 'robot-guide:visual-cue';
     const INTRO_PROMPT = 'Want quick highlights? Press Guide Me!';
-    const INTRO_PROMPT_MOBILE = 'Open the menu and tap Guide Me for quick project highlights.';
     const GUIDE_ME_MAX_STEPS = 7;
 
     const messagePools = {
@@ -2065,12 +2064,11 @@
     window.addEventListener('resize', handleEnvironmentChange);
     window.addEventListener('scroll', maybeResumeGuideOnScroll, { passive: true });
 
-    if (canShow()) {
+    if (canShow({ ignoreDismissed: true })) {
         introPromptTimer = window.setTimeout(() => {
             introPromptTimer = null;
-            if (!canShow() || guideSequenceActive) return;
-            const introMessage = desktopQuery.matches ? INTRO_PROMPT : INTRO_PROMPT_MOBILE;
-            const shown = showMessage(introMessage, 5600);
+            if (!canShow({ ignoreDismissed: true }) || guideSequenceActive) return;
+            const shown = showMessage(INTRO_PROMPT, 5600, { ignoreDismissed: true });
             if (shown) showGuideTriggerCue(5600);
         }, 2500);
     } else {
