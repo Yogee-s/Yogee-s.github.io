@@ -1109,25 +1109,4 @@
             card.style.setProperty('--mouse-y', `${y}px`);
         });
     });
-
-    /* --- IDP Responsive Details Toggle --- */
-    const mediaQuery = window.matchMedia('(min-width: 768px)');
-
-    function handleIdpDetailsToggle(e) {
-        const idpDetails = document.querySelectorAll('.idp-extra');
-        idpDetails.forEach(detail => {
-            if (e.matches) {
-                // Desktop: force open
-                detail.setAttribute('open', '');
-            } else {
-                // Mobile: let it close
-                detail.removeAttribute('open');
-            }
-        });
-    }
-
-    // Run once on load
-    handleIdpDetailsToggle(mediaQuery);
-    // Listen for window resizes
-    mediaQuery.addEventListener('change', handleIdpDetailsToggle);
 })();

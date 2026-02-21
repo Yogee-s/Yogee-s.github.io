@@ -1240,58 +1240,8 @@ figcaption {
   grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 
-/* IDP expand */
-.idp-extra {
-  margin-top: 0.65rem;
-}
-
-.idp-extra summary {
-  list-style: none;
-  cursor: pointer;
-  display: inline-flex;
-  align-items: center;
-  gap: 0.4rem;
-  padding: 0.5rem 0.85rem;
-  border-radius: 999px;
-  border: 1px solid var(--glass-border);
-  background: var(--surface);
-  font-family: var(--font-mono);
-  font-size: 0.76rem;
-  color: var(--accent-1);
-  transition: all var(--transition);
-}
-
-.idp-extra summary::-webkit-details-marker {
-  display: none;
-}
-
-.idp-extra summary:hover {
-  background: var(--surface-hover);
-  border-color: rgba(6, 182, 212, 0.3);
-}
-
-.idp-extra[open] summary {
-  background: rgba(6, 182, 212, 0.08);
-  border-color: rgba(6, 182, 212, 0.25);
-}
-
 .idp-pair-grid-extra {
   margin-top: 1rem;
-}
-
-/* Force show details content on desktop, hide the toggle summary */
-@media (min-width: 768px) {
-  .idp-extra summary {
-    display: none !important;
-  }
-
-  .idp-extra> :not(summary) {
-    display: block !important;
-  }
-
-  .idp-extra .idp-pair-grid-extra {
-    display: grid !important;
-  }
 }
 
 /* --- Poster Gallery --- */
