@@ -2220,11 +2220,13 @@ figcaption {
 
 .card-node-tags span {
   font-size: 0.65rem;
-  padding: 2px 8px;
-  border-radius: 4px;
-  background: rgba(255, 255, 255, 0.05);
-  color: var(--text-muted);
-  border: 1px solid rgba(255, 255, 255, 0.05);
+  padding: 3px 10px;
+  border-radius: 6px;
+  background: color-mix(in srgb, var(--node-color, #9ca3af) 15%, transparent);
+  color: color-mix(in srgb, var(--node-color, #9ca3af) 80%, white);
+  border: 1px solid color-mix(in srgb, var(--node-color, #9ca3af) 30%, transparent);
+  font-weight: 500;
+  letter-spacing: 0.02em;
 }
 
 /* Per-project accents */
@@ -2273,7 +2275,7 @@ figcaption {
   flex-wrap: wrap;
   gap: 6px;
   margin-top: auto;
-  /* Push to bottom if needed */
+  margin-bottom: 0.75rem;
 }
 
 /* GitHub repo button / badge */
@@ -2623,7 +2625,7 @@ figcaption {
 
 #featured .constellation-wrap {
   position: relative;
-  min-height: 910px;
+  min-height: 980px;
   margin-top: 0.45rem;
 }
 
@@ -3004,27 +3006,27 @@ figcaption {
 
 #featured .robot-project-grid .card-node[data-project="breaking-bias"] {
   right: 8.8%;
-  top: 14%;
+  top: 7%;
 }
 
 #featured .robot-project-grid .card-node[data-project="boxbunny"] {
   left: 8.8%;
-  top: 18%;
+  top: 10%;
 }
 
 #featured .robot-project-grid .card-node[data-project="teleco"] {
   right: 8.8%;
-  top: 38.5%;
+  top: 35%;
 }
 
 #featured .robot-project-grid .card-node[data-project="astar-rl"] {
   right: 8.8%;
-  top: 70.5%;
+  top: 68%;
 }
 
 #featured .robot-project-grid .card-node[data-project="idp"] {
   left: 8.8%;
-  top: 61%;
+  top: 58%;
 }
 
 #featured .robot-project-grid .card-node:hover,
