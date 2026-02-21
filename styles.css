@@ -758,6 +758,10 @@ p {
   border-color: rgba(139, 92, 246, 0.34);
 }
 
+.hero-meta .signal-event-purple {
+  color: #fff;
+}
+
 .signal-metric {
   color: #7dd3fc;
   font-weight: 700;
@@ -4126,13 +4130,14 @@ body::before {
   padding: 0.2rem 0.6rem;
   font-size: 0.75rem;
   font-family: var(--font-mono);
-  color: var(--text);
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 999px;
+  border-radius: 6px;
   transition: all var(--transition);
   position: relative;
   overflow: hidden;
+  --skill-color: #9ca3af;
+  color: #fff;
+  background: color-mix(in srgb, var(--skill-color) 18%, rgba(0, 0, 0, 0.4));
+  border: 1px solid color-mix(in srgb, var(--skill-color) 45%, rgba(255, 255, 255, 0.2));
 }
 
 .skill-pill::before {
@@ -4142,20 +4147,41 @@ body::before {
   left: -100%;
   width: 100%;
   height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.12), transparent);
   transition: left 0.4s;
 }
 
 .skill-pill:hover {
-  background: rgba(6, 182, 212, 0.15);
-  border-color: rgba(6, 182, 212, 0.5);
-  box-shadow: 0 0 10px rgba(6, 182, 212, 0.3);
+  background: color-mix(in srgb, var(--skill-color) 28%, rgba(0, 0, 0, 0.3));
+  border-color: color-mix(in srgb, var(--skill-color) 55%, rgba(255, 255, 255, 0.3));
+  box-shadow: 0 0 12px color-mix(in srgb, var(--skill-color) 35%, transparent);
   color: #fff;
   transform: translateY(-2px);
 }
 
 .skill-pill:hover::before {
   left: 100%;
+}
+
+/* Hero stack pills – same palette as project cards */
+.skill-pill-amber {
+  --skill-color: #f59e0b;
+}
+
+.skill-pill-cyan {
+  --skill-color: #06b6d4;
+}
+
+.skill-pill-rose {
+  --skill-color: #f43f5e;
+}
+
+.skill-pill-violet {
+  --skill-color: #8b5cf6;
+}
+
+.skill-pill-pink {
+  --skill-color: #fb7185;
 }
 
 /* --- Spotlight Card Effect --- */
