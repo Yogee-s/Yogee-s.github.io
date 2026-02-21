@@ -1325,17 +1325,6 @@
                 }
             },
             {
-                id: 'featured-highlights',
-                text: 'Highlights to start with: BoxBunny and the Legged Balancing Robot.',
-                ttlMs: 2400,
-                cue: {
-                    type: 'spotlight',
-                    projectIds: ['boxbunny', 'idp'],
-                    dwellMs: 760,
-                    holdMs: 500
-                }
-            },
-            {
                 id: 'featured-open-project',
                 text: 'Click Open Project on any card to view implementation details.',
                 ttlMs: 2400,
@@ -1354,7 +1343,7 @@
             },
             {
                 id: 'poster-lifequest',
-                text: 'I also designed LifeQuest visuals and game flow.',
+                text: 'I also designed the visuals and the game flow for my gamified app.',
                 ttlMs: 2400
             }
         ],
