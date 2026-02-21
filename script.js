@@ -642,7 +642,7 @@
         'boxbunny': {
             panelTitle: 'BoxBunny: Intelligent Boxing Robot',
             panelPill: 'In Progress',
-            focusTitle: 'BoxBunny → Full-Body Integration',
+            focusTitle: 'Full-Body Integration',
             focusDesc: 'Full-body integration across perception, control, and feedback.',
             partLabel: 'Scope: Full-body system integration',
             projectLabel: 'BoxBunny - vision, reasoning, and control integrated into one stack',
@@ -654,7 +654,7 @@
         'teleco': {
             panelTitle: 'Teleco Localization',
             panelPill: 'Deployed',
-            focusTitle: 'Teleco Localization → Eyes / Visual Attention',
+            focusTitle: 'Eyes / Visual Attention',
             focusDesc: 'Vision + localization for gaze and visual attention.',
             partLabel: 'Targeted part: Eyes and visual focus',
             projectLabel: 'Teleco - camera-to-map localization and social gaze control',
@@ -666,7 +666,7 @@
         'breaking-bias': {
             panelTitle: 'Breaking Bias in LLMs',
             panelPill: 'LLM Research',
-            focusTitle: 'Breaking Bias → Head / Reasoning Layer',
+            focusTitle: 'Head / Reasoning Layer',
             focusDesc: 'Reasoning-layer safety through bias analysis and mitigation.',
             partLabel: 'Targeted part: Head and cognition',
             projectLabel: 'Breaking Bias - safer language reasoning and mitigation workflows',
@@ -678,7 +678,7 @@
         'astar-rl': {
             panelTitle: 'RL Dexterous Hand',
             panelPill: 'Research',
-            focusTitle: 'RL Dexterous Hand → Manipulation Hand',
+            focusTitle: 'Manipulation Hand',
             focusDesc: 'Dexterous hand control for grasping and manipulation.',
             partLabel: 'Targeted part: Hand dexterity',
             projectLabel: 'A*STAR RL - dexterous grasping and control adaptation',
@@ -690,7 +690,7 @@
         'idp': {
             panelTitle: 'Legged Balancing Robot (IDP)',
             panelPill: 'Foundation',
-            focusTitle: 'Legged Balancing Robot → Legs / Locomotion Base',
+            focusTitle: 'Legs / Locomotion Base',
             focusDesc: 'Simulation-based LQR tuning and kinematic modeling for legged balance and locomotion stability.',
             partLabel: 'Targeted part: Legs, balance, and locomotion base',
             projectLabel: 'Legged Balancing Robot - MATLAB/Simulink LQR tuning, kinematic analysis, and locomotion stability iteration.',
@@ -846,7 +846,7 @@
         cards.forEach(card => card.classList.toggle('active', card.dataset.project === projectId));
         hotspots.forEach(hotspot => hotspot.classList.toggle('active', hotspot.dataset.project === projectId));
 
-        if (focusTitle) focusTitle.textContent = neutralState.focusTitle;
+        if (focusTitle) focusTitle.textContent = config.focusTitle;
         if (focusDesc) focusDesc.textContent = config.focusDesc;
         if (partLabel) partLabel.textContent = config.partLabel;
         if (projectLabel) projectLabel.textContent = config.projectLabel;
