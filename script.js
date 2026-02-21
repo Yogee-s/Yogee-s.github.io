@@ -639,6 +639,10 @@
     const model = document.getElementById('humanoid-model');
     const stage = document.getElementById('robot-stage');
     const hotspots = Array.from(section.querySelectorAll('.robot-hotspot'));
+    const posterSection = section.querySelector('.poster-section');
+    const otherProjectsSection = section.querySelector('.other-projects');
+    const posterSectionTitle = posterSection ? posterSection.querySelector('.poster-section-title') : null;
+    const otherProjectsTitle = otherProjectsSection ? otherProjectsSection.querySelector('.other-projects-title') : null;
 
     const focusTitle = document.getElementById('robot-focus-title');
     const focusDesc = document.getElementById('robot-focus-desc');
@@ -905,6 +909,10 @@
             if (openButton) openButton.classList.remove('guide-open-cue');
         });
         hotspots.forEach((hotspot) => hotspot.classList.remove('guide-spotlight'));
+        if (posterSectionTitle) posterSectionTitle.classList.remove('guide-section-spotlight');
+        if (otherProjectsTitle) otherProjectsTitle.classList.remove('guide-section-spotlight');
+        if (posterSection) posterSection.classList.remove('guide-section-spotlight');
+        if (otherProjectsSection) otherProjectsSection.classList.remove('guide-section-spotlight');
     }
 
     function snapshotGuideState() {
@@ -925,9 +933,11 @@
 
     function stopGuideVisualCue(options = {}) {
         const shouldRestore = options.restore === true;
+        const shouldResetToDefault = options.resetToDefault === true;
         clearGuideCueTimers();
         clearGuideCueClasses();
         if (shouldRestore && guideCueSnapshot) restoreGuideState(guideCueSnapshot);
+        if (shouldResetToDefault) clearSelection({ moveCamera: false });
         guideCueSnapshot = null;
     }
 
@@ -940,6 +950,19 @@
         if (selectedProject && PROJECTS[selectedProject]) return selectedProject;
         if (activeProject && PROJECTS[activeProject]) return activeProject;
         return 'boxbunny';
+    }
+
+    function resolveGuideSectionTarget(rawSectionId) {
+        const sectionId = typeof rawSectionId === 'string' ? rawSectionId : '';
+        if (!sectionId) return null;
+
+        if (sectionId === 'poster' || sectionId === 'posters' || sectionId === 'posterSection') {
+            return posterSectionTitle || posterSection;
+        }
+        if (sectionId === 'other' || sectionId === 'otherProjects') {
+            return otherProjectsTitle || otherProjectsSection;
+        }
+        return null;
     }
 
     function applyGuideSpotlight(projectId, options = {}) {
@@ -965,6 +988,7 @@
         const dwellMs = Math.max(680, Number(options.dwellMs) || 980);
         const holdMs = Math.max(500, Number(options.holdMs) || 860);
         const shouldRestore = options.restore !== false;
+        const shouldResetToDefault = options.resetToDefault === true;
         let index = 0;
 
         const runStep = () => {
@@ -976,8 +1000,12 @@
                 return;
             }
 
-            if (!shouldRestore) return;
+            if (!shouldRestore && !shouldResetToDefault) return;
             guideCueRestoreTimer = window.setTimeout(() => {
+                if (shouldResetToDefault) {
+                    stopGuideVisualCue({ restore: false, resetToDefault: true });
+                    return;
+                }
                 stopGuideVisualCue({ restore: true });
             }, holdMs);
         };
@@ -1003,6 +1031,18 @@
         }, durationMs);
     }
 
+    function showGuideSectionCue(sectionId, options = {}) {
+        const target = resolveGuideSectionTarget(sectionId);
+        if (!target) return;
+        target.classList.add('guide-section-spotlight');
+
+        if (options.restore === false) return;
+        const durationMs = Math.max(1200, Number(options.durationMs) || 2600);
+        guideCueRestoreTimer = window.setTimeout(() => {
+            stopGuideVisualCue({ restore: true });
+        }, durationMs);
+    }
+
     function handleGuideVisualCueEvent(event) {
         if (panel && panel.getAttribute('aria-hidden') === 'false') return;
 
@@ -1018,6 +1058,10 @@
 
         if (cueType === 'openCue') {
             showGuideOpenCue(detail.projectId, detail);
+            return;
+        }
+        if (cueType === 'sectionCue') {
+            showGuideSectionCue(detail.section, detail);
             return;
         }
 
@@ -1303,25 +1347,25 @@
     const SESSION_KEY = 'portfolio_robot_sidekick_dismissed';
     const GUIDE_TOUR_EVENT = 'robot-guide:request-tour';
     const GUIDE_VISUAL_CUE_EVENT = 'robot-guide:visual-cue';
-    const INTRO_PROMPT = 'Want quick highlights? Press Guide Me for more info.';
+    const INTRO_PROMPT = 'Want quick highlights? Press Guide Me!';
     const GUIDE_ME_MAX_STEPS = 7;
 
     const messagePools = {
         home: [
             'I focus on embodied robotics: perception, reasoning, manipulation, and locomotion.',
-            'Guide Me jumps once to the humanoid map, then shares only key highlights.'
         ],
         featured: [
             {
                 id: 'featured-map-structure',
                 text: 'This humanoid map is organized to show my range across embodied robotics subsystems.',
-                ttlMs: 3000,
-                gapAfterMs: 2400,
+                ttlMs: 4000,
+                gapAfterMs: 240,
                 cue: {
                     type: 'spotlight',
                     projectIds: ['boxbunny', 'teleco', 'breaking-bias', 'astar-rl', 'idp'],
                     dwellMs: 760,
-                    holdMs: 460
+                    holdMs: 460,
+                    resetToDefault: true
                 }
             },
             {
@@ -1330,8 +1374,8 @@
                 ttlMs: 2400,
                 cue: {
                     type: 'openCue',
-                    projectId: 'active',
-                    durationMs: 3200
+                    projectId: 'boxbunny',
+                    restore: false
                 }
             }
         ],
@@ -1339,16 +1383,34 @@
             {
                 id: 'poster-clarity',
                 text: 'I design posters to be clear, aesthetic, and easy to read.',
-                ttlMs: 2500
+                ttlMs: 2500,
+                cue: {
+                    type: 'sectionCue',
+                    section: 'poster',
+                    durationMs: 2600
+                }
             },
             {
                 id: 'poster-lifequest',
                 text: 'I also designed the visuals and the game flow for my gamified app.',
-                ttlMs: 2400
+                ttlMs: 2400,
+                cue: {
+                    type: 'sectionCue',
+                    section: 'other',
+                    durationMs: 2500
+                }
             }
         ],
         featuredOther: [
-            'LifeQuest is a gamified app where I worked on both product design and implementation.'
+            {
+                id: 'featured-other-lifequest',
+                text: 'LifeQuest is a gamified app where I worked on both product design and implementation.',
+                cue: {
+                    type: 'sectionCue',
+                    section: 'other',
+                    durationMs: 2600
+                }
+            }
         ],
         resume: [
             'This timeline shows my growth from the foundations to deployed robotics systems.',
@@ -1378,10 +1440,13 @@
     let featuredPosterSequenceIndex = 0;
     let introPromptTimer = null;
     let guideTriggerCueTimer = null;
+    let messageSwapTimer = null;
     let pendingGuideReplayEntry = null;
     let pendingGuideReplayContext = null;
     let lastSpokenEntry = null;
     let lastMessageKey = '';
+    let currentGuideContextId = getCurrentGuideContextId();
+    let previousGuideContextId = currentGuideContextId;
 
     function syncAria(hidden) {
         sidekick.setAttribute('aria-hidden', hidden ? 'true' : 'false');
@@ -1396,6 +1461,18 @@
             window.clearTimeout(guideSequenceTimer);
             guideSequenceTimer = null;
         }
+        if (messageSwapTimer) {
+            window.clearTimeout(messageSwapTimer);
+            messageSwapTimer = null;
+        }
+    }
+
+    function clearMessageSwap() {
+        if (messageSwapTimer) {
+            window.clearTimeout(messageSwapTimer);
+            messageSwapTimer = null;
+        }
+        messageEl.classList.remove('is-swapping');
     }
 
     function clearIntroPromptTimer() {
@@ -1442,7 +1519,8 @@
             return;
         }
 
-        const currentContextId = getCurrentGuideContextId();
+        const currentContextId = syncGuideContextState();
+        const enteringFeaturedFromAnotherSection = currentContextId === 'featured' && previousGuideContextId !== 'featured';
         if (pendingGuideReplayEntry && pendingGuideReplayContext && pendingGuideReplayContext !== currentContextId) {
             pendingGuideReplayEntry = null;
             pendingGuideReplayContext = null;
@@ -1450,6 +1528,17 @@
         if (guideSequencePauseContext && currentContextId === guideSequencePauseContext) return;
 
         if (currentContextId === 'featured' && featuredGuideComplete) {
+            if (enteringFeaturedFromAnotherSection) {
+                const returnEntry = pickMessageById('featured', 'featured-open-project') || pickFirstMessage('featured');
+                if (returnEntry && returnEntry.text) {
+                    const returnTtl = getMessageDurationMs(returnEntry);
+                    const shown = showMessage(returnEntry.text, returnTtl, { ignoreDismissed: true, persist: true });
+                    if (shown) {
+                        lastSpokenEntry = returnEntry;
+                        emitGuideVisualCue(returnEntry);
+                    }
+                }
+            }
             guideSequencePauseContext = 'featured';
             return;
         }
@@ -1496,16 +1585,43 @@
             return;
         }
 
-        guideSequenceActive = false;
+        // Keep guide mode alive so new section scrolls can still trigger relevant updates.
+        guideSequencePauseContext = currentContextId;
+    }
+
+    function isFeaturedGuideContext(contextId) {
+        return contextId === 'featured' || contextId === 'featuredPosters' || contextId === 'featuredOther';
     }
 
     function maybeResumeGuideOnScroll() {
-        if (!guideSequenceActive) return;
-        if (guideSequenceTimer) return;
-        if (!guideSequencePauseContext) return;
+        const priorContextId = currentGuideContextId;
+        const currentContextId = syncGuideContextState();
+        const contextChanged = currentContextId !== priorContextId;
+
+        if (!guideSequenceActive) {
+            if (contextChanged && !isFeaturedGuideContext(currentContextId)) {
+                clearGuideVisualCue();
+            }
+            return;
+        }
+
         if (!canShow({ ignoreDismissed: true })) return;
 
-        const currentContextId = getCurrentGuideContextId();
+        if (contextChanged) {
+            if (!isFeaturedGuideContext(currentContextId)) {
+                clearGuideVisualCue();
+            }
+            guideSequencePauseContext = null;
+            if (guideSequenceTimer) {
+                window.clearTimeout(guideSequenceTimer);
+                guideSequenceTimer = null;
+            }
+            scheduleGuideSequenceStep(120);
+            return;
+        }
+
+        if (guideSequenceTimer) return;
+        if (!guideSequencePauseContext) return;
         if (currentContextId === guideSequencePauseContext) return;
 
         guideSequencePauseContext = null;
@@ -1513,6 +1629,7 @@
     }
 
     function hideSidekick() {
+        clearMessageSwap();
         sidekick.classList.remove('is-visible', 'is-speaking');
         syncAria(true);
     }
@@ -1523,19 +1640,61 @@
         return desktopQuery.matches && !reducedMotionQuery.matches && (ignoreDismissed || !dismissed) && !panelOpen && !document.hidden;
     }
 
+    function getFocusBandBounds() {
+        const topbar = document.getElementById('topbar');
+        const topbarHeight = topbar ? topbar.getBoundingClientRect().height : 0;
+        const bandTop = Math.min(window.innerHeight - 1, Math.max(0, topbarHeight + 14));
+        const bandBottom = Math.max(bandTop + 1, Math.round(window.innerHeight * 0.74));
+        return { bandTop, bandBottom };
+    }
+
+    function getBandOverlap(rect, bandTop, bandBottom) {
+        const overlapTop = Math.max(rect.top, bandTop);
+        const overlapBottom = Math.min(rect.bottom, bandBottom);
+        return Math.max(0, overlapBottom - overlapTop);
+    }
+
     function getCurrentSectionId() {
-        const probeY = window.innerHeight * 0.45;
-        const sections = document.querySelectorAll('main section[id]');
-        let activeId = 'home';
+        const sections = Array.from(document.querySelectorAll('main section[id]'));
+        if (!sections.length) return 'home';
+
+        const { bandTop, bandBottom } = getFocusBandBounds();
+        let bestSectionId = 'home';
+        let bestOverlap = 0;
 
         sections.forEach((section) => {
             const rect = section.getBoundingClientRect();
-            if (rect.top <= probeY && rect.bottom >= probeY) {
-                activeId = section.id;
+            const overlap = getBandOverlap(rect, bandTop, bandBottom);
+            if (overlap > bestOverlap) {
+                bestOverlap = overlap;
+                bestSectionId = section.id;
             }
         });
 
-        return activeId;
+        if (bestOverlap > 0) return bestSectionId;
+
+        const probeY = Math.round((bandTop + bandBottom) * 0.5);
+        for (let index = 0; index < sections.length; index += 1) {
+            const section = sections[index];
+            const rect = section.getBoundingClientRect();
+            if (rect.top <= probeY && rect.bottom >= probeY) return section.id;
+        }
+
+        let nearestSectionId = sections[0].id;
+        let nearestDistance = Number.POSITIVE_INFINITY;
+        sections.forEach((section) => {
+            const rect = section.getBoundingClientRect();
+            const distance = Math.min(
+                Math.abs(rect.top - bandTop),
+                Math.abs(rect.bottom - bandTop)
+            );
+            if (distance < nearestDistance) {
+                nearestDistance = distance;
+                nearestSectionId = section.id;
+            }
+        });
+
+        return nearestSectionId;
     }
 
     function probeHitsElement(element, probeY) {
@@ -1544,15 +1703,59 @@
         return rect.top <= probeY && rect.bottom >= probeY;
     }
 
+    function getGuideContextAnchorY() {
+        const topbar = document.getElementById('topbar');
+        const topbarHeight = topbar ? topbar.getBoundingClientRect().height : 0;
+        const minAnchorY = topbarHeight + 36;
+        const preferredAnchorY = Math.round(window.innerHeight * 0.28);
+        return Math.max(minAnchorY, preferredAnchorY);
+    }
+
     function getCurrentGuideContextId() {
         const sectionId = getCurrentSectionId();
         if (sectionId !== 'featured') return sectionId;
 
-        const probeY = window.innerHeight * 0.45;
+        const anchorY = getGuideContextAnchorY();
+        if (probeHitsElement(featuredMapZone, anchorY)) return 'featured';
+        if (probeHitsElement(featuredPosterZone, anchorY)) return 'featuredPosters';
+        if (probeHitsElement(featuredOtherZone, anchorY)) return 'featuredOther';
+
+        const { bandTop, bandBottom } = getFocusBandBounds();
+        const featuredZones = [
+            { id: 'featured', element: featuredMapZone },
+            { id: 'featuredPosters', element: featuredPosterZone },
+            { id: 'featuredOther', element: featuredOtherZone }
+        ];
+
+        let bestZoneId = 'featured';
+        let bestZoneOverlap = 0;
+        featuredZones.forEach((zone) => {
+            if (!zone.element) return;
+            const overlap = getBandOverlap(zone.element.getBoundingClientRect(), bandTop, bandBottom);
+            if (overlap > bestZoneOverlap) {
+                bestZoneOverlap = overlap;
+                bestZoneId = zone.id;
+            }
+        });
+        if (bestZoneOverlap > 0) return bestZoneId;
+
+        const probeY = Math.round((bandTop + bandBottom) * 0.5);
         if (probeHitsElement(featuredPosterZone, probeY)) return 'featuredPosters';
         if (probeHitsElement(featuredOtherZone, probeY)) return 'featuredOther';
         if (probeHitsElement(featuredMapZone, probeY)) return 'featured';
         return 'featured';
+    }
+
+    function syncGuideContextState() {
+        const nextContextId = getCurrentGuideContextId();
+        if (nextContextId !== currentGuideContextId) {
+            previousGuideContextId = currentGuideContextId;
+            currentGuideContextId = nextContextId;
+            if (currentGuideContextId === 'featuredPosters') {
+                featuredPosterSequenceIndex = 0;
+            }
+        }
+        return currentGuideContextId;
     }
 
     function normalizeMessageEntry(entry, sectionId, index) {
@@ -1574,7 +1777,8 @@
 
     function emitGuideVisualCue(messageEntry) {
         if (!messageEntry || !messageEntry.cue) return;
-        if (getCurrentGuideContextId() !== 'featured') return;
+        const contextId = getCurrentGuideContextId();
+        if (contextId !== 'featured' && contextId !== 'featuredPosters' && contextId !== 'featuredOther') return;
         document.dispatchEvent(new CustomEvent(GUIDE_VISUAL_CUE_EVENT, { detail: messageEntry.cue }));
     }
 
@@ -1597,6 +1801,30 @@
 
         lastMessageKey = selected.id;
         return selected;
+    }
+
+    function pickFirstMessage(sectionId) {
+        const pool = messagePools[sectionId] || messagePools.default;
+        if (!pool.length) return null;
+        const first = normalizeMessageEntry(pool[0], sectionId, 0);
+        if (!first) return null;
+        lastMessageKey = first.id;
+        return first;
+    }
+
+    function pickMessageById(sectionId, targetId) {
+        const pool = messagePools[sectionId] || messagePools.default;
+        if (!pool.length || !targetId) return null;
+
+        for (let index = 0; index < pool.length; index += 1) {
+            const candidate = normalizeMessageEntry(pool[index], sectionId, index);
+            if (!candidate) continue;
+            if (candidate.id !== targetId) continue;
+            lastMessageKey = candidate.id;
+            return candidate;
+        }
+
+        return null;
     }
 
     function pickGuideSequenceMessage(sectionId, stepIndex) {
@@ -1642,15 +1870,36 @@
         if (!canShow(options) || !text) return false;
         const durationMs = Number.isFinite(ttl) ? ttl : getReadingDurationMs(text);
         const persist = options.persist === true;
+        const nextText = String(text);
+        const wasVisible = sidekick.classList.contains('is-visible');
+        const shouldAnimateSwap = wasVisible
+            && messageEl.textContent
+            && messageEl.textContent !== nextText
+            && !reducedMotionQuery.matches;
 
-        messageEl.textContent = text;
+        clearMessageSwap();
+        if (shouldAnimateSwap) {
+            messageEl.classList.add('is-swapping');
+            messageSwapTimer = window.setTimeout(() => {
+                messageEl.textContent = nextText;
+                messageEl.classList.remove('is-swapping');
+                messageSwapTimer = null;
+            }, 120);
+        } else {
+            messageEl.textContent = nextText;
+            messageEl.classList.remove('is-swapping');
+        }
         sidekick.classList.add('is-visible');
         syncAria(false);
 
-        sidekick.classList.remove('is-speaking');
-        requestAnimationFrame(() => {
+        if (!wasVisible) {
+            sidekick.classList.remove('is-speaking');
+            requestAnimationFrame(() => {
+                sidekick.classList.add('is-speaking');
+            });
+        } else {
             sidekick.classList.add('is-speaking');
-        });
+        }
 
         if (hideTimer) {
             window.clearTimeout(hideTimer);
@@ -1744,7 +1993,13 @@
         if (guideSequenceActive || !canShow()) return;
         clearIntroPromptTimer();
         clearGuideTriggerCue();
-        const entry = pickMessage(getCurrentGuideContextId());
+        const currentContextId = syncGuideContextState();
+        const comingBackToProjects = currentContextId === 'featured'
+            && (previousGuideContextId === 'featuredPosters' || previousGuideContextId === 'featuredOther');
+        const entry = comingBackToProjects ? pickFirstMessage('featured') : pickMessage(currentContextId);
+        if (comingBackToProjects) {
+            previousGuideContextId = currentContextId;
+        }
         if (!entry) return;
 
         const shown = showMessage(entry.text);

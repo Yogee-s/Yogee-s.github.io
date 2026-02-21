@@ -3620,6 +3620,31 @@ figcaption {
   animation: guide-click-tag 980ms ease-in-out infinite;
 }
 
+#featured .poster-section-title,
+#featured .other-projects-title {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.14rem 0.54rem;
+  border-radius: 999px;
+  border: 1px solid transparent;
+  transition: color 220ms ease, text-shadow 220ms ease, transform 220ms ease, background 220ms ease, border-color 220ms ease, box-shadow 220ms ease;
+}
+
+#featured .poster-section-title.guide-section-spotlight,
+#featured .other-projects-title.guide-section-spotlight {
+  color: #ecfeff;
+  border-color: rgba(34, 211, 238, 0.8);
+  background: linear-gradient(135deg, rgba(8, 47, 73, 0.92), rgba(14, 116, 144, 0.78));
+  text-shadow:
+    0 0 12px rgba(103, 232, 249, 0.8),
+    0 0 22px rgba(34, 211, 238, 0.45);
+  box-shadow:
+    0 0 0 1px rgba(34, 211, 238, 0.42),
+    0 0 20px rgba(34, 211, 238, 0.38),
+    0 8px 20px rgba(2, 12, 28, 0.48);
+  animation: guide-section-spotlight 980ms ease-in-out infinite;
+}
+
 @keyframes guide-card-spotlight {
   0%,
   100% {
@@ -3676,12 +3701,35 @@ figcaption {
   }
 }
 
+@keyframes guide-section-spotlight {
+  0%,
+  100% {
+    filter: brightness(1);
+    transform: translateY(0) scale(1);
+    box-shadow:
+      0 0 0 1px rgba(34, 211, 238, 0.42),
+      0 0 20px rgba(34, 211, 238, 0.36),
+      0 8px 20px rgba(2, 12, 28, 0.45);
+  }
+
+  50% {
+    filter: brightness(1.16);
+    transform: translateY(-1px) scale(1.04);
+    box-shadow:
+      0 0 0 1px rgba(34, 211, 238, 0.64),
+      0 0 30px rgba(34, 211, 238, 0.52),
+      0 10px 24px rgba(2, 12, 28, 0.56);
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   #featured .robot-project-grid .card-node.guide-spotlight,
   #featured .robot-hotspot.guide-spotlight .hotspot-dot,
   #featured .card-node-open.guide-open-cue,
   #featured .card-node-open.guide-open-cue::before,
-  #featured .card-node-open.guide-open-cue::after {
+  #featured .card-node-open.guide-open-cue::after,
+  #featured .poster-section-title.guide-section-spotlight,
+  #featured .other-projects-title.guide-section-spotlight {
     animation: none !important;
   }
 }
@@ -4581,6 +4629,12 @@ body::before {
   font-size: 0.74rem;
   line-height: 1.45;
   color: var(--text-secondary);
+  transition: opacity 180ms ease, transform 220ms ease;
+}
+
+.robot-sidekick-text.is-swapping {
+  opacity: 0;
+  transform: translateY(4px);
 }
 
 .robot-sidekick-dismiss {
@@ -4809,5 +4863,9 @@ body::before {
 
   .robot-sidekick {
     transition: opacity 150ms linear;
+  }
+
+  .robot-sidekick-text {
+    transition: none !important;
   }
 }
