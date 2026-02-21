@@ -1290,6 +1290,7 @@
     const messageEl = document.getElementById('robot-sidekick-text');
     const avatarBtn = document.getElementById('robot-sidekick-avatar');
     const dismissBtn = document.getElementById('robot-sidekick-dismiss');
+    const guideTriggerBtn = document.getElementById('robot-guide-trigger');
     if (!sidekick || !messageEl || !avatarBtn || !dismissBtn) return;
 
     const detailPanel = document.getElementById('detail-panel');
@@ -1303,7 +1304,7 @@
     const GUIDE_TOUR_EVENT = 'robot-guide:request-tour';
     const GUIDE_VISUAL_CUE_EVENT = 'robot-guide:visual-cue';
     const INTRO_PROMPT = 'Want quick highlights? Press Guide Me for more info.';
-    const GUIDE_ME_MAX_STEPS = 5;
+    const GUIDE_ME_MAX_STEPS = 7;
 
     const messagePools = {
         home: [
@@ -1314,26 +1315,30 @@
             {
                 id: 'featured-map-structure',
                 text: 'This humanoid map is organized to show my range across embodied robotics subsystems.',
+                ttlMs: 3000,
+                gapAfterMs: 2400,
                 cue: {
                     type: 'spotlight',
                     projectIds: ['boxbunny', 'teleco', 'breaking-bias', 'astar-rl', 'idp'],
-                    dwellMs: 940,
-                    holdMs: 720
+                    dwellMs: 760,
+                    holdMs: 460
                 }
             },
             {
                 id: 'featured-highlights',
                 text: 'Highlights to start with: BoxBunny and the Legged Balancing Robot.',
+                ttlMs: 2400,
                 cue: {
                     type: 'spotlight',
                     projectIds: ['boxbunny', 'idp'],
-                    dwellMs: 1200,
-                    holdMs: 920
+                    dwellMs: 760,
+                    holdMs: 500
                 }
             },
             {
                 id: 'featured-open-project',
                 text: 'Click Open Project on any card to view implementation details.',
+                ttlMs: 2400,
                 cue: {
                     type: 'openCue',
                     projectId: 'active',
@@ -1342,8 +1347,16 @@
             }
         ],
         featuredPosters: [
-            'I enjoy poster design and focus on aesthetics with user-friendly communication.',
-            'For LifeQuest, I designed both the game experience and its poster visuals.'
+            {
+                id: 'poster-clarity',
+                text: 'I design posters to be clear, aesthetic, and easy to read.',
+                ttlMs: 2500
+            },
+            {
+                id: 'poster-lifequest',
+                text: 'I also designed LifeQuest visuals and game flow.',
+                ttlMs: 2400
+            }
         ],
         featuredOther: [
             'LifeQuest is a gamified app where I worked on both product design and implementation.'
@@ -1374,7 +1387,10 @@
     let guideSequencePauseContext = null;
     let featuredGuideComplete = false;
     let featuredPosterSequenceIndex = 0;
+    let introPromptTimer = null;
+    let guideTriggerCueTimer = null;
     let pendingGuideReplayEntry = null;
+    let pendingGuideReplayContext = null;
     let lastSpokenEntry = null;
     let lastMessageKey = '';
 
@@ -1391,6 +1407,32 @@
             window.clearTimeout(guideSequenceTimer);
             guideSequenceTimer = null;
         }
+    }
+
+    function clearIntroPromptTimer() {
+        if (!introPromptTimer) return;
+        window.clearTimeout(introPromptTimer);
+        introPromptTimer = null;
+    }
+
+    function clearGuideTriggerCue() {
+        if (guideTriggerCueTimer) {
+            window.clearTimeout(guideTriggerCueTimer);
+            guideTriggerCueTimer = null;
+        }
+        if (guideTriggerBtn) {
+            guideTriggerBtn.classList.remove('guide-trigger-cue');
+        }
+    }
+
+    function showGuideTriggerCue(durationMs = 5600) {
+        if (!guideTriggerBtn) return;
+        clearGuideTriggerCue();
+        guideTriggerBtn.classList.add('guide-trigger-cue');
+        guideTriggerCueTimer = window.setTimeout(() => {
+            guideTriggerCueTimer = null;
+            guideTriggerBtn.classList.remove('guide-trigger-cue');
+        }, durationMs);
     }
 
     function scheduleGuideSequenceStep(delayMs) {
@@ -1412,6 +1454,10 @@
         }
 
         const currentContextId = getCurrentGuideContextId();
+        if (pendingGuideReplayEntry && pendingGuideReplayContext && pendingGuideReplayContext !== currentContextId) {
+            pendingGuideReplayEntry = null;
+            pendingGuideReplayContext = null;
+        }
         if (guideSequencePauseContext && currentContextId === guideSequencePauseContext) return;
 
         if (currentContextId === 'featured' && featuredGuideComplete) {
@@ -1419,14 +1465,21 @@
             return;
         }
 
+        const posterPool = messagePools.featuredPosters || [];
+        if (currentContextId === 'featuredPosters' && featuredPosterSequenceIndex >= posterPool.length) {
+            guideSequencePauseContext = 'featuredPosters';
+            return;
+        }
+
         const messageEntry = pendingGuideReplayEntry || pickGuideSequenceMessage(currentContextId, guideSequenceIndex);
         pendingGuideReplayEntry = null;
+        pendingGuideReplayContext = null;
         if (!messageEntry || !messageEntry.text) {
             return;
         }
 
-        const ttl = getReadingDurationMs(messageEntry.text);
-        const shown = showMessage(messageEntry.text, ttl, { ignoreDismissed: true });
+        const ttl = getMessageDurationMs(messageEntry);
+        const shown = showMessage(messageEntry.text, ttl, { ignoreDismissed: true, persist: true });
         if (!shown) return;
         lastSpokenEntry = messageEntry;
         emitGuideVisualCue(messageEntry);
@@ -1443,7 +1496,14 @@
         }
 
         if (guideSequenceIndex < GUIDE_ME_MAX_STEPS) {
-            scheduleGuideSequenceStep(ttl + 320);
+            const isProjectsContext = currentContextId === 'featured'
+                || currentContextId === 'featuredPosters'
+                || currentContextId === 'featuredOther';
+            const baseStepGapMs = isProjectsContext ? 240 : 320;
+            const stepGapMs = Number.isFinite(messageEntry.gapAfterMs)
+                ? Math.max(baseStepGapMs, messageEntry.gapAfterMs)
+                : baseStepGapMs;
+            scheduleGuideSequenceStep(ttl + stepGapMs);
             return;
         }
 
@@ -1509,13 +1569,15 @@
     function normalizeMessageEntry(entry, sectionId, index) {
         if (!entry) return null;
         if (typeof entry === 'string') {
-            return { id: `${sectionId}-${index}`, text: entry, cue: null };
+            return { id: `${sectionId}-${index}`, text: entry, cue: null, ttlMs: null, gapAfterMs: null };
         }
         if (typeof entry === 'object' && typeof entry.text === 'string') {
             return {
                 id: typeof entry.id === 'string' ? entry.id : `${sectionId}-${index}`,
                 text: entry.text,
-                cue: entry.cue || null
+                cue: entry.cue || null,
+                ttlMs: Number.isFinite(entry.ttlMs) ? Number(entry.ttlMs) : null,
+                gapAfterMs: Number.isFinite(entry.gapAfterMs) ? Number(entry.gapAfterMs) : null
             };
         }
         return null;
@@ -1561,7 +1623,8 @@
         }
 
         if (sectionId === 'featuredPosters') {
-            const posterIndex = Math.min(featuredPosterSequenceIndex, pool.length - 1);
+            if (featuredPosterSequenceIndex >= pool.length) return null;
+            const posterIndex = featuredPosterSequenceIndex;
             const forcedPoster = normalizeMessageEntry(pool[posterIndex], sectionId, posterIndex);
             featuredPosterSequenceIndex += 1;
             if (forcedPoster) {
@@ -1579,9 +1642,17 @@
         return Math.max(4200, Math.min(8600, computed));
     }
 
+    function getMessageDurationMs(messageEntry) {
+        if (messageEntry && Number.isFinite(messageEntry.ttlMs)) {
+            return Math.max(1600, messageEntry.ttlMs);
+        }
+        return getReadingDurationMs(messageEntry ? messageEntry.text : '');
+    }
+
     function showMessage(text, ttl = null, options = {}) {
         if (!canShow(options) || !text) return false;
         const durationMs = Number.isFinite(ttl) ? ttl : getReadingDurationMs(text);
+        const persist = options.persist === true;
 
         messageEl.textContent = text;
         sidekick.classList.add('is-visible');
@@ -1594,6 +1665,10 @@
 
         if (hideTimer) {
             window.clearTimeout(hideTimer);
+            hideTimer = null;
+        }
+        if (persist) {
+            return true;
         }
         hideTimer = window.setTimeout(() => {
             hideSidekick();
@@ -1628,6 +1703,8 @@
         }
 
         clearTimers();
+        clearIntroPromptTimer();
+        clearGuideTriggerCue();
         clearGuideVisualCue();
         guideSequenceActive = true;
         guideSequenceIndex = 0;
@@ -1635,6 +1712,7 @@
         featuredGuideComplete = false;
         featuredPosterSequenceIndex = 0;
         pendingGuideReplayEntry = null;
+        pendingGuideReplayContext = null;
         lastSpokenEntry = null;
 
         scrollGuideToProjectsStart();
@@ -1648,9 +1726,11 @@
                 if (hideTimer && guideSequenceIndex > 0 && lastSpokenEntry) {
                     // If interrupted while speaking, replay that same message on resume.
                     pendingGuideReplayEntry = lastSpokenEntry;
+                    pendingGuideReplayContext = getCurrentGuideContextId();
                     guideSequenceIndex -= 1;
                 }
                 clearTimers();
+                clearGuideTriggerCue();
                 clearGuideVisualCue();
                 hideSidekick();
                 return;
@@ -1664,6 +1744,7 @@
 
         if (!canShow()) {
             clearTimers();
+            clearGuideTriggerCue();
             clearGuideVisualCue();
             hideSidekick();
             return;
@@ -1672,6 +1753,8 @@
 
     avatarBtn.addEventListener('click', () => {
         if (guideSequenceActive || !canShow()) return;
+        clearIntroPromptTimer();
+        clearGuideTriggerCue();
         const entry = pickMessage(getCurrentGuideContextId());
         if (!entry) return;
 
@@ -1691,9 +1774,15 @@
             // Ignore storage errors (private mode / blocked storage).
         }
         clearTimers();
+        clearIntroPromptTimer();
+        clearGuideTriggerCue();
         clearGuideVisualCue();
         hideSidekick();
     });
+
+    if (guideTriggerBtn) {
+        guideTriggerBtn.addEventListener('click', clearGuideTriggerCue);
+    }
 
     document.addEventListener(GUIDE_TOUR_EVENT, () => {
         startGuideMeSequence();
@@ -1721,11 +1810,14 @@
     window.addEventListener('scroll', maybeResumeGuideOnScroll, { passive: true });
 
     if (canShow()) {
-        window.setTimeout(() => {
-            if (!canShow()) return;
-            showMessage(INTRO_PROMPT, 5600);
+        introPromptTimer = window.setTimeout(() => {
+            introPromptTimer = null;
+            if (!canShow() || guideSequenceActive) return;
+            const shown = showMessage(INTRO_PROMPT, 5600);
+            if (shown) showGuideTriggerCue(5600);
         }, 2500);
     } else {
+        clearGuideTriggerCue();
         hideSidekick();
     }
 })();
