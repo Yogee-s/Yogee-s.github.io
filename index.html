@@ -61,6 +61,7 @@
 </head>
 
 <body>
+  <div class="scroll-progress-bar" id="scroll-progress"></div>
   <div class="bg-noise"></div>
 
   <header class="topbar" id="topbar">
@@ -112,14 +113,22 @@
       <div class="hero-meta">
         <article class="meta-card">
           <h3>Current</h3>
-          <p><span class="signal-event signal-event-purple">NUS Immersive Reality Lab</span> + <span class="signal-event signal-event-purple">BoxBunny
+          <p><span class="signal-event signal-event-purple">NUS Immersive Reality Lab</span> + <span
+              class="signal-event signal-event-purple">BoxBunny
               Capstone</span> — eldercare AI companions and an intelligent boxing robot</p>
         </article>
         <article class="meta-card">
           <h3>Stack</h3>
-          <p><span class="signal-tech">Python</span> · <span class="signal-tech">ROS2</span> · YOLO · <span
-              class="signal-tech">RL</span> · LLM · <span class="signal-tech">Simulation</span> · <span
-              class="signal-tech">SolidWorks</span> · Embedded (STM32)</p>
+          <p class="stack-pills">
+            <span class="skill-pill">Python</span>
+            <span class="skill-pill">ROS2</span>
+            <span class="skill-pill">YOLO</span>
+            <span class="skill-pill">RL</span>
+            <span class="skill-pill">LLM</span>
+            <span class="skill-pill">Simulation</span>
+            <span class="skill-pill">SolidWorks</span>
+            <span class="skill-pill">Embedded (STM32)</span>
+          </p>
         </article>
         <article class="meta-card">
           <h3>Focus</h3>
@@ -152,21 +161,20 @@
 
           <div class="robot-model-shell">
             <model-viewer id="humanoid-model" src="assets/models/humanoid_mannequin.glb"
-              alt="High-fidelity humanoid mannequin used as an interactive project-to-body-part map" camera-controls disable-pan
-              interaction-prompt="none" interpolation-decay="120" camera-orbit="0deg 88deg 4.1m"
-              min-camera-orbit="auto auto 2.45m" max-camera-orbit="auto auto 4.8m"
-              camera-target="0m 0m 0m" shadow-intensity="0.18" exposure="1.2" environment-image="neutral">
+              alt="High-fidelity humanoid mannequin used as an interactive project-to-body-part map" camera-controls
+              disable-pan interaction-prompt="none" interpolation-decay="120" camera-orbit="0deg 88deg 4.1m"
+              min-camera-orbit="auto auto 2.45m" max-camera-orbit="auto auto 4.8m" camera-target="0m 0m 0m"
+              shadow-intensity="0.18" exposure="1.2" environment-image="neutral">
               <button class="robot-hotspot" slot="hotspot-fullbody" data-project="boxbunny"
-                data-position="-0.58m 0.18m 0.02m"
-                data-normal="0m 1m 0m">
+                data-position="-0.58m 0.18m 0.02m" data-normal="0m 1m 0m">
                 <span class="hotspot-dot"></span><span class="hotspot-label">BoxBunny</span>
               </button>
               <button class="robot-hotspot" slot="hotspot-eyes" data-project="teleco" data-position="0.07m 0.79m 0.12m"
                 data-normal="0m 0m 1m">
                 <span class="hotspot-dot"></span><span class="hotspot-label">Teleco</span>
               </button>
-              <button class="robot-hotspot" slot="hotspot-head" data-project="breaking-bias" data-position="0.02m 0.88m 0.08m"
-                data-normal="0m 1m 0m">
+              <button class="robot-hotspot" slot="hotspot-head" data-project="breaking-bias"
+                data-position="0.02m 0.88m 0.08m" data-normal="0m 1m 0m">
                 <span class="hotspot-dot"></span><span class="hotspot-label">Breaking Bias</span>
               </button>
               <button class="robot-hotspot" slot="hotspot-hand" data-project="astar-rl" data-position="0.48m 0.38m 0m"
@@ -182,7 +190,8 @@
 
           <div class="robot-stage-meta">
             <span class="robot-stage-part" id="robot-part-label">Hover a project to preview subsystem focus.</span>
-            <span class="robot-stage-project" id="robot-project-label">Click a project to lock focus and open details.</span>
+            <span class="robot-stage-project" id="robot-project-label">Click a project to lock focus and open
+              details.</span>
           </div>
           <p class="robot-model-credit">3D model: <a href="https://poly.pizza/m/qbDLeTtb8K" target="_blank"
               rel="noopener noreferrer">Character Base</a> by madtrollstudio (CC-BY 3.0).</p>
@@ -203,6 +212,26 @@
               <div class="card-node-tags">
                 <span>ROS2</span><span>RGB-D</span><span>Neural Nets</span>
               </div>
+              <div class="card-node-links">
+                <a href="https://github.com/Yogee-s/boxing_action_recognition" class="card-repo-btn" target="_blank"
+                  rel="noopener noreferrer" onclick="event.stopPropagation()">
+                  <svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true">
+                    <path
+                      d="M8 0c-4.42 0-8 3.58-8 8 0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38a8.013 8.013 0 0 0-5.55-7.97z">
+                    </path>
+                  </svg>
+                  ML Repo
+                </a>
+                <a href="https://github.com/Yogee-s/boxing_robot_ws" class="card-repo-btn" target="_blank"
+                  rel="noopener noreferrer" onclick="event.stopPropagation()">
+                  <svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true">
+                    <path
+                      d="M8 0c-4.42 0-8 3.58-8 8 0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38a8.013 8.013 0 0 0-5.55-7.97z">
+                    </path>
+                  </svg>
+                  ROS2 Repo
+                </a>
+              </div>
               <button class="card-node-open" type="button">Open Project</button>
             </div>
           </article>
@@ -220,6 +249,17 @@
               <p class="card-node-summary">Deployed at Osaka Expo 2025. YOLOv12 + SLAM for social robot gaze.</p>
               <div class="card-node-tags">
                 <span>YOLOv12</span><span>SLAM</span><span>Kabsch</span>
+              </div>
+              <div class="card-node-links">
+                <a href="https://github.com/Yogee-s/human_detector_ws" class="card-repo-btn" target="_blank"
+                  rel="noopener noreferrer" onclick="event.stopPropagation()">
+                  <svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true">
+                    <path
+                      d="M8 0c-4.42 0-8 3.58-8 8 0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38a8.013 8.013 0 0 0-5.55-7.97z">
+                    </path>
+                  </svg>
+                  GitHub
+                </a>
               </div>
               <button class="card-node-open" type="button">Open Project</button>
             </div>
@@ -239,6 +279,17 @@
               <div class="card-node-tags">
                 <span>LLMs</span><span>Python</span><span>PyTorch</span>
               </div>
+              <div class="card-node-links">
+                <a href="https://github.com/gin-guo/breaking-bias" class="card-repo-btn" target="_blank"
+                  rel="noopener noreferrer" onclick="event.stopPropagation()">
+                  <svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true">
+                    <path
+                      d="M8 0c-4.42 0-8 3.58-8 8 0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38a8.013 8.013 0 0 0-5.55-7.97z">
+                    </path>
+                  </svg>
+                  GitHub
+                </a>
+              </div>
               <button class="card-node-open" type="button">Open Project</button>
             </div>
           </article>
@@ -256,6 +307,26 @@
               <p class="card-node-summary">Sim-to-real reinforcement learning for dexterous manipulation.</p>
               <div class="card-node-tags">
                 <span>MuJoCo</span><span>RL / DAPG</span><span>URDF</span>
+              </div>
+              <div class="card-node-links">
+                <a href="https://github.com/Yogee-s/dexterous_hand-simulation" class="card-repo-btn" target="_blank"
+                  rel="noopener noreferrer" onclick="event.stopPropagation()">
+                  <svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true">
+                    <path
+                      d="M8 0c-4.42 0-8 3.58-8 8 0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38a8.013 8.013 0 0 0-5.55-7.97z">
+                    </path>
+                  </svg>
+                  Sim Repo
+                </a>
+                <a href="https://github.com/Yogee-s/dexterous_hand-learning" class="card-repo-btn" target="_blank"
+                  rel="noopener noreferrer" onclick="event.stopPropagation()">
+                  <svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true">
+                    <path
+                      d="M8 0c-4.42 0-8 3.58-8 8 0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38a8.013 8.013 0 0 0-5.55-7.97z">
+                    </path>
+                  </svg>
+                  RL Repo
+                </a>
               </div>
               <button class="card-node-open" type="button">Open Project</button>
             </div>
@@ -317,6 +388,7 @@
             <p>Gamified productivity app with auth, progress tracking, and social battles.</p>
             <div class="links">
               <a href="assets/orbital/milestone_3_submission.pdf" target="_blank" rel="noopener noreferrer">Report</a>
+              <a href="https://github.com/Yogee-s/NUS-Orbital-2023" target="_blank" rel="noopener noreferrer">GitHub</a>
             </div>
           </article>
 
@@ -360,6 +432,12 @@
                   <span class="signal-strong">real-time punch prediction</span> across fast and slow strikes
                 </li>
               </ul>
+              <div class="links">
+                <a href="https://github.com/Yogee-s/boxing_action_recognition" target="_blank"
+                  rel="noopener noreferrer">ML Repo</a>
+                <a href="https://github.com/Yogee-s/boxing_robot_ws" target="_blank" rel="noopener noreferrer">ROS2
+                  Repo</a>
+              </div>
             </div>
             <div class="boxing-side-media">
               <figure>
@@ -470,8 +548,12 @@
                     cm</span> height error</li>
                 <li>Deployed at Yoshikawa Lab pavilion, <span class="signal-event">Osaka Expo 2025</span></li>
               </ul>
-              <div class="links"><a href="assets/frontier/frontier_report.pdf" target="_blank"
-                  rel="noopener noreferrer">Frontier Report</a></div>
+              <div class="links">
+                <a href="assets/frontier/frontier_report.pdf" target="_blank" rel="noopener noreferrer">Frontier
+                  Report</a>
+                <a href="https://github.com/Yogee-s/human_detector_ws" target="_blank"
+                  rel="noopener noreferrer">GitHub</a>
+              </div>
             </div>
             <figure class="teleco-side-photo">
               <img class="js-lightbox" src="assets/frontier/close_up_teleco_robot.jpg" alt="Teleco robot"
@@ -528,6 +610,10 @@
                 rel="noopener noreferrer">Report</a>
               <a href="assets/artc_internship/internship_final_presentation.pdf" target="_blank"
                 rel="noopener noreferrer">Presentation</a>
+              <a href="https://github.com/Yogee-s/dexterous_hand-simulation" target="_blank"
+                rel="noopener noreferrer">Sim Repo</a>
+              <a href="https://github.com/Yogee-s/dexterous_hand-learning" target="_blank" rel="noopener noreferrer">RL
+                Repo</a>
             </div>
           </div>
           <div class="media-layout media-layout-2">
@@ -575,6 +661,9 @@
                   <span class="signal-strong">fine-tuning checks</span>.
                 </li>
               </ul>
+              <div class="links">
+                <a href="https://github.com/gin-guo/breaking-bias" target="_blank" rel="noopener noreferrer">GitHub</a>
+              </div>
             </div>
             <figure class="bias-side-node">
               <img class="js-lightbox" src="assets/breaking_bias/Breaking_bias_node.png"
@@ -588,9 +677,10 @@
             <div class="pdf-item">
               <h4 class="pdf-title">Final Presentation</h4>
               <div class="pdf-actions" aria-label="Presentation PDF actions">
-                <a class="pdf-action-btn" href="assets/breaking_bias/breaking_bias_final_presentation.pdf" target="_blank"
-                  rel="noopener noreferrer">Open PDF</a>
-                <a class="pdf-action-btn" href="assets/breaking_bias/breaking_bias_final_presentation.pdf" download>Download</a>
+                <a class="pdf-action-btn" href="assets/breaking_bias/breaking_bias_final_presentation.pdf"
+                  target="_blank" rel="noopener noreferrer">Open PDF</a>
+                <a class="pdf-action-btn" href="assets/breaking_bias/breaking_bias_final_presentation.pdf"
+                  download>Download</a>
               </div>
               <div class="pdf-embed-container">
                 <object class="pdf-embed"
@@ -608,7 +698,8 @@
               <div class="pdf-actions" aria-label="Report PDF actions">
                 <a class="pdf-action-btn" href="assets/breaking_bias/breaking_bias_final_report.pdf" target="_blank"
                   rel="noopener noreferrer">Open PDF</a>
-                <a class="pdf-action-btn" href="assets/breaking_bias/breaking_bias_final_report.pdf" download>Download</a>
+                <a class="pdf-action-btn" href="assets/breaking_bias/breaking_bias_final_report.pdf"
+                  download>Download</a>
               </div>
               <div class="pdf-embed-container">
                 <object class="pdf-embed"

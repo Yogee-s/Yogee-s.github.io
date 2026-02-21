@@ -1067,3 +1067,42 @@
         easing: 'easeOutCubic'
     });
 })();
+
+/* ========================================================
+   NEW HIGH-IMPACT VISUAL EFFECTS (Cursor, Glow, Spotlight)
+   ======================================================== */
+(function initVisualEffects() {
+    /* --- Scroll Progress Bar --- */
+    const scrollProgress = document.getElementById('scroll-progress');
+    if (scrollProgress) {
+        window.addEventListener('scroll', () => {
+            const scrollTop = window.scrollY;
+            const docHeight = document.body.scrollHeight - window.innerHeight;
+            const scrollPercent = (scrollTop / docHeight) * 100;
+            scrollProgress.style.width = scrollPercent + '%';
+        }, { passive: true });
+    }
+
+    /* --- Global Mouse Tracker (for glow effects) --- */
+    document.addEventListener('mousemove', (e) => {
+        const mouseX = e.clientX;
+        const mouseY = e.clientY;
+        
+        // Set global variables for spotlight / glowing background
+        document.body.style.setProperty('--mouse-x', `${mouseX}px`);
+        document.body.style.setProperty('--mouse-y', `${mouseY}px`);
+    });
+
+    /* --- Spotlight Card Effect --- */
+    const cards = document.querySelectorAll('.card, .card-node');
+    cards.forEach(card => {
+        card.addEventListener('mousemove', (e) => {
+            const rect = card.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            
+            card.style.setProperty('--mouse-x', `${x}px`);
+            card.style.setProperty('--mouse-y', `${y}px`);
+        });
+    });
+})();

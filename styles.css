@@ -2307,6 +2307,51 @@ figcaption {
   /* Push to bottom if needed */
 }
 
+/* GitHub repo button / badge */
+.card-node-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 0.75rem;
+  position: relative;
+  z-index: 2;
+  /* appear above card link */
+}
+
+.card-repo-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.25rem 0.6rem;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 4px;
+  color: var(--text-2);
+  font-size: 0.7rem;
+  font-weight: 500;
+  text-decoration: none;
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+.card-repo-btn:hover {
+  background: rgba(6, 182, 212, 0.08);
+  /* accent-1 low opacity */
+  border-color: rgba(6, 182, 212, 0.4);
+  color: var(--accent-1);
+}
+
+.card-repo-btn svg {
+  flex-shrink: 0;
+  fill: currentColor;
+  opacity: 0.7;
+  transition: opacity 0.2s ease;
+}
+
+.card-repo-btn:hover svg {
+  opacity: 1;
+}
+
 /* Ensure no conflict with previous styles */
 
 /* Active card */
@@ -2737,8 +2782,7 @@ figcaption {
 
 #humanoid-model.fullbody-focus {
   filter:
-    drop-shadow(0 0 10px rgba(245, 158, 11, 0.58))
-    drop-shadow(0 0 22px rgba(245, 158, 11, 0.34));
+    drop-shadow(0 0 10px rgba(245, 158, 11, 0.58)) drop-shadow(0 0 22px rgba(245, 158, 11, 0.34));
 }
 
 #humanoid-model::part(default-progress-bar) {
@@ -3398,6 +3442,7 @@ figcaption {
 }
 
 @media (max-width: 760px) {
+
   .boxing-side-media,
   .boxing-column-data .boxing-column-media,
   .boxing-column-model .boxing-column-media,
@@ -3805,4 +3850,149 @@ figcaption {
     padding: 0.26rem 0.56rem;
     font-size: 0.6rem;
   }
+}
+
+/* ===========================================
+   NEW HIGH-IMPACT VISUAL EFFECTS
+   =========================================== */
+
+/* --- Global Mouse Flashlight --- */
+body::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 0;
+  background: radial-gradient(circle 600px at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(139, 92, 246, 0.05), transparent 80%);
+}
+
+/* --- Scroll Progress Bar --- */
+.scroll-progress-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--accent-1), var(--accent-2));
+  width: 0%;
+  z-index: 10000;
+  box-shadow: 0 0 10px var(--accent-1);
+  transition: width 0.1s ease-out;
+}
+
+/* --- Shimmering Text Effect (Muthukumaran Yogeeswaran) --- */
+@keyframes textShimmer {
+  0% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
+
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.hero-content h1 {
+  background: linear-gradient(to right,
+      #ffffff 20%,
+      var(--accent-1) 40%,
+      var(--accent-2) 60%,
+      #ffffff 80%);
+  background-size: 200% auto;
+  color: #000;
+  background-clip: text;
+  text-fill-color: transparent;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: textShimmer 5s linear infinite;
+}
+
+/* --- Glowing Skill Pills --- */
+.stack-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 0.4rem;
+}
+
+.skill-pill {
+  padding: 0.2rem 0.6rem;
+  font-size: 0.75rem;
+  font-family: var(--font-mono);
+  color: var(--text);
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 999px;
+  transition: all var(--transition);
+  position: relative;
+  overflow: hidden;
+}
+
+.skill-pill::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+  transition: left 0.4s;
+}
+
+.skill-pill:hover {
+  background: rgba(6, 182, 212, 0.15);
+  border-color: rgba(6, 182, 212, 0.5);
+  box-shadow: 0 0 10px rgba(6, 182, 212, 0.3);
+  color: #fff;
+  transform: translateY(-2px);
+}
+
+.skill-pill:hover::before {
+  left: 100%;
+}
+
+/* --- Spotlight Card Effect --- */
+.card,
+.card-node,
+.detail-project {
+  position: relative;
+}
+
+.card::before,
+.card-node::before,
+.detail-project::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(800px circle at var(--mouse-x, 0) var(--mouse-y, 0),
+      rgba(255, 255, 255, 0.06),
+      transparent 40%);
+  opacity: 0;
+  transition: opacity 0.5s;
+  pointer-events: none;
+  z-index: 1;
+  /* Keep above bg but below content */
+  border-radius: inherit;
+}
+
+.card:hover::before,
+.card-node:hover::before,
+.detail-project:hover::before {
+  opacity: 1;
+}
+
+/* Bring card content above spotlight */
+.card>*,
+.card-node>*,
+.detail-project>* {
+  position: relative;
+  z-index: 2;
 }
