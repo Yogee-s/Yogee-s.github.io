@@ -71,7 +71,8 @@
     <nav id="main-nav">
       <a href="#featured">Projects</a>
       <a href="#resume">Experience</a>
-      <a href="#contact">Contact</a>
+      <button id="robot-guide-trigger" class="robot-guide-trigger" type="button"
+        aria-label="Summon robot guide">Guide Me</button>
     </nav>
   </header>
 
@@ -146,7 +147,7 @@
         <p class="featured-intro">I am passionate about <span class="signal-strong">embodied robotics</span>. Through my
           projects, I have built hands-on experience in <span class="signal-tech">perception</span>, <span
             class="signal-tech">reasoning</span>, <span class="signal-tech">manipulation</span>, and <span
-            class="signal-tech">legged balance</span>. My long-term dream is to contribute to a <span
+            class="signal-tech">legged balance</span>. My dream one day is to contribute to a <span
             class="signal-strong">humanoid robot</span> that brings all of these capabilities into one <span
             class="signal-strong">integrated system</span>.</p>
       </div>
@@ -295,6 +296,8 @@
       <div class="poster-and-other-wrap">
       <div class="poster-section">
         <h3 class="poster-section-title">Poster Gallery</h3>
+        <p class="poster-section-note">I love designing posters and put strong emphasis on making information easy to
+          understand at a glance. For LifeQuest, I designed both the game experience and its poster visuals.</p>
         <div class="poster-grid">
           <figure class="poster-card card">
             <img class="js-lightbox" src="assets/idp_projects/balancing_robot_poster.png"
@@ -982,6 +985,27 @@
 
 
   <div id="detail-overlay" class="detail-overlay"></div>
+
+  <aside id="robot-sidekick" class="robot-sidekick" aria-live="polite" aria-hidden="true">
+    <div class="robot-sidekick-bubble">
+      <p id="robot-sidekick-text">Hover a project node to steer the humanoid focus map.</p>
+      <button id="robot-sidekick-dismiss" class="robot-sidekick-dismiss" type="button">Hide tips</button>
+    </div>
+    <button id="robot-sidekick-avatar" class="robot-sidekick-avatar" type="button"
+      aria-label="Show robotics assistant tip">
+      <span class="guide-bot-shell" aria-hidden="true">
+        <span class="guide-bot-antenna"></span>
+        <span class="guide-bot-antenna-tip"></span>
+        <span class="guide-bot-faceplate">
+          <span class="guide-bot-eye guide-bot-eye-left"></span>
+          <span class="guide-bot-eye guide-bot-eye-right"></span>
+          <span class="guide-bot-cheek guide-bot-cheek-left"></span>
+          <span class="guide-bot-cheek guide-bot-cheek-right"></span>
+          <span class="guide-bot-smile"></span>
+        </span>
+      </span>
+    </button>
+  </aside>
 
   <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.2/lib/anime.min.js"></script>
   <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
