@@ -4869,3 +4869,172 @@ body::before {
     transition: none !important;
   }
 }
+
+/* --- Phone layout fixes for featured cards + supporting rows --- */
+@media (max-width: 760px) {
+  #featured .constellation-wrap {
+    min-height: 460px;
+    display: block;
+    gap: 0;
+  }
+
+  #featured .robot-stage {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: min(182px, 49vw);
+    height: 332px;
+    margin: 0;
+    padding: 24px 0 20px;
+  }
+
+  #featured .robot-stage-meta,
+  #featured .robot-stage.has-active[data-active-project="breaking-bias"] .robot-stage-meta,
+  #featured .robot-stage.has-active[data-active-project="teleco"] .robot-stage-meta,
+  #featured .robot-stage.has-active[data-active-project="astar-rl"] .robot-stage-meta {
+    width: min(84vw, 240px);
+    top: calc(100% + 2px);
+    bottom: auto;
+  }
+
+  #humanoid-model {
+    width: 74%;
+    height: 80%;
+  }
+
+  #featured .robot-project-grid {
+    position: absolute;
+    inset: 0;
+    display: block;
+    pointer-events: none;
+  }
+
+  #featured .robot-project-grid .card-node {
+    width: clamp(86px, 24vw, 100px);
+    min-height: 92px;
+    height: auto;
+    box-sizing: border-box;
+    padding-bottom: 0.14rem;
+    border-radius: 10px;
+    pointer-events: auto;
+    left: auto;
+    right: auto;
+    top: auto;
+    bottom: auto;
+  }
+
+  #featured .robot-project-grid .card-node[data-project="breaking-bias"],
+  #featured .robot-project-grid .card-node[data-project="teleco"],
+  #featured .robot-project-grid .card-node[data-project="astar-rl"] {
+    width: clamp(86px, 24vw, 100px);
+    min-height: 92px;
+    height: auto;
+  }
+
+  #featured .robot-project-grid .card-node[data-project="boxbunny"],
+  #featured .robot-project-grid .card-node[data-project="idp"] {
+    width: clamp(86px, 24vw, 100px);
+    min-height: 92px;
+    height: auto;
+  }
+
+  #featured .robot-project-grid .card-node[data-project="boxbunny"] {
+    left: 2%;
+    top: 27%;
+  }
+
+  #featured .robot-project-grid .card-node[data-project="idp"] {
+    left: 2%;
+    bottom: 4%;
+    top: auto;
+  }
+
+  #featured .robot-project-grid .card-node[data-project="breaking-bias"] {
+    right: 2%;
+    top: 24%;
+  }
+
+  #featured .robot-project-grid .card-node[data-project="teleco"] {
+    right: 2%;
+    top: 49%;
+  }
+
+  #featured .robot-project-grid .card-node[data-project="astar-rl"] {
+    right: 2%;
+    bottom: 4%;
+    top: auto;
+  }
+
+  #featured .robot-project-grid .node-visual {
+    height: 26px;
+  }
+
+  #featured .robot-project-grid .card-node[data-project="boxbunny"] .node-visual,
+  #featured .robot-project-grid .card-node[data-project="idp"] .node-visual {
+    height: 54px;
+  }
+
+  #featured .robot-project-grid .node-content {
+    padding: 0.16rem 0.22rem 0.12rem;
+  }
+
+  #featured .robot-project-grid .card-node-pill {
+    margin-bottom: 0.07rem;
+    font-size: 0.36rem;
+    padding: 0.07rem 0.2rem;
+  }
+
+  #featured .robot-project-grid .card-node h3 {
+    font-size: 0.54rem;
+    line-height: 1.2;
+    margin-bottom: 0.07rem;
+  }
+
+  #featured .card-node-open {
+    min-height: 26px;
+    margin: 0.1rem 0 0;
+    padding: 0.15rem 0.24rem;
+    font-size: 0.5rem;
+  }
+
+  .poster-and-other-wrap {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    margin-top: 0.25rem;
+    padding-top: 0.25rem;
+  }
+
+  .poster-and-other-wrap .poster-section,
+  .poster-and-other-wrap .other-projects {
+    width: 100%;
+    padding-right: 0;
+    padding-left: 0;
+    margin-left: 0;
+  }
+
+  .poster-and-other-wrap .poster-section-note {
+    text-align: left;
+    align-self: flex-start;
+    width: 100%;
+    max-width: none;
+    margin-left: 0;
+    margin-right: 0;
+  }
+
+  .poster-and-other-wrap .poster-section {
+    order: 1;
+  }
+
+  .poster-and-other-wrap .other-projects {
+    order: 2;
+    border-left: 0;
+    border-top: 1px solid hsl(240 14% 20%);
+    margin-top: 0;
+    padding-top: 0.95rem;
+  }
+
+  .poster-and-other-wrap .other-projects-grid {
+    grid-template-columns: 1fr;
+  }
+}
