@@ -5151,6 +5151,28 @@ body::before {
   }
 }
 
+@keyframes mobileSidekickLook {
+
+  0%,
+  15%,
+  35%,
+  65%,
+  85%,
+  100% {
+    transform: translateX(0);
+  }
+
+  20%,
+  30% {
+    transform: translateX(-2px);
+  }
+
+  70%,
+  80% {
+    transform: translateX(2px);
+  }
+}
+
 @media (max-width: 980px) {
   .robot-sidekick {
     left: 50%;
@@ -5255,6 +5277,7 @@ body::before {
     top: 7px;
     width: 8px;
     height: 8px;
+    animation: mobileSidekickLook 7s infinite ease-in-out;
   }
 
   .guide-bot-eye-left {
@@ -5792,25 +5815,34 @@ body::before {
 .sparky-antenna-orbit {
   position: absolute;
   left: 50%;
-  top: -5px;
-  width: 18px;
-  height: 18px;
-  transform: translateX(-50%);
+  top: -13px;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  margin-left: -14px;
   pointer-events: none;
-  animation: sparkyOrbitSpin 2.8s linear infinite;
+  background: conic-gradient(from 0deg, transparent 60%, rgba(165, 243, 252, 0.1) 80%, rgba(34, 211, 238, 0.4) 100%);
+  mask: radial-gradient(circle, transparent 45%, #000 48%, #000 100%);
+  -webkit-mask: radial-gradient(circle, transparent 45%, #000 48%, #000 100%);
+  transform-style: preserve-3d;
+  animation: sparkyOrbitSpin 2.4s linear infinite;
 }
 
 .sparky-antenna-orbit::before {
   content: '';
   position: absolute;
-  top: 0;
+  top: -2px;
   left: 50%;
-  width: 2.5px;
-  height: 2.5px;
+  width: 4px;
+  height: 4px;
   border-radius: 50%;
-  transform: translateX(-50%);
-  background: #a5f3fc;
-  box-shadow: 0 0 5px rgba(165, 243, 252, 0.9);
+  margin-left: -2px;
+  background: radial-gradient(circle, #ffffff 0%, #a5f3fc 40%, #06b6d4 100%);
+  box-shadow:
+    0 0 6px rgba(165, 243, 252, 0.9),
+    0 0 12px rgba(34, 211, 238, 0.6);
+  transform: rotateX(-75deg);
+  /* Counteract the tilt to keep the dot facing the camera */
 }
 
 /* --- Face --- */
@@ -5826,7 +5858,7 @@ body::before {
 /* --- Eyes (cursor tracked, with iris glow) --- */
 .sparky-eye {
   position: absolute;
-  top: 5px;
+  top: 3px;
   width: 7px;
   height: 7px;
   border-radius: 50%;
@@ -6008,7 +6040,7 @@ body::before {
 .sparky--happy .sparky-eye {
   height: 3px;
   border-radius: 7px 7px 0 0;
-  top: 8px;
+  top: 6px;
   box-shadow: 0 0 10px rgba(34, 211, 238, 0.9), 0 0 20px rgba(6, 182, 212, 0.3);
 }
 
@@ -6233,11 +6265,11 @@ body::before {
 
 @keyframes sparkyOrbitSpin {
   from {
-    transform: translateX(-50%) rotate(0deg);
+    transform: rotateX(75deg) rotateZ(0deg);
   }
 
   to {
-    transform: translateX(-50%) rotate(360deg);
+    transform: rotateX(75deg) rotateZ(360deg);
   }
 }
 

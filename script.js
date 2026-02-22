@@ -1184,6 +1184,9 @@
         panel.setAttribute('aria-hidden', 'true');
         overlay.classList.remove('active');
         document.body.style.overflow = '';
+
+        // Force the guide robot to re-appear using the resize event handler
+        window.dispatchEvent(new Event('resize'));
     }
 
     function normalizeModelMaterials() {
@@ -1724,6 +1727,14 @@
                 return;
             }
 
+            // Handle scrolling backwards up the page
+            if (currentContextId === 'featured' && (priorContextId === 'featuredPosters' || priorContextId === 'featuredOther')) {
+                featuredGuideComplete = false;
+                guideSequenceIndex = 0;
+            } else if (currentContextId === 'featuredPosters' && priorContextId === 'featuredOther') {
+                featuredPosterSequenceIndex = 0;
+            }
+
             guideSequencePauseContext = null;
             if (guideSequenceTimer) {
                 window.clearTimeout(guideSequenceTimer);
@@ -1865,9 +1876,6 @@
         if (nextContextId !== currentGuideContextId) {
             previousGuideContextId = currentGuideContextId;
             currentGuideContextId = nextContextId;
-            if (currentGuideContextId === 'featuredPosters') {
-                featuredPosterSequenceIndex = 0;
-            }
         }
         return currentGuideContextId;
     }
@@ -2081,6 +2089,7 @@
             // Ignore storage errors (private mode / blocked storage).
         }
 
+        markGuideIconHintSeen();
         clearTimers();
         clearIntroPromptTimer();
         clearGuideTriggerCue();
@@ -2312,7 +2321,10 @@
         if (idleTimer) clearTimeout(idleTimer);
         idleTimer = setTimeout(() => {
             if (currentEmotion !== 'happy' && currentEmotion !== 'surprised') {
-                setEmotion('sleepy', 0);
+                const isMobile = window.matchMedia('(max-width: 980px)').matches;
+                if (!isMobile) {
+                    setEmotion('sleepy', 0);
+                }
             }
         }, 6000);
     }
@@ -2326,7 +2338,7 @@
 
     document.querySelectorAll('.btn, .btn-primary, .btn-ghost, .card-node, .card, .robot-hotspot, nav a, .skill-pill').forEach(el => {
         el.addEventListener('mouseenter', () => {
-            if (currentEmotion !== 'surprised') setEmotion('happy', 800);
+            if (currentEmotion !== 'surprised') setEmotion('happy', 0);
         });
         el.addEventListener('mouseleave', () => {
             if (currentEmotion === 'happy') setEmotion('', 0);
