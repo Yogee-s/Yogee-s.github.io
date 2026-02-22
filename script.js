@@ -1339,6 +1339,8 @@
 
     const detailPanel = document.getElementById('detail-panel');
     const featuredSection = document.getElementById('featured');
+    const featuredSectionHead = featuredSection ? featuredSection.querySelector('.section-head') : null;
+    const featuredEyebrow = featuredSectionHead ? featuredSectionHead.querySelector('.eyebrow') : null;
     const featuredMapZone = featuredSection ? featuredSection.querySelector('.constellation-wrap') : null;
     const featuredPosterZone = featuredSection ? featuredSection.querySelector('.poster-section') : null;
     const featuredOtherZone = featuredSection ? featuredSection.querySelector('.other-projects') : null;
@@ -1348,7 +1350,7 @@
     const SESSION_KEY = 'portfolio_robot_sidekick_dismissed';
     const GUIDE_TOUR_EVENT = 'robot-guide:request-tour';
     const GUIDE_VISUAL_CUE_EVENT = 'robot-guide:visual-cue';
-    const INTRO_PROMPT = 'Want quick highlights? Press Guide Me!';
+    const INTRO_PROMPT = 'Want quick highlights? Click the robot icon or press Guide Me.';
     const GUIDE_ME_MAX_STEPS = 7;
 
     const messagePools = {
@@ -1432,6 +1434,8 @@
         dismissed = false;
     }
 
+    let guideIconHintSeen = false;
+
     let hideTimer = null;
     let guideSequenceTimer = null;
     let guideSequenceActive = false;
@@ -1480,6 +1484,12 @@
         if (!introPromptTimer) return;
         window.clearTimeout(introPromptTimer);
         introPromptTimer = null;
+    }
+
+    function markGuideIconHintSeen() {
+        if (guideIconHintSeen) return;
+        guideIconHintSeen = true;
+        avatarBtn.classList.add('guide-badge-hidden');
     }
 
     function clearGuideTriggerCue() {
@@ -1921,20 +1931,22 @@
         const topbar = document.getElementById('topbar');
         const titleAnchor = document.getElementById('robot-focus-title');
         const stageAnchor = document.getElementById('robot-stage');
+        const sectionHeadAnchor = featuredEyebrow || featuredSectionHead;
         const isMobileViewport = window.matchMedia('(max-width: 980px)').matches;
         const anchorCandidates = isMobileViewport
-            ? [featuredSection, stageAnchor, titleAnchor]
-            : [titleAnchor, stageAnchor, featuredSection];
+            ? [sectionHeadAnchor, featuredSection, titleAnchor, stageAnchor]
+            : [titleAnchor, stageAnchor, sectionHeadAnchor, featuredSection];
         const anchor = anchorCandidates.find((candidate) => {
             if (!(candidate instanceof Element)) return false;
             const rect = candidate.getBoundingClientRect();
             return candidate.getClientRects().length > 0 && rect.height > 0 && rect.width > 0;
-        }) || featuredSection || stageAnchor || titleAnchor;
+        }) || sectionHeadAnchor || featuredSection || stageAnchor || titleAnchor;
         if (!anchor) return;
 
         const topbarHeight = topbar ? topbar.getBoundingClientRect().height : 0;
         const anchorTop = window.scrollY + anchor.getBoundingClientRect().top;
-        const targetTop = Math.max(0, anchorTop - topbarHeight - 10);
+        const scrollOffset = isMobileViewport ? 2 : 10;
+        const targetTop = Math.max(0, anchorTop - topbarHeight - scrollOffset);
 
         window.scrollTo({
             top: targetTop,
@@ -2000,23 +2012,11 @@
     }
 
     avatarBtn.addEventListener('click', () => {
-        if (guideSequenceActive || !canShow()) return;
+        markGuideIconHintSeen();
+        if (guideSequenceActive || !canShow({ ignoreDismissed: true })) return;
         clearIntroPromptTimer();
         clearGuideTriggerCue();
-        const currentContextId = syncGuideContextState();
-        const comingBackToProjects = currentContextId === 'featured'
-            && (previousGuideContextId === 'featuredPosters' || previousGuideContextId === 'featuredOther');
-        const entry = comingBackToProjects ? pickFirstMessage('featured') : pickMessage(currentContextId);
-        if (comingBackToProjects) {
-            previousGuideContextId = currentContextId;
-        }
-        if (!entry) return;
-
-        const shown = showMessage(entry.text);
-        if (!shown) return;
-
-        lastSpokenEntry = entry;
-        emitGuideVisualCue(entry);
+        document.dispatchEvent(new CustomEvent(GUIDE_TOUR_EVENT));
     });
 
     dismissBtn.addEventListener('click', () => {

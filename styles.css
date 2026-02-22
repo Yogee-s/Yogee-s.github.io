@@ -4669,6 +4669,7 @@ body::before {
   border-radius: 50%;
   border: 0;
   background: transparent;
+  overflow: visible;
   box-shadow: none;
   cursor: pointer;
   transform-origin: center bottom;
@@ -4683,6 +4684,41 @@ body::before {
   border-radius: 50%;
   background: radial-gradient(circle, rgba(34, 211, 238, 0.16) 0%, rgba(6, 182, 212, 0.06) 52%, transparent 74%);
   filter: blur(0.4px);
+}
+
+.robot-sidekick-avatar::after {
+  content: "Click me";
+  position: absolute;
+  left: 50%;
+  bottom: -10px;
+  transform: translateX(-50%);
+  padding: 0.12rem 0.36rem;
+  border-radius: 999px;
+  border: 1px solid rgba(125, 211, 252, 0.52);
+  background: linear-gradient(145deg, rgba(10, 25, 47, 0.96), rgba(8, 47, 73, 0.94));
+  color: #d6f9ff;
+  font-family: var(--font-mono);
+  font-size: 0.44rem;
+  line-height: 1.08;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 6px 12px rgba(2, 6, 23, 0.34), 0 0 10px rgba(34, 211, 238, 0.18);
+  pointer-events: none;
+  z-index: 2;
+}
+
+.robot-sidekick-avatar.guide-badge-hidden::after {
+  content: none;
+}
+
+.robot-sidekick.is-visible .robot-sidekick-avatar::before {
+  animation: sidekickIconHalo 1.9s ease-in-out infinite;
+}
+
+.robot-sidekick.is-visible .robot-sidekick-avatar::after {
+  animation: sidekickBadgePulse 1.9s ease-in-out infinite;
 }
 
 .guide-bot-shell {
@@ -4848,6 +4884,32 @@ body::before {
   }
 }
 
+@keyframes sidekickIconHalo {
+  0%,
+  100% {
+    opacity: 0.78;
+    box-shadow: 0 0 0 0 rgba(34, 211, 238, 0.08);
+  }
+
+  50% {
+    opacity: 1;
+    box-shadow: 0 0 0 8px rgba(34, 211, 238, 0.14);
+  }
+}
+
+@keyframes sidekickBadgePulse {
+  0%,
+  100% {
+    opacity: 0.86;
+    transform: translateX(-50%) translateY(0);
+  }
+
+  50% {
+    opacity: 1;
+    transform: translateX(-50%) translateY(-1px);
+  }
+}
+
 @media (max-width: 980px) {
   .robot-sidekick {
     left: 50%;
@@ -4901,6 +4963,13 @@ body::before {
     inset: 4px;
   }
 
+  .robot-sidekick-avatar::after {
+    bottom: -8px;
+    font-size: 0.4rem;
+    letter-spacing: 0.06em;
+    padding: 0.08rem 0.28rem;
+  }
+
   .guide-bot-shell {
     width: 50px;
     height: 44px;
@@ -4938,53 +5007,64 @@ body::before {
     grid-column: 2;
     grid-row: 1 / span 2;
     align-self: center;
-    font-size: 0.7rem;
-    line-height: 1.4;
+    font-size: 0.64rem;
+    line-height: 1.34;
     text-align: left;
-    padding-right: 1.2rem;
+    padding-right: 2.6rem;
   }
 
   .robot-sidekick-dismiss {
     position: absolute;
-    top: 0.34rem;
-    right: 0.34rem;
-    width: 23px;
-    min-width: 23px;
-    height: 23px;
+    top: 0.3rem;
+    right: 0.3rem;
+    width: 34px;
+    min-width: 34px;
+    height: 34px;
     margin: 0;
     padding: 0;
-    border-radius: 6px;
-    border: 1px solid rgba(248, 113, 113, 0.58);
-    background: rgba(220, 38, 38, 0.9);
+    border-radius: 999px;
+    border: 1px solid rgba(254, 202, 202, 0.76);
+    background: linear-gradient(150deg, rgba(248, 113, 113, 0.96), rgba(220, 38, 38, 0.94) 62%, rgba(153, 27, 27, 0.95));
     color: transparent;
     font-size: 0;
     line-height: 0;
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    box-shadow: 0 4px 10px rgba(220, 38, 38, 0.35);
+    box-shadow:
+      0 8px 16px rgba(220, 38, 38, 0.34),
+      0 0 0 1px rgba(127, 29, 29, 0.16),
+      inset 0 1px 0 rgba(255, 255, 255, 0.38);
   }
 
   .robot-sidekick-dismiss::before {
     content: '×';
     color: #fff;
-    font-size: 0.82rem;
+    font-size: 1.12rem;
     line-height: 1;
-    font-weight: 700;
+    font-weight: 800;
+    text-shadow: 0 1px 2px rgba(69, 10, 10, 0.46);
     letter-spacing: 0;
     text-transform: none;
   }
 
+  .robot-sidekick-dismiss:focus-visible {
+    outline: 2px solid rgba(254, 202, 202, 0.88);
+    outline-offset: 2px;
+  }
+
   .robot-sidekick-dismiss:hover {
-    transform: translateY(0);
-    background: rgba(239, 68, 68, 0.95);
-    border-color: rgba(252, 165, 165, 0.72);
+    transform: translateY(0) scale(1.03);
+    background: linear-gradient(150deg, rgba(252, 165, 165, 0.98), rgba(239, 68, 68, 0.95) 62%, rgba(185, 28, 28, 0.96));
+    border-color: rgba(254, 226, 226, 0.9);
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
   .hero-photo::after,
   .robot-sidekick-avatar,
+  .robot-sidekick-avatar::before,
+  .robot-sidekick-avatar::after,
   .guide-bot-antenna-tip,
   .guide-bot-eye,
   .robot-sidekick.is-speaking .robot-sidekick-bubble {
@@ -5006,13 +5086,13 @@ body::before {
     min-height: 460px;
     display: block;
     gap: 0;
-    margin-top: -1rem;
+    margin-top: -1.3rem;
   }
 
   #featured .robot-stage {
     position: absolute;
     left: 50%;
-    top: 50%;
+    top: 60%;
     transform: translate(-50%, -50%);
     width: min(182px, 49vw);
     height: 332px;
@@ -5020,13 +5100,31 @@ body::before {
     padding: 24px 0 20px;
   }
 
+  #featured .robot-stage-head {
+    display: grid;
+    top: 4px;
+    width: min(84vw, 228px);
+    gap: 0.12rem;
+  }
+
+  #featured .robot-stage-head h3 {
+    font-size: clamp(0.72rem, 3.2vw, 0.9rem);
+    line-height: 1.16;
+  }
+
+  #featured .robot-stage-head p {
+    max-width: 30ch;
+    font-size: clamp(0.5rem, 2.35vw, 0.63rem);
+    line-height: 1.28;
+    padding: 0.18rem 0.34rem;
+    border-radius: 6px;
+  }
+
   #featured .robot-stage-meta,
   #featured .robot-stage.has-active[data-active-project="breaking-bias"] .robot-stage-meta,
   #featured .robot-stage.has-active[data-active-project="teleco"] .robot-stage-meta,
   #featured .robot-stage.has-active[data-active-project="astar-rl"] .robot-stage-meta {
-    width: min(84vw, 240px);
-    top: calc(100% + 2px);
-    bottom: auto;
+    display: none;
   }
 
   #humanoid-model {
@@ -5072,7 +5170,7 @@ body::before {
 
   #featured .robot-project-grid .card-node[data-project="boxbunny"] {
     left: 2%;
-    top: 27%;
+    top: 22%;
   }
 
   #featured .robot-project-grid .card-node[data-project="idp"] {
@@ -5083,12 +5181,12 @@ body::before {
 
   #featured .robot-project-grid .card-node[data-project="breaking-bias"] {
     right: 2%;
-    top: 24%;
+    top: 20%;
   }
 
   #featured .robot-project-grid .card-node[data-project="teleco"] {
     right: 2%;
-    top: 49%;
+    top: 45%;
   }
 
   #featured .robot-project-grid .card-node[data-project="astar-rl"] {
