@@ -65,14 +65,22 @@
   <div class="bg-noise"></div>
 
   <header class="topbar" id="topbar">
-    <a class="brand" href="#home">Yogee<span>.</span></a>
+    <div class="brand-group">
+      <span class="brand-bot" aria-hidden="true">
+        <span class="brand-bot-head">
+          <span class="brand-bot-eye"></span>
+          <span class="brand-bot-eye"></span>
+        </span>
+      </span>
+      <a class="brand" href="#home">Yogee<span>.</span></a>
+    </div>
     <button class="nav-toggle" id="nav-toggle" type="button" aria-label="Toggle navigation" aria-expanded="false"
       aria-controls="main-nav">☰</button>
     <nav id="main-nav">
       <a href="#featured">Projects</a>
       <a href="#resume">Experience</a>
-      <button id="robot-guide-trigger" class="robot-guide-trigger" type="button"
-        aria-label="Summon robot guide">Guide Me</button>
+      <button id="robot-guide-trigger" class="robot-guide-trigger" type="button" aria-label="Summon robot guide">Guide
+        Me</button>
     </nav>
   </header>
 
@@ -294,57 +302,57 @@
 
       <!-- Poster Gallery + Other Projects (side by side) -->
       <div class="poster-and-other-wrap">
-      <div class="poster-section">
-        <h3 class="poster-section-title"><span class="guide-section-label">Poster Gallery</span></h3>
-        <p class="poster-section-note">I love designing posters and put strong emphasis on making information easy to
-          understand at a glance. For LifeQuest, I designed both the game mechanics and its poster visuals.</p>
-        <div class="poster-grid">
-          <figure class="poster-card card">
-            <img class="js-lightbox" src="assets/idp_projects/balancing_robot_poster.png"
-              alt="IDP balancing robot poster" loading="lazy">
-            <figcaption>Balancing Robot</figcaption>
-          </figure>
-          <figure class="poster-card card">
-            <img class="js-lightbox" src="assets/orbital/orbital_first_poster.jpg" alt="Orbital first poster"
-              loading="lazy">
-            <figcaption>Orbital v1</figcaption>
-          </figure>
-          <figure class="poster-card card">
-            <img class="js-lightbox" src="assets/orbital/orbital_final_poster.jpg" alt="Orbital final poster"
-              loading="lazy">
-            <figcaption>Orbital Final</figcaption>
-          </figure>
+        <div class="poster-section">
+          <h3 class="poster-section-title"><span class="guide-section-label">Poster Gallery</span></h3>
+          <p class="poster-section-note">I love designing posters and put strong emphasis on making information easy to
+            understand at a glance. For LifeQuest, I designed both the game mechanics and its poster visuals.</p>
+          <div class="poster-grid">
+            <figure class="poster-card card">
+              <img class="js-lightbox" src="assets/idp_projects/balancing_robot_poster.png"
+                alt="IDP balancing robot poster" loading="lazy">
+              <figcaption>Balancing Robot</figcaption>
+            </figure>
+            <figure class="poster-card card">
+              <img class="js-lightbox" src="assets/orbital/orbital_first_poster.jpg" alt="Orbital first poster"
+                loading="lazy">
+              <figcaption>Orbital v1</figcaption>
+            </figure>
+            <figure class="poster-card card">
+              <img class="js-lightbox" src="assets/orbital/orbital_final_poster.jpg" alt="Orbital final poster"
+                loading="lazy">
+              <figcaption>Orbital Final</figcaption>
+            </figure>
+          </div>
         </div>
-      </div>
 
-      <!-- Other Projects row -->
-      <div class="other-projects">
-        <h3 class="other-projects-title"><span class="guide-section-label">Other Projects</span></h3>
-        <div class="other-projects-grid">
-          <article class="card other-card">
-            <h4>LifeQuest (NUS Orbital)</h4>
-            <p class="meta">Co-Lead · May – Aug 2023</p>
-            <div class="tech-tags">
-              <span class="tech-tag">React Native</span>
-              <span class="tech-tag">Firebase</span>
-            </div>
-            <p>Gamified productivity app with auth, progress tracking, and social battles.</p>
-            <div class="links">
-              <a href="assets/orbital/milestone_3_submission.pdf" target="_blank" rel="noopener noreferrer">Report</a>
-              <a href="https://github.com/Yogee-s/NUS-Orbital-2023" class="card-repo-btn" target="_blank"
-                rel="noopener noreferrer">
-                <svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true">
-                  <path
-                    d="M8 0c-4.42 0-8 3.58-8 8 0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38a8.013 8.013 0 0 0-5.55-7.97z">
-                  </path>
-                </svg>
-                GitHub
-              </a>
-            </div>
-          </article>
+        <!-- Other Projects row -->
+        <div class="other-projects">
+          <h3 class="other-projects-title"><span class="guide-section-label">Other Projects</span></h3>
+          <div class="other-projects-grid">
+            <article class="card other-card">
+              <h4>LifeQuest (NUS Orbital)</h4>
+              <p class="meta">Co-Lead · May – Aug 2023</p>
+              <div class="tech-tags">
+                <span class="tech-tag">React Native</span>
+                <span class="tech-tag">Firebase</span>
+              </div>
+              <p>Gamified productivity app with auth, progress tracking, and social battles.</p>
+              <div class="links">
+                <a href="assets/orbital/milestone_3_submission.pdf" target="_blank" rel="noopener noreferrer">Report</a>
+                <a href="https://github.com/Yogee-s/NUS-Orbital-2023" class="card-repo-btn" target="_blank"
+                  rel="noopener noreferrer">
+                  <svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true">
+                    <path
+                      d="M8 0c-4.42 0-8 3.58-8 8 0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38a8.013 8.013 0 0 0-5.55-7.97z">
+                    </path>
+                  </svg>
+                  GitHub
+                </a>
+              </div>
+            </article>
 
+          </div>
         </div>
-      </div>
       </div>
     </section>
 
@@ -993,16 +1001,29 @@
     </div>
     <button id="robot-sidekick-avatar" class="robot-sidekick-avatar" type="button"
       aria-label="Show robotics assistant tip">
-      <span class="guide-bot-shell" aria-hidden="true">
-        <span class="guide-bot-antenna"></span>
-        <span class="guide-bot-antenna-tip"></span>
-        <span class="guide-bot-faceplate">
-          <span class="guide-bot-eye guide-bot-eye-left"></span>
-          <span class="guide-bot-eye guide-bot-eye-right"></span>
-          <span class="guide-bot-cheek guide-bot-cheek-left"></span>
-          <span class="guide-bot-cheek guide-bot-cheek-right"></span>
-          <span class="guide-bot-smile"></span>
+      <span class="sparky-avatar-wrap" aria-hidden="true">
+        <span class="sparky-particles" id="sparky-particles"></span>
+        <span class="sparky-antenna">
+          <span class="sparky-antenna-tip"></span>
+          <span class="sparky-antenna-orbit"></span>
         </span>
+        <span class="sparky-head">
+          <span class="sparky-scanline"></span>
+          <span class="sparky-face" id="sparky-face">
+            <span class="sparky-eye sparky-eye-left"><span class="sparky-iris"></span></span>
+            <span class="sparky-eye sparky-eye-right"><span class="sparky-iris"></span></span>
+            <span class="sparky-mouth"></span>
+          </span>
+          <span class="sparky-head-shimmer"></span>
+        </span>
+        <span class="sparky-torso">
+          <span class="sparky-energy-ring"></span>
+          <span class="sparky-core"></span>
+        </span>
+        <span class="sparky-arm sparky-arm-left"><span class="sparky-hand"></span></span>
+        <span class="sparky-arm sparky-arm-right"><span class="sparky-hand"></span></span>
+        <span class="sparky-leg sparky-leg-left"><span class="sparky-foot"></span></span>
+        <span class="sparky-leg sparky-leg-right"><span class="sparky-foot"></span></span>
       </span>
     </button>
   </aside>

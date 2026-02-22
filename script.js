@@ -2012,11 +2012,22 @@
         sidekick.classList.add('is-visible');
         syncAria(false);
 
+        /* --- Sparky emotes on message changes --- */
         if (!wasVisible) {
+            // First appearance: wave hello
+            sidekick.classList.remove('sparky--happy', 'sparky--surprised', 'sparky--sleepy');
+            sidekick.classList.add('sparky--wave');
+            setTimeout(() => { sidekick.classList.remove('sparky--wave'); }, 1200);
             sidekick.classList.remove('is-speaking');
             requestAnimationFrame(() => {
                 sidekick.classList.add('is-speaking');
             });
+        } else if (shouldAnimateSwap) {
+            // New message while already visible: happy reaction
+            sidekick.classList.remove('sparky--wave', 'sparky--surprised', 'sparky--sleepy');
+            sidekick.classList.add('sparky--happy');
+            setTimeout(() => { sidekick.classList.remove('sparky--happy'); }, 800);
+            sidekick.classList.add('is-speaking');
         } else {
             sidekick.classList.add('is-speaking');
         }
@@ -2186,3 +2197,150 @@
         hideSidekick();
     }
 })();
+
+/* ========================================================
+   SPARKY AVATAR — EYE TRACKING + EMOTIONS + PARTICLES (premium)
+   ======================================================== */
+(function initSparkyAvatar() {
+    const sidekick = document.getElementById('robot-sidekick');
+    const face = document.getElementById('sparky-face');
+    const particleContainer = document.getElementById('sparky-particles');
+    const avatarWrap = sidekick ? sidekick.querySelector('.sparky-avatar-wrap') : null;
+    if (!sidekick || !face) return;
+
+    let mouseX = window.innerWidth / 2;
+    let mouseY = window.innerHeight / 2;
+    let currentEmotion = '';
+    let emotionTimer = null;
+    let idleTimer = null;
+    let currentEyeX = 0;
+    let hasMaterialized = false;
+
+    // --- Particle System ---
+    const PARTICLE_COUNT = 6;
+    const particles = [];
+
+    function createParticles() {
+        if (!particleContainer) return;
+        for (let i = 0; i < PARTICLE_COUNT; i++) {
+            const el = document.createElement('span');
+            el.className = 'sparky-particle';
+            const startX = (Math.random() - 0.5) * 40;
+            const startY = Math.random() * 40 + 10;
+            const endX = startX + (Math.random() - 0.5) * 20;
+            const endY = -(Math.random() * 35 + 15);
+            const duration = 2.5 + Math.random() * 2;
+            const delay = Math.random() * duration;
+            const size = 1.5 + Math.random() * 2.5;
+
+            el.style.setProperty('--start-x', startX + 'px');
+            el.style.setProperty('--start-y', startY + 'px');
+            el.style.setProperty('--end-x', endX + 'px');
+            el.style.setProperty('--end-y', endY + 'px');
+            el.style.setProperty('--drift-duration', duration + 's');
+            el.style.setProperty('--drift-delay', delay + 's');
+            el.style.width = size + 'px';
+            el.style.height = size + 'px';
+
+            particleContainer.appendChild(el);
+            particles.push(el);
+        }
+    }
+
+    createParticles();
+
+    // --- Materialize Entrance ---
+    function playMaterializeEntrance() {
+        if (hasMaterialized || !avatarWrap) return;
+        hasMaterialized = true;
+        avatarWrap.classList.add('sparky--materializing');
+        avatarWrap.addEventListener('animationend', function handler() {
+            avatarWrap.classList.remove('sparky--materializing');
+            avatarWrap.removeEventListener('animationend', handler);
+        });
+    }
+
+    // Observer to detect when sidekick becomes visible
+    const visObserver = new MutationObserver(function () {
+        if (sidekick.classList.contains('is-visible') && !hasMaterialized) {
+            playMaterializeEntrance();
+        }
+    });
+    visObserver.observe(sidekick, { attributes: true, attributeFilter: ['class'] });
+
+    // --- Eye Tracking (with lerp for organic movement) ---
+    function updateEyes() {
+        const rect = sidekick.getBoundingClientRect();
+        const centerX = rect.right - 42;
+        const centerY = rect.bottom - 50;
+        const dx = mouseX - centerX;
+        const dy = mouseY - centerY;
+        const dist = Math.sqrt(dx * dx + dy * dy);
+        const maxOffset = 3;
+        const factor = dist > 0 ? Math.min(maxOffset / dist, maxOffset / 80) : 0;
+        const targetEyeX = Math.max(-3, Math.min(3, dx * factor));
+
+        // Lerp for smooth following
+        currentEyeX += (targetEyeX - currentEyeX) * 0.15;
+        sidekick.style.setProperty('--eye-x', currentEyeX.toFixed(2) + 'px');
+        sidekick.style.setProperty('--eye-y', '0px');
+    }
+
+    function eyeLoop() {
+        updateEyes();
+        requestAnimationFrame(eyeLoop);
+    }
+
+    // --- Emotions ---
+    function setEmotion(emotion, durationMs) {
+        if (emotionTimer) { clearTimeout(emotionTimer); emotionTimer = null; }
+        sidekick.classList.remove('sparky--happy', 'sparky--surprised', 'sparky--sleepy');
+        currentEmotion = emotion;
+        if (emotion) {
+            sidekick.classList.add('sparky--' + emotion);
+            if (durationMs) {
+                emotionTimer = setTimeout(() => {
+                    sidekick.classList.remove('sparky--' + emotion);
+                    if (currentEmotion === emotion) currentEmotion = '';
+                }, durationMs);
+            }
+        }
+    }
+
+    function resetIdleTimer() {
+        if (currentEmotion === 'sleepy') setEmotion('', 0);
+        if (idleTimer) clearTimeout(idleTimer);
+        idleTimer = setTimeout(() => {
+            if (currentEmotion !== 'happy' && currentEmotion !== 'surprised') {
+                setEmotion('sleepy', 0);
+            }
+        }, 6000);
+    }
+
+    // --- Events ---
+    document.addEventListener('mousemove', function (e) {
+        mouseX = e.clientX;
+        mouseY = e.clientY;
+        resetIdleTimer();
+    }, { passive: true });
+
+    document.querySelectorAll('.btn, .btn-primary, .btn-ghost, .card-node, .card, .robot-hotspot, nav a, .skill-pill').forEach(el => {
+        el.addEventListener('mouseenter', () => {
+            if (currentEmotion !== 'surprised') setEmotion('happy', 800);
+        });
+        el.addEventListener('mouseleave', () => {
+            if (currentEmotion === 'happy') setEmotion('', 0);
+        });
+    });
+
+    document.addEventListener('click', function (e) {
+        const target = e.target;
+        if (!(target instanceof Element)) return;
+        const isInteractive = target.closest('.btn, .btn-primary, .btn-ghost, .card-node-open, .robot-guide-trigger, .card-node, .robot-hotspot, nav a');
+        if (isInteractive) setEmotion('surprised', 500);
+    });
+
+    requestAnimationFrame(eyeLoop);
+    resetIdleTimer();
+})();
+
