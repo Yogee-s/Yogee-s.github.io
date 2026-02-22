@@ -643,6 +643,9 @@
     const otherProjectsSection = section.querySelector('.other-projects');
     const posterSectionTitle = posterSection ? posterSection.querySelector('.poster-section-title') : null;
     const otherProjectsTitle = otherProjectsSection ? otherProjectsSection.querySelector('.other-projects-title') : null;
+    const resumeSection = document.getElementById('resume');
+    const resumeSectionHead = resumeSection ? resumeSection.querySelector('.section-head') : null;
+    const resumeSectionTitle = resumeSectionHead ? resumeSectionHead.querySelector('h2') : null;
 
     const focusTitle = document.getElementById('robot-focus-title');
     const focusDesc = document.getElementById('robot-focus-desc');
@@ -913,6 +916,7 @@
         if (otherProjectsTitle) otherProjectsTitle.classList.remove('guide-section-spotlight');
         if (posterSection) posterSection.classList.remove('guide-section-spotlight');
         if (otherProjectsSection) otherProjectsSection.classList.remove('guide-section-spotlight');
+        if (resumeSectionTitle) resumeSectionTitle.classList.remove('guide-resume-spotlight');
     }
 
     function snapshotGuideState() {
@@ -963,6 +967,39 @@
             return otherProjectsTitle || otherProjectsSection;
         }
         return null;
+    }
+
+    function resolveGuideSectionTargets(rawSectionRef) {
+        const sectionRefs = Array.isArray(rawSectionRef) ? rawSectionRef : [rawSectionRef];
+        const targets = [];
+        sectionRefs.forEach((sectionRef) => {
+            const target = resolveGuideSectionTarget(sectionRef);
+            if (!target || targets.includes(target)) return;
+            targets.push(target);
+        });
+        return targets;
+    }
+
+    function resolveGuideResumeTargets(rawTargets) {
+        const knownTargets = {
+            heading: resumeSectionTitle || resumeSectionHead,
+            title: resumeSectionTitle || resumeSectionHead
+        };
+        const requestedTargets = Array.isArray(rawTargets)
+            ? rawTargets
+            : ['heading'];
+        const includeAll = requestedTargets.some((target) => String(target).toLowerCase() === 'all');
+        const targetKeys = includeAll ? ['heading'] : requestedTargets;
+        const resolvedTargets = [];
+
+        targetKeys.forEach((target) => {
+            const key = String(target).toLowerCase();
+            const element = knownTargets[key];
+            if (!element || resolvedTargets.includes(element)) return;
+            resolvedTargets.push(element);
+        });
+
+        return resolvedTargets;
     }
 
     function applyGuideSpotlight(projectId, options = {}) {
@@ -1031,13 +1068,31 @@
         }, durationMs);
     }
 
-    function showGuideSectionCue(sectionId, options = {}) {
-        const target = resolveGuideSectionTarget(sectionId);
-        if (!target) return;
-        target.classList.add('guide-section-spotlight');
+    function showGuideSectionCue(sectionRef, options = {}) {
+        const targets = resolveGuideSectionTargets(sectionRef);
+        if (!targets.length) return;
+        targets.forEach((target) => {
+            target.classList.add('guide-section-spotlight');
+        });
 
         if (options.restore === false) return;
         const durationMs = Math.max(1200, Number(options.durationMs) || 2600);
+        guideCueRestoreTimer = window.setTimeout(() => {
+            stopGuideVisualCue({ restore: true });
+        }, durationMs);
+    }
+
+    function showGuideResumeCue(options = {}) {
+        const targets = resolveGuideResumeTargets(options.targets);
+        if (!targets.length) return;
+
+        targets.forEach((target) => {
+            target.classList.add('guide-resume-spotlight');
+        });
+
+        const shouldRestore = options.restore === true;
+        if (!shouldRestore) return;
+        const durationMs = Math.max(1200, Number(options.durationMs) || 3000);
         guideCueRestoreTimer = window.setTimeout(() => {
             stopGuideVisualCue({ restore: true });
         }, durationMs);
@@ -1061,7 +1116,12 @@
             return;
         }
         if (cueType === 'sectionCue') {
-            showGuideSectionCue(detail.section, detail);
+            const sectionRef = Array.isArray(detail.sections) ? detail.sections : detail.section;
+            showGuideSectionCue(sectionRef, detail);
+            return;
+        }
+        if (cueType === 'resumeCue') {
+            showGuideResumeCue(detail);
             return;
         }
 
@@ -1386,11 +1446,11 @@
             {
                 id: 'poster-clarity',
                 text: 'I design posters to be clear, aesthetic, and easy to read.',
-                ttlMs: 2500,
+                ttlMs: 1800,
                 cue: {
                     type: 'sectionCue',
                     section: 'poster',
-                    durationMs: 2600
+                    durationMs: 2050
                 }
             },
             {
@@ -1416,8 +1476,26 @@
             }
         ],
         resume: [
-            'This timeline shows my growth from the foundations to deployed robotics systems.',
-            'It reflects work across simulation, controls, perception, and full integration.'
+            {
+                id: 'resume-growth-path',
+                text: 'This timeline shows my growth from the foundations to deployed robotics systems.',
+                cue: {
+                    type: 'resumeCue',
+                    targets: ['heading'],
+                    durationMs: 3200,
+                    restore: false
+                }
+            },
+            {
+                id: 'resume-skill-breadth',
+                text: 'It reflects work across simulation, controls, perception, and full integration.',
+                cue: {
+                    type: 'resumeCue',
+                    targets: ['heading'],
+                    durationMs: 3000,
+                    restore: false
+                }
+            }
         ],
         contact: [
             'If this work aligns with your interests, feel free to connect.'
@@ -1443,6 +1521,7 @@
     let guideSequencePauseContext = null;
     let featuredGuideComplete = false;
     let featuredPosterSequenceIndex = 0;
+    let featuredPosterOrOtherSeen = false;
     let introPromptTimer = null;
     let guideTriggerCueTimer = null;
     let messageSwapTimer = null;
@@ -1622,6 +1701,29 @@
             if (!isFeaturedGuideContext(currentContextId)) {
                 clearGuideVisualCue();
             }
+
+            const inPosterOrOtherContext = currentContextId === 'featuredPosters' || currentContextId === 'featuredOther';
+            const posterOrOtherSeenBefore = featuredPosterOrOtherSeen;
+            if (inPosterOrOtherContext) featuredPosterOrOtherSeen = true;
+            const enteredPosterOrOtherFromOutsideFeatured = inPosterOrOtherContext && !isFeaturedGuideContext(priorContextId);
+            const shouldHoldCombinedFeaturedLabels = inPosterOrOtherContext
+                && (posterOrOtherSeenBefore || enteredPosterOrOtherFromOutsideFeatured || guideSequenceIndex >= GUIDE_ME_MAX_STEPS);
+            if (shouldHoldCombinedFeaturedLabels) {
+                document.dispatchEvent(new CustomEvent(GUIDE_VISUAL_CUE_EVENT, {
+                    detail: {
+                        type: 'sectionCue',
+                        sections: ['poster', 'other'],
+                        restore: false
+                    }
+                }));
+                guideSequencePauseContext = currentContextId;
+                if (guideSequenceTimer) {
+                    window.clearTimeout(guideSequenceTimer);
+                    guideSequenceTimer = null;
+                }
+                return;
+            }
+
             guideSequencePauseContext = null;
             if (guideSequenceTimer) {
                 window.clearTimeout(guideSequenceTimer);
@@ -1790,7 +1892,13 @@
     function emitGuideVisualCue(messageEntry) {
         if (!messageEntry || !messageEntry.cue) return;
         const contextId = getCurrentGuideContextId();
-        if (contextId !== 'featured' && contextId !== 'featuredPosters' && contextId !== 'featuredOther') return;
+        const cueType = typeof messageEntry.cue.type === 'string' ? messageEntry.cue.type : 'spotlight';
+        const isFeaturedContext = contextId === 'featured' || contextId === 'featuredPosters' || contextId === 'featuredOther';
+        if (cueType === 'resumeCue') {
+            if (contextId !== 'resume') return;
+        } else if (!isFeaturedContext) {
+            return;
+        }
         document.dispatchEvent(new CustomEvent(GUIDE_VISUAL_CUE_EVENT, { detail: messageEntry.cue }));
     }
 
@@ -1971,6 +2079,7 @@
         guideSequencePauseContext = null;
         featuredGuideComplete = false;
         featuredPosterSequenceIndex = 0;
+        featuredPosterOrOtherSeen = false;
         pendingGuideReplayEntry = null;
         pendingGuideReplayContext = null;
         lastSpokenEntry = null;
