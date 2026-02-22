@@ -1728,10 +1728,7 @@
             }
 
             // Handle scrolling backwards up the page
-            if (currentContextId === 'featured' && (priorContextId === 'featuredPosters' || priorContextId === 'featuredOther')) {
-                featuredGuideComplete = false;
-                guideSequenceIndex = 0;
-            } else if (currentContextId === 'featuredPosters' && priorContextId === 'featuredOther') {
+            if (currentContextId === 'featuredPosters' && priorContextId === 'featuredOther') {
                 featuredPosterSequenceIndex = 0;
             }
 
