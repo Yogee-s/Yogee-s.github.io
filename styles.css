@@ -7297,6 +7297,21 @@ body::before {
   border-bottom: 1px solid var(--glass-border);
 }
 
+.deep-dive-note {
+  margin: 0 0 0.7rem;
+  padding: 0.65rem 0.9rem;
+  font-size: 0.88rem;
+  line-height: 1.5;
+  color: var(--text-secondary);
+  background: rgba(6, 182, 212, 0.08);
+  border-left: 3px solid var(--accent-1);
+  border-radius: 6px;
+}
+
+.deep-dive-note strong {
+  color: var(--accent-1);
+}
+
 .companion-video video {
   width: 100%;
   height: auto;
