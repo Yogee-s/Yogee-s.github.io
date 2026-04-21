@@ -7,7 +7,7 @@
         'Computer Vision Engineer',
         'Reinforcement Learning Researcher',
         'Perception Pipeline Builder',
-        'Embodied AI Engineer'
+        'On-device LLM & Embodied AI Engineer'
     ];
 
     const typedEl = document.getElementById('typed-text');
@@ -624,7 +624,7 @@
 })();
 
 /* ========================================================
-   FEATURED PROJECTS — ROBOT BODY MAP
+   FEATURED PROJECTS · ROBOT BODY MAP
    ======================================================== */
 
 (function initHumanoidMap() {
@@ -661,8 +661,8 @@
 
     const PROJECTS = {
         'boxbunny': {
-            panelTitle: 'BoxBunny: Intelligent Boxing Robot',
-            panelPill: 'In Progress',
+            panelTitle: 'BoxBunny · Intelligent Boxing Robot',
+            panelPill: 'Final Year Project',
             focusTitle: 'Full-Body Integration',
             focusDesc: 'Full-body integration across perception, control, and feedback.',
             partLabel: 'Scope: Full-body system integration',
@@ -671,6 +671,18 @@
             cameraTarget: '0m 0.02m 0m',
             color: '#f59e0b',
             template: 'tpl-boxbunny'
+        },
+        'robotic-companion': {
+            panelTitle: 'Robotic Companion',
+            panelPill: 'UREx · Solo',
+            focusTitle: 'Chest / Embodied Social Cognition',
+            focusDesc: 'On-device voice, vision, and affect fused into an embodied companion.',
+            partLabel: 'Targeted area: Embodied social AI (head + torso)',
+            projectLabel: 'Robotic Companion - offline emotion-aware voice and face loop',
+            cameraOrbit: '-14deg 78deg 2.82m',
+            cameraTarget: '0m 0.40m 0.1m',
+            color: '#10b981',
+            template: 'tpl-robotic-companion'
         },
         'teleco': {
             panelTitle: 'Teleco Localization',
@@ -2205,7 +2217,7 @@
 })();
 
 /* ========================================================
-   SPARKY AVATAR — EYE TRACKING + EMOTIONS + PARTICLES (premium)
+   SPARKY AVATAR · EYE TRACKING + EMOTIONS + PARTICLES (premium)
    ======================================================== */
 (function initSparkyAvatar() {
     const sidekick = document.getElementById('robot-sidekick');

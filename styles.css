@@ -1,5 +1,5 @@
 /* ============================================
-   PORTFOLIO — DARK PREMIUM THEME
+   PORTFOLIO · DARK PREMIUM THEME
    ============================================ */
 
 /* --- Design Tokens --- */
@@ -2232,7 +2232,7 @@ figcaption {
 }
 
 /* ========================================================
-   PROJECT CONSTELLATION — Card-Node Layout
+   PROJECT CONSTELLATION · Card-Node Layout
    ======================================================== */
 
 /* --- Project Constellation --- */
@@ -2547,6 +2547,16 @@ figcaption {
   border-color: rgba(252, 165, 165, 0.4);
 }
 
+.card-node[data-project="robotic-companion"] {
+  --node-color: #10b981;
+}
+
+.card-node[data-project="robotic-companion"] .card-node-pill {
+  background: rgba(16, 185, 129, 0.2);
+  color: #6ee7b7;
+  border-color: rgba(16, 185, 129, 0.4);
+}
+
 .card-node-tags {
   display: flex;
   flex-wrap: wrap;
@@ -2608,7 +2618,7 @@ figcaption {
   box-shadow: 0 0 32px var(--node-glow, hsl(250 60% 50% / 0.3));
 }
 
-/* ---- Detail Panel — FULL SCREEN ---- */
+/* ---- Detail Panel · FULL SCREEN ---- */
 .detail-panel {
   position: fixed;
   inset: 0;
@@ -3339,6 +3349,17 @@ figcaption {
   --hotspot-color: #fca5a5;
 }
 
+#featured .robot-hotspot[data-project="robotic-companion"] {
+  --hotspot-color: #10b981;
+}
+
+#featured .robot-hotspot[data-project="robotic-companion"] .hotspot-label {
+  right: calc(100% + 16px);
+  left: auto;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
 #featured .robot-stage-meta {
   position: absolute;
   left: 50%;
@@ -3380,7 +3401,8 @@ figcaption {
 
 #featured .robot-stage.has-active[data-active-project="breaking-bias"] .robot-stage-meta,
 #featured .robot-stage.has-active[data-active-project="teleco"] .robot-stage-meta,
-#featured .robot-stage.has-active[data-active-project="astar-rl"] .robot-stage-meta {
+#featured .robot-stage.has-active[data-active-project="astar-rl"] .robot-stage-meta,
+#featured .robot-stage.has-active[data-active-project="robotic-companion"] .robot-stage-meta {
   bottom: 4px;
 }
 
@@ -3435,20 +3457,15 @@ figcaption {
   pointer-events: none;
 }
 
+/* Uniform narrow width for all 6 constellation cards */
 #featured .robot-project-grid .card-node[data-project="boxbunny"],
-#featured .robot-project-grid .card-node[data-project="idp"] {
-  width: clamp(232px, 17.2vw, 272px);
-}
-
-#featured .robot-project-grid .card-node[data-project="boxbunny"],
-#featured .robot-project-grid .card-node[data-project="idp"] {
-  min-height: 0;
-}
-
+#featured .robot-project-grid .card-node[data-project="idp"],
 #featured .robot-project-grid .card-node[data-project="breaking-bias"],
 #featured .robot-project-grid .card-node[data-project="teleco"],
-#featured .robot-project-grid .card-node[data-project="astar-rl"] {
+#featured .robot-project-grid .card-node[data-project="astar-rl"],
+#featured .robot-project-grid .card-node[data-project="robotic-companion"] {
   width: clamp(186px, 13.6vw, 220px);
+  min-height: 0;
 }
 
 /* Right column: top/bottom align with left (12% / 6%); middle at 40% */
@@ -3460,6 +3477,11 @@ figcaption {
 #featured .robot-project-grid .card-node[data-project="boxbunny"] {
   left: 8.8%;
   top: 12%;
+}
+
+#featured .robot-project-grid .card-node[data-project="robotic-companion"] {
+  left: 8.8%;
+  top: 40%;
 }
 
 #featured .robot-project-grid .card-node[data-project="teleco"] {
@@ -3517,25 +3539,25 @@ figcaption {
       transparent 100%);
 }
 
-#featured .robot-project-grid .card-node[data-project="boxbunny"] .node-visual {
-  height: clamp(165px, 18vw, 215px);
-}
-
-#featured .robot-project-grid .card-node[data-project="idp"] .node-visual {
-  height: clamp(150px, 16vw, 195px);
-}
-
-/* Right column: same image height for all three so vertical gaps are consistent */
+/* Uniform 72px image height for all 6 cards (prevents vertical overlap between stacked cards) */
+#featured .robot-project-grid .card-node[data-project="boxbunny"] .node-visual,
+#featured .robot-project-grid .card-node[data-project="idp"] .node-visual,
 #featured .robot-project-grid .card-node[data-project="breaking-bias"] .node-visual,
 #featured .robot-project-grid .card-node[data-project="teleco"] .node-visual,
-#featured .robot-project-grid .card-node[data-project="astar-rl"] .node-visual {
+#featured .robot-project-grid .card-node[data-project="astar-rl"] .node-visual,
+#featured .robot-project-grid .card-node[data-project="robotic-companion"] .node-visual {
   height: 72px;
 }
 
-#featured .robot-project-grid .card-node[data-project="breaking-bias"],
-#featured .robot-project-grid .card-node[data-project="teleco"],
-#featured .robot-project-grid .card-node[data-project="astar-rl"] {
-  min-height: 0;
+/* Cover-fill the BoxBunny frame so no side bars appear, cropped around the robot body */
+#featured .robot-project-grid .card-node[data-project="boxbunny"] .node-visual img {
+  object-fit: cover;
+  object-position: center 20%;
+}
+
+/* Shift Teleco cover upward to frame the main robot */
+#featured .robot-project-grid .card-node[data-project="teleco"] .node-visual img {
+  object-position: center 40%;
 }
 
 #featured .robot-project-grid .node-content {
@@ -3572,6 +3594,7 @@ figcaption {
   margin-bottom: 0.16rem;
   display: -webkit-box;
   -webkit-line-clamp: 2;
+  line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
   color: rgba(255, 255, 255, 0.9);
@@ -3613,6 +3636,10 @@ figcaption {
 
 #featured .robot-project-grid .card-node[data-project="idp"] {
   --node-color: #fb7185;
+}
+
+#featured .robot-project-grid .card-node[data-project="robotic-companion"] {
+  --node-color: #10b981;
 }
 
 #featured .robot-project-grid .card-node[data-project="breaking-bias"] .card-node-pill {
@@ -3916,13 +3943,11 @@ figcaption {
   }
 
   #featured .robot-project-grid .card-node[data-project="boxbunny"],
-  #featured .robot-project-grid .card-node[data-project="idp"] {
-    width: clamp(212px, 17.5vw, 246px);
-  }
-
+  #featured .robot-project-grid .card-node[data-project="idp"],
   #featured .robot-project-grid .card-node[data-project="breaking-bias"],
   #featured .robot-project-grid .card-node[data-project="teleco"],
-  #featured .robot-project-grid .card-node[data-project="astar-rl"] {
+  #featured .robot-project-grid .card-node[data-project="astar-rl"],
+  #featured .robot-project-grid .card-node[data-project="robotic-companion"] {
     width: clamp(176px, 14vw, 206px);
   }
 
@@ -3933,7 +3958,8 @@ figcaption {
   }
 
   #featured .robot-project-grid .card-node[data-project="boxbunny"],
-  #featured .robot-project-grid .card-node[data-project="idp"] {
+  #featured .robot-project-grid .card-node[data-project="idp"],
+  #featured .robot-project-grid .card-node[data-project="robotic-companion"] {
     left: 6.8%;
   }
 }
@@ -4030,29 +4056,30 @@ figcaption {
     --card-transform: translate3d(0, 0, 0);
   }
 
+  #featured .robot-project-grid .card-node[data-project="boxbunny"],
+  #featured .robot-project-grid .card-node[data-project="idp"],
   #featured .robot-project-grid .card-node[data-project="breaking-bias"],
   #featured .robot-project-grid .card-node[data-project="teleco"],
-  #featured .robot-project-grid .card-node[data-project="astar-rl"] {
+  #featured .robot-project-grid .card-node[data-project="astar-rl"],
+  #featured .robot-project-grid .card-node[data-project="robotic-companion"] {
     width: clamp(128px, 19vw, 160px);
     min-height: 142px;
-  }
-
-  #featured .robot-project-grid .card-node[data-project="boxbunny"],
-  #featured .robot-project-grid .card-node[data-project="idp"] {
-    min-height: 0;
   }
 
   #featured .robot-project-grid .card-node[data-project="boxbunny"] {
     left: 2.8%;
     top: 12%;
-    width: clamp(136px, 21vw, 170px);
   }
 
   #featured .robot-project-grid .card-node[data-project="idp"] {
     left: 2.8%;
     bottom: 6%;
     top: auto;
-    width: clamp(136px, 21vw, 170px);
+  }
+
+  #featured .robot-project-grid .card-node[data-project="robotic-companion"] {
+    left: 2.8%;
+    top: 40%;
   }
 
   #featured .robot-project-grid .card-node[data-project="breaking-bias"] {
@@ -4075,15 +4102,13 @@ figcaption {
     height: 62px;
   }
 
+  #featured .robot-project-grid .card-node[data-project="boxbunny"] .node-visual,
+  #featured .robot-project-grid .card-node[data-project="idp"] .node-visual,
   #featured .robot-project-grid .card-node[data-project="breaking-bias"] .node-visual,
   #featured .robot-project-grid .card-node[data-project="teleco"] .node-visual,
-  #featured .robot-project-grid .card-node[data-project="astar-rl"] .node-visual {
+  #featured .robot-project-grid .card-node[data-project="astar-rl"] .node-visual,
+  #featured .robot-project-grid .card-node[data-project="robotic-companion"] .node-visual {
     height: 62px;
-  }
-
-  #featured .robot-project-grid .card-node[data-project="boxbunny"] .node-visual,
-  #featured .robot-project-grid .card-node[data-project="idp"] .node-visual {
-    height: clamp(76px, 21vw, 105px);
   }
 
   #featured .robot-project-grid .node-content {
@@ -4237,7 +4262,8 @@ figcaption {
 
   #featured .robot-stage.has-active[data-active-project="breaking-bias"] .robot-stage-meta,
   #featured .robot-stage.has-active[data-active-project="teleco"] .robot-stage-meta,
-  #featured .robot-stage.has-active[data-active-project="astar-rl"] .robot-stage-meta {
+  #featured .robot-stage.has-active[data-active-project="astar-rl"] .robot-stage-meta,
+  #featured .robot-stage.has-active[data-active-project="robotic-companion"] .robot-stage-meta {
     top: calc(100% + 6px);
     bottom: auto;
   }
@@ -4260,17 +4286,14 @@ figcaption {
     border-radius: 11px;
   }
 
+  #featured .robot-project-grid .card-node[data-project="boxbunny"],
+  #featured .robot-project-grid .card-node[data-project="idp"],
   #featured .robot-project-grid .card-node[data-project="breaking-bias"],
   #featured .robot-project-grid .card-node[data-project="teleco"],
-  #featured .robot-project-grid .card-node[data-project="astar-rl"] {
+  #featured .robot-project-grid .card-node[data-project="astar-rl"],
+  #featured .robot-project-grid .card-node[data-project="robotic-companion"] {
     width: clamp(102px, 34vw, 120px);
     min-height: 96px;
-  }
-
-  #featured .robot-project-grid .card-node[data-project="boxbunny"],
-  #featured .robot-project-grid .card-node[data-project="idp"] {
-    width: clamp(112px, 36vw, 132px);
-    min-height: 0;
   }
 
   #featured .robot-project-grid .card-node[data-project="boxbunny"] {
@@ -4282,6 +4305,11 @@ figcaption {
     left: 1%;
     bottom: 6%;
     top: auto;
+  }
+
+  #featured .robot-project-grid .card-node[data-project="robotic-companion"] {
+    left: 1%;
+    top: 40%;
   }
 
   #featured .robot-project-grid .card-node[data-project="breaking-bias"] {
@@ -4304,26 +4332,13 @@ figcaption {
     height: 32px;
   }
 
+  #featured .robot-project-grid .card-node[data-project="boxbunny"] .node-visual,
+  #featured .robot-project-grid .card-node[data-project="idp"] .node-visual,
   #featured .robot-project-grid .card-node[data-project="breaking-bias"] .node-visual,
   #featured .robot-project-grid .card-node[data-project="teleco"] .node-visual,
-  #featured .robot-project-grid .card-node[data-project="astar-rl"] .node-visual {
+  #featured .robot-project-grid .card-node[data-project="astar-rl"] .node-visual,
+  #featured .robot-project-grid .card-node[data-project="robotic-companion"] .node-visual {
     height: 32px;
-  }
-
-  #featured .robot-project-grid .card-node[data-project="boxbunny"] .node-visual,
-  #featured .robot-project-grid .card-node[data-project="idp"] .node-visual {
-    height: clamp(62px, 24vw, 88px);
-  }
-
-  #featured .robot-project-grid .card-node[data-project="boxbunny"] .node-visual {
-    height: 70px;
-  }
-
-  #featured .robot-project-grid .card-node[data-project="boxbunny"] .node-visual img,
-  #featured .robot-project-grid .card-node[data-project="idp"] .node-visual img {
-    object-fit: cover;
-    object-position: center;
-    background: transparent;
   }
 
   #featured .robot-project-grid .node-content {
@@ -5577,7 +5592,7 @@ body::before {
 }
 
 /* ===========================================
-   SPARKY V2 — CURSOR-INTERACTIVE ROBOT MASCOT
+   SPARKY V2 · CURSOR-INTERACTIVE ROBOT MASCOT
    =========================================== */
 
 .sparky {
@@ -6036,7 +6051,7 @@ body::before {
 
 /* ===== EMOTIONAL STATES ===== */
 
-/* Happy — sparkle eyes, wider smile */
+/* Happy · sparkle eyes, wider smile */
 .sparky--happy .sparky-eye {
   height: 3px;
   border-radius: 7px 7px 0 0;
@@ -6071,7 +6086,7 @@ body::before {
   box-shadow: 0 0 10px rgba(34, 211, 238, 0.8), 0 0 20px rgba(6, 182, 212, 0.4);
 }
 
-/* Surprised — big eyes, ring shockwave */
+/* Surprised · big eyes, ring shockwave */
 .sparky--surprised .sparky-eye {
   width: 9px;
   height: 9px;
@@ -6098,7 +6113,7 @@ body::before {
   animation: sparkyBounce 400ms ease;
 }
 
-/* Sleepy — staggered floating zzz */
+/* Sleepy · staggered floating zzz */
 .sparky--sleepy .sparky-eye {
   height: 2px;
   top: 9px;
@@ -6705,5 +6720,212 @@ body::before {
 
   .sparky:hover .sparky-body {
     animation: none !important;
+  }
+}
+
+/* ===== Shared detail-modal utilities (metric tiles, callouts, 3-col flow) ===== */
+.metric-strip {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0.5rem;
+  margin-top: 0.8rem;
+}
+
+.metric-tile {
+  display: flex;
+  flex-direction: column;
+  gap: 0.14rem;
+  padding: 0.6rem 0.65rem;
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-sm);
+  background: linear-gradient(160deg,
+      color-mix(in srgb, var(--accent-1) 10%, rgba(10, 12, 22, 0.6)) 0%,
+      rgba(8, 10, 16, 0.6) 100%);
+}
+
+.metric-value {
+  font-family: var(--font-mono);
+  font-weight: 700;
+  font-size: 1.05rem;
+  color: #7dd3fc;
+  letter-spacing: 0.01em;
+  line-height: 1.1;
+}
+
+.metric-label {
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  line-height: 1.25;
+}
+
+.flow-columns-3 {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  align-items: stretch;
+}
+
+.flow-columns-3 .boxing-column {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.flow-columns-3 .boxing-column > figure {
+  margin-top: auto;
+}
+
+/* Keep each pipeline step together so arrows don't orphan across line breaks */
+.flow-node {
+  white-space: nowrap;
+}
+
+.flow-col-img {
+  height: 160px;
+  object-fit: contain;
+  object-position: center;
+  background: rgba(0, 0, 0, 0.32);
+}
+
+.callout-strip {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin: 0.3rem 0 0;
+  padding: 0;
+}
+
+.callout-chip {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  font-weight: 500;
+  color: #a5f3fc;
+  background: rgba(6, 182, 212, 0.12);
+  border: 1px solid rgba(6, 182, 212, 0.3);
+  border-radius: 999px;
+  padding: 0.26rem 0.7rem;
+  white-space: nowrap;
+}
+
+.companion-video {
+  margin: 0.5rem 0 0.2rem;
+  max-width: 100%;
+}
+
+.companion-personality {
+  display: grid;
+  gap: 0.7rem;
+  padding: 0.85rem 0.95rem;
+  border: 1px solid color-mix(in srgb, #10b981 38%, var(--glass-border));
+  border-radius: var(--radius-sm);
+  background: linear-gradient(160deg,
+      color-mix(in srgb, #10b981 10%, rgba(10, 12, 22, 0.6)) 0%,
+      rgba(8, 10, 16, 0.65) 100%);
+  margin: 0.2rem 0;
+}
+
+.companion-personality .boxing-flow-title {
+  color: #6ee7b7;
+  margin: 0;
+  font-size: 0.95rem;
+}
+
+.companion-personality .project-copy p {
+  margin: 0.35rem 0 0;
+}
+
+.companion-personality .media-layout-2 img {
+  height: clamp(180px, 22vw, 260px);
+  object-fit: cover;
+  object-position: center;
+}
+
+.companion-personality .media-layout-2 .media-fit-contain {
+  object-fit: contain;
+  background: rgba(0, 0, 0, 0.4);
+}
+
+/* System Architecture section · full-width architecture diagrams */
+.companion-architecture {
+  display: grid;
+  gap: 0.7rem;
+  margin: 0.6rem 0 0;
+}
+
+.companion-architecture > p {
+  margin: 0;
+  color: var(--text-secondary);
+  font-size: 0.88rem;
+  line-height: 1.55;
+}
+
+.companion-architecture .boxing-flow-title {
+  margin: 0;
+}
+
+.arch-figure {
+  margin: 0;
+  padding: 0.55rem;
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.arch-figure img {
+  width: 100%;
+  height: auto;
+  max-height: 560px;
+  object-fit: contain;
+  background: #f6f7fb;
+  border-radius: 8px;
+  display: block;
+}
+
+@media (max-width: 760px) {
+  .arch-figure img {
+    max-height: 360px;
+  }
+}
+
+/* Center all captions within the Robotic Companion modal */
+.companion-detail figcaption {
+  text-align: center;
+}
+
+.links.cta-top {
+  margin: 0 0 0.9rem;
+  padding-bottom: 0.8rem;
+  border-bottom: 1px solid var(--glass-border);
+}
+
+.companion-video video {
+  width: 100%;
+  height: auto;
+  max-height: 540px;
+  aspect-ratio: auto;
+  object-fit: contain;
+  background: #000;
+  display: block;
+}
+
+@media (max-width: 760px) {
+  .metric-strip {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .flow-columns-3 {
+    grid-template-columns: 1fr;
+  }
+
+  .flow-col-img {
+    height: clamp(180px, 44vw, 260px);
+  }
+
+  .companion-video video {
+    max-height: 360px;
+  }
+
+  .companion-personality {
+    padding: 0.7rem 0.75rem;
+  }
+
+  .companion-personality .media-layout-2 img {
+    height: clamp(160px, 48vw, 240px);
   }
 }

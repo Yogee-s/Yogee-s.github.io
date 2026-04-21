@@ -1,0 +1,194 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 720" role="img" aria-labelledby="title">
+  <title id="title">Hardware topology</title>
+  <style>
+    .bg       { fill: #f6f7fb; }
+    .card     { fill: #ffffff; stroke: #e4e6ee; stroke-width: 1; }
+    .title    { fill: #14161f; font-family: -apple-system, "Segoe UI", Arial, sans-serif; font-size: 20px; font-weight: 700; letter-spacing: -0.01em; }
+    .sub      { fill: #6b7080; font-family: -apple-system, "Segoe UI", Arial, sans-serif; font-size: 13px; }
+    .section  { fill: #6b7080; font-family: ui-monospace, Consolas, monospace; font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; }
+    .tb       { fill: #14161f; font-family: -apple-system, "Segoe UI", Arial, sans-serif; font-size: 14px; font-weight: 700; }
+    .smallt   { fill: #6b7080; font-family: -apple-system, "Segoe UI", Arial, sans-serif; font-size: 11px; }
+    .hub-t    { fill: #ffffff; font-family: -apple-system, "Segoe UI", Arial, sans-serif; font-size: 16px; font-weight: 700; }
+    .hub-s    { fill: #cfddff; font-family: -apple-system, "Segoe UI", Arial, sans-serif; font-size: 12px; }
+    .chip-t   { fill: #14161f; font-family: ui-monospace, Consolas, monospace; font-size: 10px; font-weight: 700; letter-spacing: 0.04em; }
+    .role     { font-family: ui-monospace, Consolas, monospace; font-size: 10px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; }
+
+    .peri     { fill: #ffffff; stroke: #d6d8df; stroke-width: 1.2; }
+    .hub      { fill: #1e66f5; stroke: #1552d1; stroke-width: 1.4; }
+    .line     { stroke: #8b8e99; stroke-width: 1.6; fill: none; stroke-linecap: round; }
+    .chip     { fill: #ffffff; stroke: #d6d8df; stroke-width: 1; }
+
+    .in-bar   { fill: #2f8f3c; }
+    .out-bar  { fill: #b3741a; }
+    .disp-bar { fill: #7a1c5e; }
+    .ctrl-bar { fill: #6b7080; }
+
+    .in-role   { fill: #2f8f3c; }
+    .out-role  { fill: #b3741a; }
+    .disp-role { fill: #7a1c5e; }
+    .ctrl-role { fill: #6b7080; }
+  </style>
+
+  <defs>
+    <filter id="cardShadow" x="-5%" y="-5%" width="110%" height="115%">
+      <feDropShadow dx="0" dy="2" stdDeviation="4" flood-color="#14161f" flood-opacity="0.06"/>
+    </filter>
+    <filter id="hubShadow" x="-5%" y="-5%" width="110%" height="115%">
+      <feDropShadow dx="0" dy="4" stdDeviation="8" flood-color="#1e66f5" flood-opacity="0.28"/>
+    </filter>
+  </defs>
+
+  <rect class="bg" width="1080" height="720"/>
+
+  <!-- Title -->
+  <text class="title" x="540" y="46" text-anchor="middle">Hardware Topology</text>
+  <text class="sub"   x="540" y="70" text-anchor="middle">Jetson Orin Nano hub · every peripheral is a direct point-to-point link</text>
+
+  <!-- ═════════ MAIN DIAGRAM CARD ═════════ -->
+  <rect class="card" x="40" y="100" width="1000" height="500" rx="14" filter="url(#cardShadow)"/>
+  <text class="section" x="62" y="126">System Map</text>
+
+  <!-- ═════ HUB (Jetson) ═════ -->
+  <rect class="hub" x="410" y="310" width="260" height="100" rx="12" filter="url(#hubShadow)"/>
+  <text class="role" fill="#cfddff" x="540" y="336" text-anchor="middle">COMPUTE · HUB</text>
+  <text class="hub-t" x="540" y="362" text-anchor="middle">Jetson Orin Nano</text>
+  <text class="hub-s" x="540" y="382" text-anchor="middle">8 GB unified memory</text>
+  <text class="hub-s" x="540" y="398" text-anchor="middle">JetPack 6 · Ubuntu 22.04</text>
+
+  <!-- ═════ TOP ROW · SENSORS (Camera, Mic) ═════ -->
+  <!-- Camera (top-left) -->
+  <g>
+    <rect class="peri" x="80" y="160" width="220" height="92" rx="10" filter="url(#cardShadow)"/>
+    <rect class="in-bar" x="80" y="160" width="6" height="92" rx="3"/>
+    <text class="role in-role" x="100" y="184">SENSE · INPUT</text>
+    <text class="tb"     x="100" y="208">IMX219 CSI Camera</text>
+    <text class="smallt" x="100" y="226">640 × 480 @ 30 fps</text>
+    <text class="smallt" x="100" y="242">wide-angle · CSI ribbon</text>
+  </g>
+
+  <!-- ReSpeaker (top-right) -->
+  <g>
+    <rect class="peri" x="780" y="160" width="220" height="92" rx="10" filter="url(#cardShadow)"/>
+    <rect class="in-bar" x="994" y="160" width="6" height="92" rx="3"/>
+    <text class="role in-role" x="980" y="184" text-anchor="end">SENSE · INPUT</text>
+    <text class="tb"     x="980" y="208" text-anchor="end">ReSpeaker 4-mic array</text>
+    <text class="smallt" x="980" y="226" text-anchor="end">USB · XMOS XVF-3800</text>
+    <text class="smallt" x="980" y="242" text-anchor="end">DOA · 12 RGB LEDs</text>
+  </g>
+
+  <!-- ═════ SIDE ROW · ESP32 (left) + Speaker (right) ═════ -->
+  <!-- ESP32 Face (left-middle) -->
+  <g>
+    <rect class="peri" x="80" y="330" width="220" height="92" rx="10" filter="url(#cardShadow)"/>
+    <rect class="disp-bar" x="80" y="330" width="6" height="92" rx="3"/>
+    <text class="role disp-role" x="100" y="354">DISPLAY</text>
+    <text class="tb"     x="100" y="378">ESP32 Face Screen</text>
+    <text class="smallt" x="100" y="396">2.8″ TFT · ILI9341</text>
+    <text class="smallt" x="100" y="412">XPT2046 touch</text>
+  </g>
+
+  <!-- Speaker (right-middle) -->
+  <g>
+    <rect class="peri" x="780" y="330" width="220" height="92" rx="10" filter="url(#cardShadow)"/>
+    <rect class="out-bar" x="994" y="330" width="6" height="92" rx="3"/>
+    <text class="role out-role" x="980" y="354" text-anchor="end">AUDIO · OUTPUT</text>
+    <text class="tb"     x="980" y="378" text-anchor="end">USB Speaker</text>
+    <text class="smallt" x="980" y="396" text-anchor="end">aplay streaming</text>
+    <text class="smallt" x="980" y="412" text-anchor="end">TTS audio out</text>
+  </g>
+
+  <!-- ═════ BOTTOM ROW · Bus + 2 Servos ═════ -->
+  <!-- Bus adapter (bottom-center) — centered labels, top accent instead of left -->
+  <g>
+    <rect class="peri" x="390" y="480" width="300" height="80" rx="10" filter="url(#cardShadow)"/>
+    <rect class="ctrl-bar" x="390" y="480" width="300" height="4" rx="2"/>
+    <text class="role ctrl-role" x="540" y="506" text-anchor="middle">CONTROL BUS</text>
+    <text class="tb"     x="540" y="528" text-anchor="middle">CH343 Bus Adapter</text>
+    <text class="smallt" x="540" y="546" text-anchor="middle">Waveshare USB-serial · 1 Mbaud half-duplex</text>
+  </g>
+
+  <!-- Servo L -->
+  <g>
+    <rect class="peri" x="80" y="480" width="220" height="92" rx="10" filter="url(#cardShadow)"/>
+    <rect class="disp-bar" x="80" y="480" width="6" height="92" rx="3" fill="#a63d8a"/>
+    <text class="role" fill="#a63d8a" x="100" y="504">ACTUATOR</text>
+    <text class="tb"     x="100" y="528">ST3215 Servo L</text>
+    <text class="smallt" x="100" y="546">id 1 · 20-tooth pinion</text>
+    <text class="smallt" x="100" y="562">pitch + pan (mirrored)</text>
+  </g>
+
+  <!-- Servo R -->
+  <g>
+    <rect class="peri" x="780" y="480" width="220" height="92" rx="10" filter="url(#cardShadow)"/>
+    <rect class="disp-bar" x="994" y="480" width="6" height="92" rx="3" fill="#a63d8a"/>
+    <text class="role" fill="#a63d8a" x="980" y="504" text-anchor="end">ACTUATOR</text>
+    <text class="tb"     x="980" y="528" text-anchor="end">ST3215 Servo R</text>
+    <text class="smallt" x="980" y="546" text-anchor="end">id 2 · 20-tooth pinion</text>
+    <text class="smallt" x="980" y="562" text-anchor="end">pitch − pan (mirrored)</text>
+  </g>
+
+  <!-- ═════ CONNECTIONS · clean orthogonal lines with labeled chips ═════ -->
+  <!-- Camera → Jetson (top-left down) -->
+  <path class="line" d="M 300 206 L 380 206 L 380 340 L 410 340"/>
+  <rect class="chip" x="340" y="260" width="88" height="22" rx="11"/>
+  <text class="chip-t" x="384" y="275" text-anchor="middle">CSI RIBBON</text>
+
+  <!-- Mic → Jetson (top-right down) -->
+  <path class="line" d="M 780 206 L 700 206 L 700 340 L 670 340"/>
+  <rect class="chip" x="652" y="260" width="90" height="22" rx="11"/>
+  <text class="chip-t" x="697" y="275" text-anchor="middle">USB  MIC</text>
+
+  <!-- ESP32 → Jetson (left) -->
+  <path class="line" d="M 300 376 L 410 376"/>
+  <rect class="chip" x="316" y="364" width="90" height="22" rx="11"/>
+  <text class="chip-t" x="361" y="379" text-anchor="middle">USB-SERIAL</text>
+
+  <!-- Speaker → Jetson (right) -->
+  <path class="line" d="M 780 376 L 670 376"/>
+  <rect class="chip" x="680" y="364" width="88" height="22" rx="11"/>
+  <text class="chip-t" x="724" y="379" text-anchor="middle">USB AUDIO</text>
+
+  <!-- Jetson → Bus adapter (down center) -->
+  <path class="line" d="M 540 410 L 540 480"/>
+  <rect class="chip" x="496" y="434" width="88" height="22" rx="11"/>
+  <text class="chip-t" x="540" y="449" text-anchor="middle">USB 2.0</text>
+
+  <!-- Bus → Servo L -->
+  <path class="line" d="M 390 520 L 300 520"/>
+  <rect class="chip" x="314" y="509" width="78" height="22" rx="11"/>
+  <text class="chip-t" x="353" y="524" text-anchor="middle">FEETECH</text>
+
+  <!-- Bus → Servo R -->
+  <path class="line" d="M 690 520 L 780 520"/>
+  <rect class="chip" x="688" y="509" width="78" height="22" rx="11"/>
+  <text class="chip-t" x="727" y="524" text-anchor="middle">FEETECH</text>
+
+  <!-- ═════════ LEGEND CARD ═════════ -->
+  <rect class="card" x="40" y="620" width="1000" height="80" rx="12" filter="url(#cardShadow)"/>
+  <text class="section" x="62" y="646">Roles</text>
+
+  <!-- Sense -->
+  <rect fill="#2f8f3c" x="62" y="664" width="12" height="22" rx="3"/>
+  <text class="tb" x="82" y="680">Sensing input</text>
+  <text class="smallt" x="82" y="696">camera · mic</text>
+
+  <!-- Display -->
+  <rect fill="#7a1c5e" x="260" y="664" width="12" height="22" rx="3"/>
+  <text class="tb" x="280" y="680">Display</text>
+  <text class="smallt" x="280" y="696">ESP32 face screen</text>
+
+  <!-- Audio out -->
+  <rect fill="#b3741a" x="458" y="664" width="12" height="22" rx="3"/>
+  <text class="tb" x="478" y="680">Audio output</text>
+  <text class="smallt" x="478" y="696">TTS speaker</text>
+
+  <!-- Actuator -->
+  <rect fill="#a63d8a" x="656" y="664" width="12" height="22" rx="3"/>
+  <text class="tb" x="676" y="680">Actuators</text>
+  <text class="smallt" x="676" y="696">head pan / tilt</text>
+
+  <!-- Compute -->
+  <rect fill="#1e66f5" x="854" y="664" width="12" height="22" rx="3"/>
+  <text class="tb" x="874" y="680">Compute hub</text>
+  <text class="smallt" x="874" y="696">Jetson Orin Nano</text>
+</svg>
