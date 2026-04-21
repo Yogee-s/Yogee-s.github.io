@@ -4428,7 +4428,7 @@ figcaption {
   }
 
   #featured .constellation-wrap {
-    min-height: 520px;
+    min-height: 440px;
   }
 
   #featured .robot-stage {
@@ -4463,30 +4463,30 @@ figcaption {
     min-height: 0;
   }
 
-  /* Even vertical rhythm: top 6%, middle 40%, bottom 6% */
+  /* Compact even rhythm: top 4%, middle 38%, bottom 4% */
   #featured .robot-project-grid .card-node[data-project="boxbunny"] {
-    top: 6%;
+    top: 4%;
   }
 
   #featured .robot-project-grid .card-node[data-project="robotic-companion"] {
-    top: 40%;
+    top: 38%;
   }
 
   #featured .robot-project-grid .card-node[data-project="idp"] {
-    bottom: 6%;
+    bottom: 4%;
     top: auto;
   }
 
   #featured .robot-project-grid .card-node[data-project="breaking-bias"] {
-    top: 6%;
+    top: 4%;
   }
 
   #featured .robot-project-grid .card-node[data-project="teleco"] {
-    top: 40%;
+    top: 38%;
   }
 
   #featured .robot-project-grid .card-node[data-project="astar-rl"] {
-    bottom: 6%;
+    bottom: 4%;
     top: auto;
   }
 
@@ -5418,7 +5418,7 @@ body::before {
 /* --- Phone layout fixes for featured cards + supporting rows --- */
 @media (max-width: 760px) {
   #featured .constellation-wrap {
-    min-height: 460px;
+    min-height: 400px;
     display: block;
     gap: 0;
     margin-top: -1.3rem;
@@ -5504,36 +5504,36 @@ body::before {
     height: auto;
   }
 
-  /* Even vertical rhythm: top 6%, middle 40%, bottom 6% — same on both columns */
+  /* Compact even rhythm on phone · top 4%, middle 38%, bottom 4% */
   #featured .robot-project-grid .card-node[data-project="boxbunny"] {
     left: 2%;
-    top: 6%;
+    top: 4%;
   }
 
   #featured .robot-project-grid .card-node[data-project="robotic-companion"] {
     left: 2%;
-    top: 40%;
+    top: 38%;
   }
 
   #featured .robot-project-grid .card-node[data-project="idp"] {
     left: 2%;
-    bottom: 6%;
+    bottom: 4%;
     top: auto;
   }
 
   #featured .robot-project-grid .card-node[data-project="breaking-bias"] {
     right: 2%;
-    top: 6%;
+    top: 4%;
   }
 
   #featured .robot-project-grid .card-node[data-project="teleco"] {
     right: 2%;
-    top: 40%;
+    top: 38%;
   }
 
   #featured .robot-project-grid .card-node[data-project="astar-rl"] {
     right: 2%;
-    bottom: 6%;
+    bottom: 4%;
     top: auto;
   }
 
