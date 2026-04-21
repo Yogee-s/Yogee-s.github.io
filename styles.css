@@ -4463,8 +4463,13 @@ figcaption {
     min-height: 0;
   }
 
+  /* Even vertical rhythm: top 6%, middle 40%, bottom 6% */
   #featured .robot-project-grid .card-node[data-project="boxbunny"] {
-    top: 12%;
+    top: 6%;
+  }
+
+  #featured .robot-project-grid .card-node[data-project="robotic-companion"] {
+    top: 40%;
   }
 
   #featured .robot-project-grid .card-node[data-project="idp"] {
@@ -4472,12 +4477,8 @@ figcaption {
     top: auto;
   }
 
-  #featured .robot-project-grid .card-node[data-project="robotic-companion"] {
-    top: 40%;
-  }
-
   #featured .robot-project-grid .card-node[data-project="breaking-bias"] {
-    top: 12%;
+    top: 6%;
   }
 
   #featured .robot-project-grid .card-node[data-project="teleco"] {
@@ -4489,13 +4490,10 @@ figcaption {
     top: auto;
   }
 
+  /* All 6 cards share the same thumbnail height on small phones */
   #featured .robot-project-grid .card-node[data-project="boxbunny"] .node-visual,
   #featured .robot-project-grid .card-node[data-project="idp"] .node-visual {
-    height: 54px;
-  }
-
-  #featured .robot-project-grid .card-node[data-project="boxbunny"] .node-visual {
-    height: 66px;
+    height: 26px;
   }
 
   #featured .robot-stage-meta {
@@ -5506,45 +5504,44 @@ body::before {
     height: auto;
   }
 
+  /* Even vertical rhythm: top 6%, middle 40%, bottom 6% — same on both columns */
   #featured .robot-project-grid .card-node[data-project="boxbunny"] {
     left: 2%;
-    top: 22%;
-  }
-
-  #featured .robot-project-grid .card-node[data-project="idp"] {
-    left: 2%;
-    bottom: 4%;
-    top: auto;
+    top: 6%;
   }
 
   #featured .robot-project-grid .card-node[data-project="robotic-companion"] {
     left: 2%;
-    top: 45%;
+    top: 40%;
+  }
+
+  #featured .robot-project-grid .card-node[data-project="idp"] {
+    left: 2%;
+    bottom: 6%;
+    top: auto;
   }
 
   #featured .robot-project-grid .card-node[data-project="breaking-bias"] {
     right: 2%;
-    top: 20%;
+    top: 6%;
   }
 
   #featured .robot-project-grid .card-node[data-project="teleco"] {
     right: 2%;
-    top: 45%;
+    top: 40%;
   }
 
   #featured .robot-project-grid .card-node[data-project="astar-rl"] {
     right: 2%;
-    bottom: 4%;
+    bottom: 6%;
     top: auto;
   }
 
-  #featured .robot-project-grid .node-visual {
-    height: 26px;
-  }
-
+  /* All 6 cards share the same thumbnail height on phone view */
+  #featured .robot-project-grid .node-visual,
   #featured .robot-project-grid .card-node[data-project="boxbunny"] .node-visual,
   #featured .robot-project-grid .card-node[data-project="idp"] .node-visual {
-    height: 54px;
+    height: 26px;
   }
 
   #featured .robot-project-grid .node-content {
