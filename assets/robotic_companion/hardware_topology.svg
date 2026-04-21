@@ -98,7 +98,7 @@
   </g>
 
   <!-- ═════ BOTTOM ROW · Bus + 2 Servos ═════ -->
-  <!-- Bus adapter (bottom-center) — centered labels, top accent instead of left -->
+  <!-- Bus adapter (bottom-center) · centered labels, top accent instead of left -->
   <g>
     <rect class="peri" x="390" y="480" width="300" height="80" rx="10" filter="url(#cardShadow)"/>
     <rect class="ctrl-bar" x="390" y="480" width="300" height="4" rx="2"/>

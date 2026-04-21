@@ -1440,7 +1440,7 @@
                 gapAfterMs: 240,
                 cue: {
                     type: 'spotlight',
-                    projectIds: ['boxbunny', 'teleco', 'breaking-bias', 'astar-rl', 'idp'],
+                    projectIds: ['boxbunny', 'robotic-companion', 'teleco', 'breaking-bias', 'astar-rl', 'idp'],
                     dwellMs: 760,
                     holdMs: 460,
                     resetToDefault: true

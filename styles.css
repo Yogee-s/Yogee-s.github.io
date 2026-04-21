@@ -996,11 +996,19 @@ p {
   display: grid;
   gap: 0.65rem;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  align-items: start;
+  align-items: stretch;
+  align-self: center;
 }
 
 .boxing-side-media figure {
   width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.boxing-side-media figcaption {
+  margin-top: auto;
+  padding-top: 0.3rem;
 }
 
 .boxing-side-media img {
@@ -1138,6 +1146,7 @@ p {
 
 .boxing-stage-note {
   margin-top: 0.2rem !important;
+  text-align: center;
 }
 
 /* Teleco project layout */
@@ -6776,6 +6785,389 @@ body::before {
 /* Keep each pipeline step together so arrows don't orphan across line breaks */
 .flow-node {
   white-space: nowrap;
+}
+
+/* BoxBunny · full-frame videos (feature comparison + dashboard walkthrough + final inference) */
+.feature-compare-video video,
+.dashboard-walkthrough video,
+.final-inference video {
+  width: 100%;
+  height: auto;
+  max-height: 540px;
+  aspect-ratio: auto;
+  object-fit: contain;
+  background: #000;
+  display: block;
+}
+
+.final-inference {
+  margin: 0.4rem 0;
+}
+
+/* Interpretability row under the Final Model inference */
+.interpret-label {
+  margin: 0.6rem 0 0.1rem;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--text-muted);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.boxing-column-current .interpret-row {
+  grid-template-columns: 1fr 1fr;
+}
+
+.boxing-column-current .interpret-row img {
+  height: 220px;
+  object-fit: contain;
+  background: rgba(0, 0, 0, 0.3);
+}
+
+/* AI Coach · 3-column grid of interaction-pattern phone screens */
+.ai-coach-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.7rem;
+  margin: 0.5rem 0 0;
+  align-items: stretch;
+}
+
+.ai-coach-grid figure {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.ai-coach-grid img {
+  width: 100%;
+  height: clamp(280px, 32vw, 380px);
+  object-fit: contain;
+  background: rgba(0, 0, 0, 0.35);
+  border-radius: 8px;
+}
+
+.ai-coach-grid figcaption {
+  font-size: 0.78rem;
+  line-height: 1.4;
+  margin-top: auto;
+  padding-top: 0.35rem;
+  text-align: center;
+}
+
+.ai-coach-grid figcaption strong {
+  color: var(--accent-1);
+  display: block;
+  margin-bottom: 0.12rem;
+}
+
+/* LLM tuning GUI · standalone figure */
+.llm-tuning-figure {
+  margin: 0.5rem 0 0;
+}
+
+.llm-tuning-figure img {
+  width: 100%;
+  max-height: 420px;
+  object-fit: contain;
+  background: rgba(0, 0, 0, 0.25);
+  border-radius: 8px;
+}
+
+/* Dual-branch architecture · compact (diagram shouldn't dominate the page) */
+.arch-compact {
+  max-width: 760px;
+  margin: 0.4rem auto 0;
+}
+
+.arch-compact img {
+  width: 100%;
+  max-height: 300px;
+  object-fit: contain;
+  background: rgba(0, 0, 0, 0.25);
+  border-radius: 8px;
+}
+
+/* === BoxBunny · all figcaptions inside the modal centred === */
+.boxing-body figcaption,
+.boxing-body .boxing-column-media figcaption,
+.boxing-body .boxing-column-media figure figcaption {
+  text-align: center;
+}
+
+/* Grad-CAM full-width figure below the 2 exploration videos */
+.exploration-gradcam {
+  margin: 0.55rem 0 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.exploration-gradcam video {
+  width: 100%;
+  max-height: 320px;
+  object-fit: contain;
+  background: #000;
+  border-radius: 8px;
+  aspect-ratio: auto;
+}
+
+/* === BoxBunny · equal-height figures with bottom-aligned captions (covers every figure row) === */
+.boxing-body .boxing-column-media {
+  align-items: stretch;
+}
+
+.boxing-body .boxing-column-media figure {
+  display: flex;
+  flex-direction: column;
+}
+
+.boxing-body .boxing-column-media figure figcaption {
+  margin-top: auto;
+  padding-top: 0.35rem;
+}
+
+/* Final Model column · side-by-side inference videos for Person 1 vs Person 2 */
+.boxing-column-current .interpret-row video {
+  width: 100%;
+  height: 240px;
+  object-fit: contain;
+  background: #000;
+  border-radius: 8px;
+  aspect-ratio: auto;
+}
+
+/* === BoxBunny · equal-height figure rows with bottom-aligned captions === */
+.boxing-body > .boxing-flow .media-layout-2 {
+  align-items: stretch;
+}
+
+.boxing-body > .boxing-flow .media-layout-2 figure {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+}
+
+.boxing-body > .boxing-flow .media-layout-2 figure img,
+.boxing-body > .boxing-flow .media-layout-2 figure video {
+  width: 100%;
+  height: 260px;
+  object-fit: contain;
+  background: rgba(0, 0, 0, 0.25);
+  border-radius: 8px;
+  aspect-ratio: auto;
+}
+
+.boxing-body > .boxing-flow .media-layout-2 figure figcaption {
+  margin-top: auto;
+  padding-top: 0.35rem;
+}
+
+/* Interpret row (final model) uses the same equal-height rules via its own grid */
+.boxing-column-current .interpret-row {
+  align-items: stretch;
+}
+
+.boxing-column-current .interpret-row figure {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+}
+
+.boxing-column-current .interpret-row figure figcaption {
+  margin-top: auto;
+  padding-top: 0.35rem;
+}
+
+@media (max-width: 760px) {
+  .feature-compare-video video,
+  .dashboard-walkthrough video,
+  .final-inference video {
+    max-height: 360px;
+  }
+
+  .ai-coach-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .ai-coach-grid img {
+    height: clamp(260px, 60vw, 380px);
+  }
+
+  .boxing-column-current .interpret-row video {
+    height: clamp(180px, 48vw, 260px);
+  }
+}
+
+/* === BoxBunny · visible section separation === */
+.boxing-body > .boxing-flow,
+.boxing-body > .boxing-top {
+  padding: 1rem 1.1rem;
+  border: 1px solid var(--glass-border);
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.025);
+  margin-top: 0.9rem;
+}
+
+.boxing-body > .boxing-top {
+  background: linear-gradient(160deg,
+      rgba(245, 158, 11, 0.05) 0%,
+      rgba(10, 12, 22, 0.3) 100%);
+}
+
+.boxing-body > .boxing-flow > .boxing-flow-title {
+  margin-top: 0;
+  font-size: 1rem;
+  color: var(--accent-1);
+}
+
+/* === Three-Phases Converged · light card inside the dark modal === */
+.phases-diagram {
+  background: #fdfdff;
+  color: #1c1e26;
+  border: 1px solid #e0e3ec;
+  border-radius: 12px;
+  padding: 1rem 1rem 1.2rem;
+  margin: 0.5rem 0;
+  font-size: 0.85rem;
+  line-height: 1.45;
+}
+
+.phases-diagram .phases-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 0;
+}
+
+.phases-diagram .phase-col {
+  padding: 0 12px;
+}
+
+.phases-diagram .phase-pose   { border-right: 2px solid #eef0f4; }
+.phases-diagram .phase-pixels { border-right: 2px solid #eef0f4; }
+
+.phases-diagram .phase-head {
+  text-align: center;
+  padding: 8px 10px;
+  border-radius: 6px;
+  font-weight: 700;
+  font-size: 0.92rem;
+}
+
+.phases-diagram .phase-pose   .phase-head { background: #e3f2fd; color: #1565c0; }
+.phases-diagram .phase-pixels .phase-head { background: #fce4ec; color: #c62828; }
+.phases-diagram .phase-voxel  .phase-head { background: #e8f5e9; color: #2e7d32; }
+
+.phases-diagram .phase-arrow {
+  text-align: center;
+  color: #9aa0ac;
+  padding: 3px 0;
+  font-size: 0.9rem;
+}
+
+.phases-diagram .phase-step {
+  display: block;
+  padding: 8px 10px;
+  background: #f4f5f8;
+  border-radius: 6px;
+  margin-bottom: 2px;
+  font-size: 0.82rem;
+}
+
+.phases-diagram .phase-pose   .phase-step { border-left: 3px solid #1565c0; }
+.phases-diagram .phase-pixels .phase-step { border-left: 3px solid #c62828; }
+.phases-diagram .phase-voxel  .phase-step { border-left: 3px solid #2e7d32; }
+
+.phases-diagram .phase-step strong {
+  color: #1c1e26;
+  display: inline;
+}
+
+.phases-diagram .phase-step .fail {
+  display: block;
+  color: #c62828;
+  margin-top: 3px;
+  font-size: 0.8rem;
+}
+
+.phases-diagram .phase-step .insight {
+  display: block;
+  color: #e65100;
+  margin-top: 2px;
+  font-size: 0.8rem;
+}
+
+.phases-diagram .phase-lesson {
+  padding: 8px 10px;
+  background: #fff3e0;
+  border-left: 3px solid #e65100;
+  border-radius: 6px;
+  font-size: 0.82rem;
+  color: #1c1e26;
+}
+
+.phases-diagram .phase-lesson strong { color: #1c1e26; }
+
+.phases-diagram .phase-note {
+  text-align: center;
+  color: #9aa0ac;
+  font-style: italic;
+  font-size: 0.78rem;
+  padding: 6px 0;
+}
+
+.phases-diagram .phase-merge {
+  margin: 10px auto 4px;
+  max-width: 960px;
+}
+
+.phases-diagram .phase-merge svg {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.phases-diagram .phase-final {
+  padding: 12px 16px;
+  background: #e8f5e9;
+  border: 2px solid #2e7d32;
+  border-radius: 8px;
+  text-align: center;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  color: #1c1e26;
+}
+
+.phases-diagram .phase-final strong { display: block; font-size: 1rem; color: #1c1e26; }
+
+.phases-diagram .phase-final span { display: block; }
+
+.phases-diagram .phase-final-note {
+  font-size: 0.8rem;
+  color: #1b5e20;
+  font-style: italic;
+  margin-top: 3px;
+}
+
+.phases-diagram .phase-deployed {
+  border-color: #1b5e20;
+}
+
+@media (max-width: 760px) {
+  .phases-diagram .phases-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .phases-diagram .phase-col {
+    border-right: none !important;
+    border-bottom: 2px solid #eef0f4;
+    padding: 0 0 10px;
+    margin-bottom: 10px;
+  }
+
+  .phases-diagram .phase-merge {
+    display: none;
+  }
 }
 
 .flow-col-img {

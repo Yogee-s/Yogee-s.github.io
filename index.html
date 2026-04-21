@@ -474,8 +474,10 @@
                 <h5>Model Exploration + Diagnostics</h5>
                 <ul class="boxing-mini-list">
                   <li>Bounding-box RGB-D features gave a stronger proof-of-concept baseline.</li>
-                  <li><span class="signal-strong">Model interpretability:</span> Grad-CAM showed the model focusing on
-                    wrong regions instead of true motion.</li>
+                  <li><span class="signal-strong">Grad-CAM</span> confirmed early models focused on wrong regions
+                    instead of true motion.</li>
+                  <li><span class="signal-strong">Voxel + colour tracking</span> (iter 6, ~96%) was the breakthrough
+                    that showed 3D motion was the right primary signal, but coloured gloves were impractical.</li>
                 </ul>
                 <div class="boxing-column-media">
                   <figure class="boxing-media-poc"><video controls autoplay loop muted playsinline preload="metadata">
@@ -486,25 +488,50 @@
                   </figure>
                   <figure class="boxing-media-gradcam"><video controls autoplay loop muted playsinline
                       preload="metadata">
-                      <source src="assets/boxbunny_capstone/freestyle_gradcam.mp4" type="video/mp4">
+                      <source src="assets/boxbunny_capstone/multimodal_inference.mp4" type="video/mp4">
                     </video>
-                    <figcaption>Grad-CAM attention diagnosis</figcaption>
+                    <figcaption>Voxel + colour tracking (iter 6, ~96%) · real-time but needed coloured gloves
+                    </figcaption>
                   </figure>
                 </div>
+                <figure class="exploration-gradcam">
+                  <video controls autoplay loop muted playsinline preload="metadata">
+                    <source src="assets/boxbunny_capstone/freestyle_gradcam.mp4" type="video/mp4">
+                  </video>
+                  <figcaption>Grad-CAM attention diagnosis · confirms the model focuses on arms and shoulders, not
+                    background</figcaption>
+                </figure>
               </article>
               <article class="boxing-column boxing-column-current">
-                <h5>Final Model + Integration</h5>
-                <p>Converged on a dual-branch Voxel-Pose Transformer with segmented inputs, integrated into a 10-node
-                  ROS 2 Humble runtime with CV + IMU fusion. LLM coach delivers per-session cues on-device.</p>
-                <div class="boxing-column-media">
-                  <figure class="boxing-media-segmented"><img class="js-lightbox media-fit-contain"
-                      src="assets/boxbunny_capstone/segmented_data.png" alt="Segmented data pipeline" loading="lazy">
-                    <figcaption>Segmented data pipeline</figcaption>
+                <h5>Final Model + Integration (Deployed v11)</h5>
+                <p>Dual-branch Voxel-Pose Transformer + TensorRT FP16, integrated into a 10-node ROS 2 Humble runtime
+                  with CV + IMU fusion and an on-device LLM coach. Real-time prediction <em>as the punch lands</em>,
+                  not after.</p>
+                <div class="boxing-column-media interpret-row">
+                  <figure>
+                    <video controls autoplay loop muted playsinline preload="metadata">
+                      <source src="assets/boxbunny_capstone/inference_person_1.mp4" type="video/mp4">
+                    </video>
+                    <figcaption>Person 1 · newer boxer, looser form</figcaption>
                   </figure>
-                  <figure class="boxing-media-llm"><img class="js-lightbox media-fit-contain"
-                      src="assets/boxbunny_capstone/llm_finetuned_for_boxing.jpg" alt="LLM boxing coaching"
-                      loading="lazy">
-                    <figcaption>LLM fine-tuned for coaching feedback</figcaption>
+                  <figure>
+                    <video controls autoplay loop muted playsinline preload="metadata">
+                      <source src="assets/boxbunny_capstone/inference_person_2.mp4" type="video/mp4">
+                    </video>
+                    <figcaption>Person 2 · trained boxer, cleaner technique</figcaption>
+                  </figure>
+                </div>
+                <p class="interpret-label">Interpretability</p>
+                <div class="boxing-column-media interpret-row">
+                  <figure><img class="js-lightbox media-fit-contain"
+                      src="assets/boxbunny_capstone/confusion_matrix.png"
+                      alt="Confusion matrix showing 96.8% validation accuracy on unseen users" loading="lazy">
+                    <figcaption>Confusion matrix · 96.8% accuracy on unseen users</figcaption>
+                  </figure>
+                  <figure><img class="js-lightbox media-fit-contain"
+                      src="assets/boxbunny_capstone/tsne_embeddings.png"
+                      alt="t-SNE projection of learned embeddings showing clean class separation" loading="lazy">
+                    <figcaption>t-SNE · learned embeddings cluster cleanly</figcaption>
                   </figure>
                 </div>
                 <p class="boxing-stage-note"><span class="signal-metric">96.8%</span> val accuracy ·
@@ -512,6 +539,221 @@
                 </p>
               </article>
             </div>
+          </div>
+
+          <!-- How 9 iterations across 3 phases converged on Voxel + Pose Fusion -->
+          <div class="boxing-flow">
+            <h4 class="boxing-flow-title">How 9 iterations converged · three phases, one fusion</h4>
+            <p>Each phase of exploration failed on its own, but taught something the final architecture needed.
+              <span class="signal-strong">Pose</span> gave hand identity but broke under glove occlusion.
+              <span class="signal-strong">Raw pixels</span> hit 87% but were too heavy for the Jetson.
+              <span class="signal-strong">Voxels</span> captured 3D motion but couldn't tell left from right.
+              Fusing voxels with pose closed the loop at <span class="signal-metric">97.3%</span>, deployed at
+              <span class="signal-metric">96.8%</span> after TensorRT + the block-annotation fix.</p>
+
+            <div class="phases-diagram">
+              <div class="phases-grid">
+                <div class="phase-col phase-pose">
+                  <div class="phase-head">Pose (iter 1–2)</div>
+                  <div class="phase-arrow">↓</div>
+                  <div class="phase-step">
+                    <strong>1. 2D Pose + LSTM</strong>
+                    <span class="fail">✗ Wrong camera angle</span>
+                  </div>
+                  <div class="phase-arrow">↓</div>
+                  <div class="phase-step">
+                    <strong>2. 3D Pose</strong> (depth lifting, ~67%)
+                    <span class="fail">✗ Glove occlusion blocks wrists</span>
+                  </div>
+                  <div class="phase-arrow">↓</div>
+                  <div class="phase-lesson">
+                    <strong>Lesson:</strong> skeleton joints carry hand identity, but pose alone is not reliable under
+                    occlusion.
+                  </div>
+                  <div class="phase-note">Pose returns later ↓</div>
+                </div>
+
+                <div class="phase-col phase-pixels">
+                  <div class="phase-head">Raw Pixels (iter 3–4)</div>
+                  <div class="phase-arrow">↓</div>
+                  <div class="phase-step">
+                    <strong>3. Raw RGBD + 3D CNN</strong> (87.2%)
+                    <span class="fail">✗ 88M params, too large for Jetson</span>
+                  </div>
+                  <div class="phase-arrow">↓</div>
+                  <div class="phase-step">
+                    <strong>4. RGBD + Segmentation</strong>
+                    <span class="fail">✗ Still pixel-based, still required Colab</span>
+                  </div>
+                  <div class="phase-arrow">↓</div>
+                  <div class="phase-lesson">
+                    <strong>Lesson:</strong> need compact, engineered features; raw pixels are too heavy for edge
+                    deployment.
+                  </div>
+                  <div class="phase-note">Dead end, redirected the search</div>
+                </div>
+
+                <div class="phase-col phase-voxel">
+                  <div class="phase-head">Voxels (iter 5–7)</div>
+                  <div class="phase-arrow">↓</div>
+                  <div class="phase-step">
+                    <strong>5. Z-Mask</strong> (2D depth grid)
+                    <span class="fail">✗ Lost 3D spatial information</span>
+                  </div>
+                  <div class="phase-arrow">↓</div>
+                  <div class="phase-step">
+                    <strong>6. Voxel + Colour</strong> (~96%)
+                    <span class="fail">✗ Impractical coloured gloves</span>
+                    <span class="insight">★ Insight: voxels need hand info</span>
+                  </div>
+                  <div class="phase-arrow">↓</div>
+                  <div class="phase-step">
+                    <strong>7. Voxel-Only</strong> (80.6%)
+                    <span class="fail">✗ Left/right confusion (34% jab error)</span>
+                    <span class="insight">★ Insight: need pose back for L/R</span>
+                  </div>
+                  <div class="phase-arrow">↓</div>
+                  <div class="phase-lesson">
+                    <strong>Lesson:</strong> 3D motion is the right primary signal, but voxels alone cannot distinguish
+                    left from right hand.
+                  </div>
+                </div>
+              </div>
+
+              <div class="phase-merge" aria-hidden="true">
+                <svg viewBox="0 0 960 80" xmlns="http://www.w3.org/2000/svg">
+                  <line x1="160" y1="0" x2="160" y2="30" stroke="#1565c0" stroke-width="2"/>
+                  <line x1="800" y1="0" x2="800" y2="30" stroke="#2e7d32" stroke-width="2"/>
+                  <line x1="160" y1="30" x2="480" y2="30" stroke="#1565c0" stroke-width="2"/>
+                  <line x1="480" y1="30" x2="800" y2="30" stroke="#2e7d32" stroke-width="2"/>
+                  <text x="160" y="50" text-anchor="middle" font-size="14" font-weight="700" fill="#1565c0">Pose</text>
+                  <text x="800" y="50" text-anchor="middle" font-size="14" font-weight="700" fill="#2e7d32">Voxel</text>
+                  <line x1="480" y1="30" x2="480" y2="72" stroke="#555" stroke-width="2"/>
+                  <polygon points="474,68 480,78 486,68" fill="#555"/>
+                </svg>
+              </div>
+
+              <div class="phase-final">
+                <strong>8. Voxel + Pose Fusion · 97.3%</strong>
+                <span>Pose solves left/right confusion. Voxels capture 3D motion. Full circle.</span>
+                <span class="phase-final-note">Works with any gloves · YOLO finds the wrist visually.</span>
+              </div>
+              <div class="phase-arrow">↓</div>
+              <div class="phase-final phase-deployed">
+                <strong>9. Production (v11) · 96.8% deployed</strong>
+                <span>TensorRT FP16, block-annotation fix, parallel threads.</span>
+              </div>
+            </div>
+
+            <figure class="feature-compare-video">
+              <video controls autoplay loop muted playsinline preload="metadata">
+                <source src="assets/boxbunny_capstone/feature_comparison.mp4" type="video/mp4">
+              </video>
+              <figcaption>Eight feature pipelines running on the same clip · visual failure modes at a glance
+              </figcaption>
+            </figure>
+          </div>
+
+          <!-- System Deep-Dive · 3 extra sections showing the finished system -->
+          <div class="boxing-flow">
+            <h4 class="boxing-flow-title">Under the Hood · how the final system ships</h4>
+            <p>Camera frames flow through a <span class="flow-node"><span class="signal-tech">TensorRT
+                  FP16 YOLO pose</span>&nbsp;(16 ms)</span> and the
+              <span class="flow-node"><span class="signal-tech">action model</span>&nbsp;(8 ms)</span>, comfortably
+              inside the <span class="signal-metric">33 ms</span> real-time budget. A
+              <span class="signal-strong">10-node ROS 2 Humble</span> graph orchestrates perception, IMU impact events,
+              CV + IMU fusion, motor control, and the dashboard bridge.</p>
+            <div class="media-layout media-layout-2">
+              <figure>
+                <img class="js-lightbox media-fit-contain" src="assets/boxbunny_capstone/perception_pipeline.png"
+                  alt="Real-time perception pipeline · RGB + depth to action prediction" loading="lazy">
+                <figcaption>Perception pipeline · RGB + depth to action prediction</figcaption>
+              </figure>
+              <figure>
+                <img class="js-lightbox media-fit-contain" src="assets/boxbunny_capstone/ros2_node_graph.png"
+                  alt="ROS 2 node graph · 10 nodes, 40+ topics" loading="lazy">
+                <figcaption>ROS 2 graph · 10 nodes, 40+ topics</figcaption>
+              </figure>
+            </div>
+          </div>
+
+          <div class="boxing-flow">
+            <h4 class="boxing-flow-title">Dual-Branch Voxel-Pose Transformer · 1.75 M params</h4>
+            <p>Boxing gloves occlude the hands exactly when a punch matters most, which breaks standard pose
+              estimation. The model pairs a <span class="signal-tech">depth-voxel branch</span> (12³ grid, fast 67 ms
+              and slow 267 ms timescales) with a <span class="signal-tech">YOLO pose branch</span>, then fuses them in a
+              <span class="signal-strong">4-layer Transformer</span> encoder over a 12-frame rolling window. Voxels
+              fill in exactly where the pose fails.</p>
+            <figure class="arch-compact">
+              <img class="js-lightbox media-fit-contain" src="assets/boxbunny_capstone/model_architecture.png"
+                alt="Dual-branch Voxel-Pose Transformer architecture" loading="lazy">
+              <figcaption>Dual-branch architecture · voxel + pose fused in a Transformer encoder</figcaption>
+            </figure>
+          </div>
+
+          <div class="boxing-flow">
+            <h4 class="boxing-flow-title">Phone Dashboard · designed and built end-to-end</h4>
+            <p>I designed the full phone dashboard so users never have to bend over the robot's 7-inch touchscreen
+              with gloves on. To pair, the touchscreen GUI displays a <span class="signal-strong">QR code</span>: scan
+              it and the dashboard opens in the phone browser. Under the hood a
+              <span class="signal-tech">localhost.run</span> reverse tunnel publishes the FastAPI server over a
+              unique HTTPS URL, so the phone doesn't need to be on the same WiFi as the robot. It works on gym
+              WiFi, cellular, or any network. A local-access fallback kicks in if outbound internet is unavailable.</p>
+            <figure class="dashboard-walkthrough">
+              <video controls autoplay loop muted playsinline preload="metadata">
+                <source src="assets/boxbunny_capstone/dashboard_walkthrough.mp4" type="video/mp4">
+              </video>
+              <figcaption>Live walkthrough · setup, robot control, analytics, AI coach chat</figcaption>
+            </figure>
+          </div>
+
+          <div class="boxing-flow">
+            <h4 class="boxing-flow-title">AI Coach · three interaction patterns</h4>
+            <p>The on-device <span class="signal-strong">Gemma 4 E2B</span> coach is exposed to the phone via FastAPI
+              and surfaces as three distinct flows. Motivated by
+              <span class="signal-tech">CDE AI Fair</span> feedback: users wanted to chat with the coach but the
+              touchscreen keyboard was awkward with gloves, so the conversation moved to the phone.</p>
+            <div class="ai-coach-grid">
+              <figure>
+                <img class="js-lightbox media-fit-contain"
+                  src="assets/boxbunny_capstone/ai_coach_training_analysis.jpg"
+                  alt="AI coach training analysis screen" loading="lazy">
+                <figcaption><strong>Training analysis</strong>spots weak areas with specific stats</figcaption>
+              </figure>
+              <figure>
+                <img class="js-lightbox media-fit-contain"
+                  src="assets/boxbunny_capstone/ai_coach_training_suggestion.jpg"
+                  alt="AI coach training suggestion screen" loading="lazy">
+                <figcaption><strong>Training suggestion</strong>one-tap drill, loads and starts the robot</figcaption>
+              </figure>
+              <figure>
+                <img class="js-lightbox media-fit-contain"
+                  src="assets/boxbunny_capstone/ai_coach_photo_support.jpg"
+                  alt="AI coach photo support screen" loading="lazy">
+                <figcaption><strong>Photo support</strong>multimodal, identifies gear from uploaded photos
+                </figcaption>
+              </figure>
+            </div>
+          </div>
+
+          <div class="boxing-flow">
+            <h4 class="boxing-flow-title">LLM Tuning &amp; RAG · not just an off-the-shelf drop-in</h4>
+            <p>Getting coherent coaching out of a 2B-parameter on-device model took real tuning. I built a standalone
+              <span class="signal-tech">PySide6 tuning GUI</span> to iterate on system prompts, temperature, top-p,
+              context length, and generation parameters while watching streaming outputs side-by-side. Every parameter
+              was tuned against real session transcripts before shipping to production.</p>
+            <p>Prompt alone was not enough. I grounded the model with a
+              <span class="signal-strong">retrieval-augmented generation (RAG)</span> layer over a
+              <span class="signal-metric">17-document</span> boxing knowledge base (techniques, defence, combinations,
+              training plans), injected into the context window during coaching analysis so the model quotes verified
+              boxing advice instead of hallucinating plausible-sounding fluff a beginner could never verify.</p>
+            <figure class="llm-tuning-figure">
+              <img class="js-lightbox media-fit-contain" src="assets/boxbunny_capstone/llm_tuning_gui.png"
+                alt="PySide6 LLM tuning GUI used to iterate on prompts, parameters, and outputs side by side"
+                loading="lazy">
+              <figcaption>Custom LLM tuning GUI · iterate on prompts, parameters, and streaming outputs side by side
+              </figcaption>
+            </figure>
           </div>
         </div>
       </article>
