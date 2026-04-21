@@ -4451,7 +4451,8 @@ figcaption {
 
   #featured .robot-project-grid .card-node[data-project="breaking-bias"],
   #featured .robot-project-grid .card-node[data-project="teleco"],
-  #featured .robot-project-grid .card-node[data-project="astar-rl"] {
+  #featured .robot-project-grid .card-node[data-project="astar-rl"],
+  #featured .robot-project-grid .card-node[data-project="robotic-companion"] {
     width: clamp(94px, 35vw, 110px);
     min-height: 92px;
   }
@@ -4469,6 +4470,10 @@ figcaption {
   #featured .robot-project-grid .card-node[data-project="idp"] {
     bottom: 6%;
     top: auto;
+  }
+
+  #featured .robot-project-grid .card-node[data-project="robotic-companion"] {
+    top: 40%;
   }
 
   #featured .robot-project-grid .card-node[data-project="breaking-bias"] {
@@ -5487,7 +5492,8 @@ body::before {
 
   #featured .robot-project-grid .card-node[data-project="breaking-bias"],
   #featured .robot-project-grid .card-node[data-project="teleco"],
-  #featured .robot-project-grid .card-node[data-project="astar-rl"] {
+  #featured .robot-project-grid .card-node[data-project="astar-rl"],
+  #featured .robot-project-grid .card-node[data-project="robotic-companion"] {
     width: clamp(86px, 24vw, 100px);
     min-height: 92px;
     height: auto;
@@ -5509,6 +5515,11 @@ body::before {
     left: 2%;
     bottom: 4%;
     top: auto;
+  }
+
+  #featured .robot-project-grid .card-node[data-project="robotic-companion"] {
+    left: 2%;
+    top: 45%;
   }
 
   #featured .robot-project-grid .card-node[data-project="breaking-bias"] {
