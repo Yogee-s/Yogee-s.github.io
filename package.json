@@ -1,0 +1,17 @@
+{
+  "name": "yogee-portfolio",
+  "version": "2.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview"
+  },
+  "dependencies": {
+    "@astrojs/sitemap": "^3.2.1",
+    "@google/model-viewer": "^4.1.0",
+    "animejs": "3.2.2",
+    "astro": "^5.1.0"
+  }
+}

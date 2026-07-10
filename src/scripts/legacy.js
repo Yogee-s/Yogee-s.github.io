@@ -1,3 +1,8 @@
+// Bundled locally (no CDN fragility): anime for entrance/stagger timelines,
+// model-viewer registers the <model-viewer> custom element as a side effect.
+import anime from 'animejs';
+import '@google/model-viewer';
+
 (function () {
     // Gate pre-reveal hiding (.reveal opacity:0 in CSS) on this file actually
     // running: if script.js never loads, the class is absent and everything

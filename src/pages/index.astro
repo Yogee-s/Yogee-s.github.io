@@ -1,76 +1,8 @@
-<!doctype html>
-<html lang="en">
+---
+import Base from '../layouts/Base.astro';
+---
 
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description"
-    content="Robotics software engineer (NUS BEng '26, Singapore, open to relocation). Shipped human localization at Osaka Expo 2025 (0.02–0.06 m), 96.8% real-time action recognition on Jetson, and a fully offline conversational robot. Available now.">
-  <meta name="robots" content="index,follow,max-image-preview:large">
-  <meta name="keywords"
-    content="Muthukumaran Yogeeswaran, robotics software engineer, ROS2, computer vision, reinforcement learning, embodied AI, MATLAB, Simulink">
-  <meta name="theme-color" content="#06060b">
-  <title>Muthukumaran Yogeeswaran — Robotics Software Engineer</title>
-  <link rel="canonical" href="https://yogee-s.github.io/">
-  <link rel="icon" type="image/svg+xml" href="favicon.svg">
-
-  <meta property="og:type" content="website">
-  <meta property="og:title" content="Muthukumaran Yogeeswaran — Robotics Software Engineer">
-  <meta property="og:description"
-    content="Robotics software engineer (NUS BEng '26, Singapore). Shipped perception at Osaka Expo 2025 · 96.8% real-time action recognition on Jetson · fully offline conversational robot. Available now.">
-  <meta property="og:url" content="https://yogee-s.github.io/">
-  <meta property="og:site_name" content="Yogee Portfolio">
-  <meta property="og:image" content="https://yogee-s.github.io/assets/personal_photo.jpg">
-  <meta property="og:image:alt" content="Portrait of Muthukumaran Yogeeswaran">
-  <meta property="og:locale" content="en_US">
-
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Muthukumaran Yogeeswaran — Robotics Software Engineer">
-  <meta name="twitter:description"
-    content="Robotics software engineer (NUS BEng '26, Singapore). Shipped perception at Osaka Expo 2025 · 96.8% real-time action recognition on Jetson · fully offline conversational robot. Available now.">
-  <meta name="twitter:image" content="https://yogee-s.github.io/assets/personal_photo.jpg">
-  <meta name="twitter:image:alt" content="Portrait of Muthukumaran Yogeeswaran">
-
-  <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "Person",
-      "name": "Muthukumaran Yogeeswaran",
-      "url": "https://yogee-s.github.io/",
-      "image": "https://yogee-s.github.io/assets/personal_photo.jpg",
-      "jobTitle": "Robotics Software Engineer",
-      "email": "mailto:yogeeswaran99@gmail.com",
-      "alumniOf": {
-        "@type": "CollegeOrUniversity",
-        "name": "National University of Singapore"
-      },
-      "address": {
-        "@type": "PostalAddress",
-        "addressLocality": "Singapore",
-        "addressCountry": "SG"
-      },
-      "sameAs": [
-        "https://www.linkedin.com/in/yogee-s",
-        "https://github.com/Yogee-s"
-      ],
-      "knowsAbout": [
-        "ROS2",
-        "Computer Vision",
-        "Reinforcement Learning",
-        "MATLAB/Simulink",
-        "Embodied AI"
-      ]
-    }
-  </script>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link
-    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap"
-    rel="stylesheet">
-  <link rel="stylesheet" href="styles.css">
-</head>
-
-<body>
+<Base>
   <div class="scroll-progress-bar" id="scroll-progress"></div>
   <div class="bg-noise"></div>
 
@@ -1488,10 +1420,7 @@
     </button>
   </aside>
 
-  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.2/lib/anime.min.js"></script>
-  <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
-  <script nomodule src="https://unpkg.com/@google/model-viewer/dist/model-viewer-legacy.js"></script>
-  <script src="script.js"></script>
-</body>
-
-</html>
+  <script>
+    import '../scripts/legacy.js';
+  </script>
+</Base>

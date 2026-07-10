@@ -1,27 +1,39 @@
-# Robotics Portfolio (GitHub Pages)
+# Robotics Portfolio (yogee-s.github.io)
 
-Static portfolio website for Muthukumaran Yogeeswaran.
+Personal portfolio of Muthukumaran Yogeeswaran — robotics software & embodied AI.
+Built with [Astro](https://astro.build) and deployed to GitHub Pages via GitHub Actions.
 
-## Files
-- `index.html` - full portfolio page content
-- `styles.css` - visual design and responsive layout
-- `script.js` - reveal animation, poster lightbox, and footer date
-- `assets/` - project media, reports, resume
+## Develop locally
 
-## Run locally
 ```bash
-python3 -m http.server 8000
+npm install
+npm run dev        # http://localhost:4321
 ```
-Then open `http://localhost:8000`.
 
-## Deploy on GitHub Pages
-1. Push this folder to a GitHub repository.
-2. In repository settings, open `Pages`.
-3. Set source to `Deploy from a branch`.
-4. Choose branch `main` (or your default branch) and folder `/ (root)`.
-5. Save and wait for the Pages URL.
+## Build & preview the production site
+
+```bash
+npm run build
+npm run preview
+```
+
+## Deploy
+
+Push to `main` — the workflow in `.github/workflows/deploy.yml` builds and deploys automatically.
+
+One-time setup: repository **Settings → Pages → Source = "GitHub Actions"**.
+(Rollback path: switch Source back to "Deploy from a branch".)
+
+## Structure
+
+- `src/pages/index.astro` — homepage
+- `src/layouts/Base.astro` — shared `<head>`, meta/OG/JSON-LD
+- `src/styles/global.css` — design system and responsive layout
+- `src/scripts/legacy.js` — interactions (scroll reveals, humanoid project map, lightbox, guide robot)
+- `public/assets/` — project media, reports, resume (served at stable `/assets/...` URLs)
 
 ## Update content
-- Replace project text in `index.html`.
-- Add new media under `assets/` and reference the path in `index.html`.
-- For projects still in progress, keep the `Work in Progress` badge and update links when reports are ready.
+
+- Edit text in `src/pages/index.astro`.
+- Add media under `public/assets/` and reference it as `/assets/...`.
+- Videos: keep `preload="none"` + a `poster` image so nothing auto-downloads.
