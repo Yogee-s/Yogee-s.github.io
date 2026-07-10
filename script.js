@@ -1,4 +1,10 @@
 (function () {
+    // Gate pre-reveal hiding (.reveal opacity:0 in CSS) on this file actually
+    // running: if script.js never loads, the class is absent and everything
+    // stays visible. Set here — not in an inline <head> script — so the flag
+    // and the reveal machinery can only exist together.
+    document.documentElement.classList.add('js-anim');
+
     /* ========================================
        TYPING EFFECT
        ======================================== */
@@ -52,17 +58,21 @@
        ======================================== */
     function runHeroEntrance() {
         const heroEls = document.querySelectorAll('[data-anim="hero"]');
-        // Initially hide all hero elements
-        heroEls.forEach(el => {
-            el.style.opacity = '0';
-            el.style.transform = 'translateY(30px)';
-        });
 
         // Make hero section visible immediately
         const heroSection = document.getElementById('home');
         if (heroSection) {
             heroSection.classList.add('visible');
         }
+
+        // Without anime.js the hero simply stays visible — never hide content we can't reveal
+        if (typeof anime === 'undefined') return;
+
+        // Initially hide all hero elements
+        heroEls.forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(30px)';
+        });
 
         const tl = anime.timeline({
             easing: 'easeOutExpo',
@@ -259,6 +269,9 @@
     }
 
     function animateSection(section) {
+        // Sections are already visible via the .visible class; the stagger is enhancement only
+        if (typeof anime === 'undefined') return;
+
         const id = section.id;
 
         // Project cards
@@ -578,20 +591,6 @@
     });
 
     /* ========================================
-       FOOTER DATE
-       ======================================== */
-    const updated = document.getElementById('last-updated');
-    if (updated) {
-        const now = new Date();
-        const formatter = new Intl.DateTimeFormat('en-US', {
-            year: 'numeric',
-            month: 'long',
-            day: 'numeric'
-        });
-        updated.textContent = formatter.format(now);
-    }
-
-    /* ========================================
        SMOOTH SCROLL FOR ANCHORS
        ======================================== */
     document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
@@ -615,9 +614,14 @@
     }
 
     function init() {
-        initParticles();
-        runHeroEntrance();
+        // Reveals first: even if a later step throws, content is never left hidden
         initScrollReveals();
+        initParticles();
+        try {
+            runHeroEntrance();
+        } catch (err) {
+            console.warn('Hero entrance skipped:', err);
+        }
         initCardTilt();
         initMagneticButtons();
     }
