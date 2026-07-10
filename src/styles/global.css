@@ -7347,3 +7347,143 @@ body::before {
     height: clamp(160px, 48vw, 240px);
   }
 }
+/* ============================================================
+   PHONE LAYOUT FIX (<=760px) — featured section
+   The absolute pinned-around-the-robot layout clips text off both
+   screen edges at phone widths and shrinks cards to unreadable tiles.
+   Below 760px only: humanoid stage on top, readable full-width cards
+   stacked beneath. Desktop layout is untouched.
+   ============================================================ */
+@media (max-width: 760px) {
+
+  html,
+  body {
+    overflow-x: clip;
+  }
+
+  #featured .constellation-wrap {
+    display: block;
+    min-height: 0;
+    margin-top: 0;
+  }
+
+  /* connector lines make no sense in a stacked layout */
+  #featured #robot-link-layer {
+    display: none;
+  }
+
+  #featured .robot-stage {
+    position: relative;
+    left: auto;
+    top: auto;
+    transform: none;
+    width: min(320px, 88vw);
+    height: 380px;
+    margin: 0 auto 1.4rem;
+    padding: 14px 10px 34px;
+  }
+
+  #featured .robot-stage-head {
+    position: static;
+    width: 100%;
+    transform: none;
+    margin-bottom: 0.3rem;
+  }
+
+  #featured .robot-stage-head h3,
+  #featured .robot-stage:not(.has-active) .robot-stage-head h3 {
+    white-space: normal;
+    font-size: 0.95rem;
+  }
+
+  #featured .robot-stage-head p {
+    max-width: none;
+    font-size: 0.68rem;
+  }
+
+  #humanoid-model {
+    width: 100%;
+    height: 74%;
+  }
+
+  #featured .robot-model-credit {
+    white-space: normal;
+    width: 92%;
+    font-size: 0.58rem;
+    line-height: 1.3;
+  }
+
+  /* cards: normal flow, one readable column */
+  #featured .constellation-wrap .robot-project-grid {
+    position: static;
+    inset: auto;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0.9rem;
+    pointer-events: auto;
+  }
+
+  #featured .constellation-wrap .robot-project-grid .card-node,
+  #featured .constellation-wrap .robot-project-grid .card-node[data-project="boxbunny"],
+  #featured .constellation-wrap .robot-project-grid .card-node[data-project="robotic-companion"],
+  #featured .constellation-wrap .robot-project-grid .card-node[data-project="teleco"],
+  #featured .constellation-wrap .robot-project-grid .card-node[data-project="breaking-bias"],
+  #featured .constellation-wrap .robot-project-grid .card-node[data-project="astar-rl"],
+  #featured .constellation-wrap .robot-project-grid .card-node[data-project="idp"] {
+    position: static;
+    width: 100%;
+    min-height: 0;
+    height: auto;
+    border-radius: var(--radius-sm);
+    padding-bottom: 0.4rem;
+  }
+
+  #featured .constellation-wrap .robot-project-grid .card-node .node-visual {
+    height: 130px;
+  }
+
+  #featured .constellation-wrap .robot-project-grid .node-content {
+    padding: 0.7rem 0.85rem 0.55rem;
+  }
+
+  #featured .constellation-wrap .robot-project-grid .card-node-pill {
+    font-size: 0.6rem;
+    padding: 0.2rem 0.55rem;
+    margin-bottom: 0.35rem;
+  }
+
+  #featured .constellation-wrap .robot-project-grid .card-node h3 {
+    font-size: 1.05rem;
+    line-height: 1.25;
+    margin-bottom: 0.25rem;
+  }
+
+  #featured .constellation-wrap .robot-project-grid .card-node-role,
+  #featured .constellation-wrap .robot-project-grid .card-node-summary,
+  #featured .constellation-wrap .robot-project-grid .card-node-tags {
+    display: block;
+  }
+
+  #featured .constellation-wrap .robot-project-grid .card-node-role {
+    font-size: 0.7rem;
+  }
+
+  #featured .constellation-wrap .robot-project-grid .card-node-summary {
+    font-size: 0.82rem;
+    line-height: 1.45;
+  }
+
+  #featured .constellation-wrap .robot-project-grid .card-node-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.3rem;
+  }
+
+  #featured .card-node-open,
+  #featured .constellation-wrap .robot-project-grid .card-node .card-node-open {
+    min-height: 44px;
+    font-size: 0.72rem;
+    padding: 0.5rem 0.9rem;
+    margin-top: 0.45rem;
+  }
+}
