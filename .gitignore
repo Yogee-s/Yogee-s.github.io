@@ -12,3 +12,6 @@ node_modules/
 .env.production
 # OS/editor
 .DS_Store
+
+# local resume source (PDF is published to public/assets/)
+resume-draft/
