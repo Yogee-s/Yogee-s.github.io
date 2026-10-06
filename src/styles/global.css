@@ -786,6 +786,11 @@ p {
   position: relative;
 }
 
+/* Projects link lands with breathing room above "Selected Works" */
+#featured {
+  scroll-margin-top: 7rem;
+}
+
 .section::before {
   content: '';
   position: absolute;
@@ -9144,7 +9149,7 @@ body::before {
 .tc-steps b {
   display: flex;
   align-items: baseline;
-  gap: 0.5rem;
+  gap: 0.6rem;
   font-size: 0.98rem;
   color: var(--accent-1);
 }
@@ -9155,13 +9160,16 @@ body::before {
   color: var(--text-secondary);
 }
 
-.tc-step-num {
+/* step number · shared by the Teleco steps and the RL joint-matching list */
+.tc-step-num,
+.rl-map-steps li::before {
+  flex-shrink: 0;
   font-family: var(--font-mono);
   font-style: normal;
-  font-size: 0.72rem;
+  font-size: 1.05rem;
+  font-weight: 600;
   color: var(--text-muted);
 }
-
 /* what each step hands to the next · pinned to the card bottom */
 .tc-out {
   font-family: var(--font-mono);
@@ -9207,7 +9215,7 @@ body::before {
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto;
   gap: 1.75rem;
-  align-items: center;
+  align-items: stretch;
   padding: 1rem 1.1rem;
   border: 1px solid var(--glass-border);
   border-radius: 10px;
@@ -9216,6 +9224,7 @@ body::before {
 
 .rl-map-text {
   display: grid;
+  grid-template-rows: auto 1fr;
   gap: 0.75rem;
 }
 
@@ -9264,19 +9273,33 @@ body::before {
   color: var(--accent-1);
 }
 
+/* three rows that stretch to the height of the hand images beside them */
 .rl-map-steps {
   margin: 0;
-  padding-left: 1.2rem;
+  padding: 0;
+  list-style: none;
+  counter-reset: rl-step;
   display: grid;
-  gap: 0.45rem;
+  grid-auto-rows: 1fr;
+  gap: 0.6rem;
   color: var(--text-secondary);
-  font-size: 0.94rem;
+  font-size: 1rem;
   line-height: 1.5;
 }
 
-.rl-map-steps li::marker {
-  color: var(--accent-1);
-  font-family: var(--font-mono);
+.rl-map-steps li {
+  counter-increment: rl-step;
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  padding: 0.6rem 0.9rem;
+  border: 1px solid var(--glass-border);
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.rl-map-steps li::before {
+  content: counter(rl-step, decimal-leading-zero);
 }
 
 .rl-map-hands {

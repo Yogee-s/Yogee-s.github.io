@@ -862,9 +862,22 @@ import Base from '../layouts/Base.astro';
 
           <section class="cs-overview tc-overview">
             <div class="tc-intro">
-              <p class="cs-intro">Teleco is a social robot that <mark>looks visitors in the eye</mark>. I built the
-                system that tells it where each person is standing, and it ran live at the Yoshikawa Lab pavilion,
-                Osaka Expo 2025.</p>
+              <dl class="cs-brief tc-brief">
+                <div>
+                  <dt>The problem</dt>
+                  <dd>Teleco is a social robot that <mark>interacts with visitors</mark>. To make eye contact,
+                    it first has to find them in the room.</dd>
+                </div>
+                <div>
+                  <dt>My part</dt>
+                  <dd>I built the system that tells it <mark>where each person is standing</mark> and how tall
+                    they are.</dd>
+                </div>
+                <div>
+                  <dt>The result</dt>
+                  <dd>It ran live at the <mark>Yoshikawa Lab pavilion</mark>, Osaka Expo 2025.</dd>
+                </div>
+              </dl>
               <div class="cs-stats cs-stats-3">
                 <div><b>2–6 cm</b><span>Position error on the map</span></div>
                 <div><b>&lt;10 cm</b><span>Height error for eye contact</span></div>
@@ -1047,10 +1060,9 @@ import Base from '../layouts/Base.astro';
               <div class="rl-map-text">
                 <p class="rl-map-label">Matching the joints</p>
                 <ol class="rl-map-steps">
-                  <li>The demonstrations were recorded on Adroit's <mark>30 joints</mark>.</li>
-                  <li>Each circled Adroit joint maps to the Inspire joint <mark>in the same spot</mark>: 12 in
-                    total.</li>
-                  <li>Add 9 hand, object and target positions = the Inspire's <mark>21 values</mark>.</li>
+                  <li><span>Demonstrations were recorded on Adroit's <mark>30 joints</mark>.</span></li>
+                  <li><span>Circled joints map to the <mark>same spot</mark> on the Inspire: 12 joints.</span></li>
+                  <li><span>Plus 9 hand, object and target positions = <mark>21 values</mark>.</span></li>
                 </ol>
               </div>
               <div class="rl-map-hands">
