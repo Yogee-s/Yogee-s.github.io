@@ -98,9 +98,7 @@ import Base from '../layouts/Base.astro';
         <p class="featured-intro">I am passionate about <span class="signal-strong">embodied robotics</span>. Through my
           projects, I have built hands-on experience in <span class="signal-tech">perception</span>, <span
             class="signal-tech">reasoning</span>, <span class="signal-tech">manipulation</span>, and <span
-            class="signal-tech">legged balance</span>. My dream one day is to contribute to a <span
-            class="signal-strong">humanoid robot</span> that brings all of these capabilities into one <span
-            class="signal-strong">integrated system</span>.</p>
+            class="signal-tech">legged balance</span>.</p>
       </div>
 
       <div class="constellation-wrap">
@@ -879,26 +877,36 @@ import Base from '../layouts/Base.astro';
             <header class="cs-section-head">
               <div>
                 <h3>From camera pixels to eye contact</h3>
-                <p class="cs-lead">A camera only sees pixels. The robot needs to know <mark>where you are standing
-                    in the room</mark>, despite changing view angles, unclear depth and noisy detections.</p>
+                <p class="cs-lead">A camera only sees pixels. To make eye contact, Teleco needs two things:
+                  <mark>where you stand</mark> on its map, and <mark>how tall you are</mark>.</p>
               </div>
             </header>
             <ol class="tc-steps">
               <li>
+                <i class="tc-step-num">01 · Detect</i>
                 <b>Find people</b>
-                <span>A YOLOv12 keypoint model I trained spots each visitor in the camera image.</span>
+                <span>A <mark>YOLOv12 pose model</mark> I trained spots each visitor. The point between their
+                  <mark>ankles</mark> marks where they stand.</span>
+                <em class="tc-out">→ position in the camera image</em>
               </li>
               <li>
+                <i class="tc-step-num">02 · Map</i>
                 <b>Place them on the map</b>
-                <span>Kabsch alignment converts each camera position into the robot's SLAM map, in the robot's own
-                  frame.</span>
+                <span>I parked Teleco at a few spots and paired where the camera saw it with where its
+                  <mark>SLAM map</mark> said it was. <mark>Kabsch alignment</mark> turns those pairs into one
+                  camera-to-map transform.</span>
+                <em class="tc-out">→ x, y on the map · <strong>2–6 cm</strong> error</em>
               </li>
               <li>
+                <i class="tc-step-num">03 · Gaze</i>
                 <b>Look them in the eye</b>
-                <span>Pixel-to-height calibration, using Teleco as the reference, works out where to aim the robot's
-                  gaze.</span>
+                <span>Teleco's known height is the <mark>reference</mark>. A fitted curve converts a visitor's
+                  <mark>pixel height</mark> into real height, correcting for distance.</span>
+                <em class="tc-out">→ height to aim the gaze · <strong>&lt;10 cm</strong> error</em>
               </li>
             </ol>
+            <p class="tc-steps-note">The nearest visitor's position and height stream to the robot over
+              <mark>MQTT</mark>, about 5 times a second.</p>
           </section>
 
           <section class="cs-section">
