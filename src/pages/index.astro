@@ -64,10 +64,15 @@ import Base from '../layouts/Base.astro';
 
       <div class="hero-meta">
         <article class="meta-card">
-          <h3>Availability</h3>
-          <p><span class="signal-event signal-event-purple">Available now</span> · full-time <span
-              class="signal-strong">robotics software roles</span> in perception, embodied AI, and on-device LLMs ·
-            NUS BEng, Class of 2026 · Singapore · open to relocation</p>
+          <div class="meta-card-head">
+            <h3>Availability</h3>
+            <span class="meta-status"><span class="availability-dot"></span>Available now</span>
+          </div>
+          <ul class="meta-list">
+            <li>Full-time <span class="signal-strong">robotics software roles</span></li>
+            <li>Perception · embodied AI · on-device LLMs</li>
+            <li>Singapore · open to relocation · NUS BEng '26</li>
+          </ul>
         </article>
         <article class="meta-card">
           <h3>Stack</h3>
@@ -332,8 +337,8 @@ import Base from '../layouts/Base.astro';
           <li><a href="#bb-model"><b>02</b> Building the model</a>
             <ol>
               <li><a href="#bb-model-data">Record + label</a></li>
-              <li><a href="#bb-model-tries">Nine iterations</a></li>
-              <li><a href="#bb-model-check">Grad-CAM check</a></li>
+              <li><a href="#bb-model-tries">Exploring features</a></li>
+              <li><a href="#bb-model-check">Interpretability</a></li>
               <li><a href="#bb-model-final">The final model</a></li>
             </ol>
           </li>
@@ -450,7 +455,7 @@ import Base from '../layouts/Base.astro';
             </div>
           </section>
 
-          <!-- 02 · The model journey: data → 9 iterations → Grad-CAM check → final model -->
+          <!-- 02 · The model journey: data → input features → interpretability → final model -->
           <section class="cs-section" id="bb-model">
             <header class="cs-section-head">
               <span class="cs-num">02</span>
@@ -481,7 +486,7 @@ import Base from '../layouts/Base.astro';
             </div>
 
             <div class="cs-step" id="bb-model-tries">
-              <h4>Nine iterations to find what works</h4>
+              <h4>Exploring input features</h4>
               <p class="cs-takeaway">Every approach failed in a different way, and each failure pointed to the next
                 idea.</p>
 
@@ -624,7 +629,7 @@ import Base from '../layouts/Base.astro';
             </div>
 
             <div class="cs-step" id="bb-model-check">
-              <h4>Checking what the model pays attention to</h4>
+              <h4>Model interpretability</h4>
               <p class="cs-takeaway">Grad-CAM heat maps show where the model is looking. Red means attention.</p>
               <p>Early models focused on the wrong regions instead of the punch itself. The final model <mark>watches
                   the arms and shoulders</mark>, like a coach would.</p>
@@ -883,30 +888,58 @@ import Base from '../layouts/Base.astro';
             </header>
             <ol class="tc-steps">
               <li>
-                <i class="tc-step-num">01 · Detect</i>
-                <b>Find people</b>
-                <span>A <mark>YOLOv12 pose model</mark> I trained spots each visitor. The point between their
-                  <mark>ankles</mark> marks where they stand.</span>
-                <em class="tc-out">→ position in the camera image</em>
+                <b><i class="tc-step-num">01</i>Find people</b>
+                <span>My <mark>YOLOv12 pose model</mark> marks where each visitor stands, between their
+                  <mark>ankles</mark>.</span>
+                <em class="tc-out">→ position in the image</em>
               </li>
               <li>
-                <i class="tc-step-num">02 · Map</i>
-                <b>Place them on the map</b>
-                <span>I parked Teleco at a few spots and paired where the camera saw it with where its
-                  <mark>SLAM map</mark> said it was. <mark>Kabsch alignment</mark> turns those pairs into one
-                  camera-to-map transform.</span>
-                <em class="tc-out">→ x, y on the map · <strong>2–6 cm</strong> error</em>
+                <b><i class="tc-step-num">02</i>Place them on the map</b>
+                <span><mark>Kabsch alignment</mark>, calibrated by parking Teleco at a few spots, maps camera
+                  points onto its <mark>SLAM map</mark>.</span>
+                <em class="tc-out">→ x, y · <strong>2–6 cm</strong> error</em>
               </li>
               <li>
-                <i class="tc-step-num">03 · Gaze</i>
-                <b>Look them in the eye</b>
-                <span>Teleco's known height is the <mark>reference</mark>. A fitted curve converts a visitor's
-                  <mark>pixel height</mark> into real height, correcting for distance.</span>
-                <em class="tc-out">→ height to aim the gaze · <strong>&lt;10 cm</strong> error</em>
+                <b><i class="tc-step-num">03</i>Look them in the eye</b>
+                <span>A curve fitted on Teleco's known height turns <mark>pixel height</mark> into real
+                  height.</span>
+                <em class="tc-out">→ height · <strong>&lt;10 cm</strong> error</em>
               </li>
             </ol>
-            <p class="tc-steps-note">The nearest visitor's position and height stream to the robot over
-              <mark>MQTT</mark>, about 5 times a second.</p>
+          </section>
+
+          <section class="cs-section">
+            <header class="cs-section-head">
+              <div>
+                <h3>Why a camera in the room, not on the robot</h3>
+                <p class="cs-lead">A camera on Teleco only sees what is in front of it. One fixed camera
+                  overlooking the area sees <mark>everyone around the robot</mark>.</p>
+              </div>
+            </header>
+            <div class="cs-parts cs-parts-2">
+              <div>
+                <h5>No blind spots</h5>
+                <p>Visitors are tracked on <mark>either side of the robot</mark>, even when Teleco partly hides
+                  them from view.</p>
+              </div>
+              <div>
+                <h5>Process once, share with every robot</h5>
+                <p>Detection runs on <mark>one central computer</mark>, not on each robot. Results stream over
+                  <mark>MQTT</mark> (~5 Hz), so <mark>multiple robots</mark> can use the same detections.</p>
+              </div>
+            </div>
+            <div class="cs-row tc-proof">
+              <figure style="--ar: 2.11"><img class="js-lightbox" src="assets/frontier/teleco_detect_open.webp"
+                  alt="SLAM map with a red marker on a visitor's legs, next to the camera view of the visitor standing between the camera and Teleco"
+                  loading="lazy">
+                <figcaption>Near side · the red map marker lands on their legs</figcaption>
+              </figure>
+              <figure style="--ar: 2.11"><img class="js-lightbox" src="assets/frontier/teleco_detect_behind.webp"
+                  alt="SLAM map with a red marker beyond Teleco, next to the camera view of a visitor standing behind the robot"
+                  loading="lazy">
+                <figcaption>Far side, partly hidden by Teleco · still found</figcaption>
+              </figure>
+            </div>
           </section>
 
           <section class="cs-section">
@@ -972,9 +1005,20 @@ import Base from '../layouts/Base.astro';
             </a>
           </div>
 
-          <p class="cs-intro">Teaching a robot hand to <mark>grasp and move objects</mark> in MuJoCo simulation with
-            DAPG, a reinforcement learning method that starts from human demonstrations. The pipeline only worked
-            for the Adroit research hand, so I <mark>ported it to the Inspire hand</mark>.</p>
+          <dl class="cs-brief rl-brief">
+            <div>
+              <dt>The goal</dt>
+              <dd>Teach a robot hand to <mark>grasp and move objects</mark> in MuJoCo simulation.</dd>
+            </div>
+            <div>
+              <dt>The method</dt>
+              <dd><mark>DAPG</mark>: reinforcement learning that starts from human demonstrations.</dd>
+            </div>
+            <div>
+              <dt>My part</dt>
+              <dd>The pipeline only ran on the Adroit hand. I <mark>ported it to the Inspire hand</mark>.</dd>
+            </div>
+          </dl>
 
           <section class="cs-section">
             <header class="cs-section-head">
@@ -982,30 +1026,32 @@ import Base from '../layouts/Base.astro';
                 <h3>What it took to switch hands</h3>
               </div>
             </header>
-            <div class="cs-parts">
+            <div class="cs-parts rl-parts">
               <div>
                 <h5>The robot model</h5>
-                <p>Converted the hand from URDF to MuJoCo's format, then fixed collisions and damping so it
-                  <mark>behaves like the real hand</mark>.</p>
+                <b class="rl-part-key">URDF → MJCF</b>
+                <p>Converted, then tuned collisions and damping so it <mark>behaves like the real hand</mark>.</p>
               </div>
               <div>
-                <h5>What the AI sees</h5>
-                <p>Remapped Adroit's 39 observation values to the Inspire's 21, so <mark>DAPG could train on the
-                    new hand</mark>.</p>
+                <h5>Model inputs</h5>
+                <b class="rl-part-key">39 → 21 values</b>
+                <p>Remapped Adroit's observations to the Inspire's, so <mark>DAPG can train on it</mark>.</p>
               </div>
               <div>
                 <h5>Joints + rewards</h5>
-                <p>Grouped the hand's joints onto its <mark>6 actuators</mark> and debugged the reward shaping.</p>
+                <b class="rl-part-key">6 actuators</b>
+                <p>Grouped the hand's joints onto its motors and <mark>debugged the reward shaping</mark>.</p>
               </div>
             </div>
             <div class="rl-map">
               <div class="rl-map-text">
                 <p class="rl-map-label">Matching the joints</p>
-                <p>The training demonstrations were recorded for Adroit's 30 joints. I matched each circled Adroit
-                  joint to the Inspire joint in the same spot, so the existing data could <mark>train the new
-                    hand</mark>.</p>
-                <p class="rl-map-note">The 9 hand, object and target positions carry over as they are, giving the
-                  Inspire's 21 observation values.</p>
+                <ol class="rl-map-steps">
+                  <li>The demonstrations were recorded on Adroit's <mark>30 joints</mark>.</li>
+                  <li>Each circled Adroit joint maps to the Inspire joint <mark>in the same spot</mark>: 12 in
+                    total.</li>
+                  <li>Add 9 hand, object and target positions = the Inspire's <mark>21 values</mark>.</li>
+                </ol>
               </div>
               <div class="rl-map-hands">
                 <figure><img class="js-lightbox" src="assets/artc_internship/adroit_joints_mapped.webp"
@@ -1079,15 +1125,21 @@ import Base from '../layouts/Base.astro';
 
           <div class="bias-overview">
             <div class="bias-text">
-              <p class="cs-intro">LLMs are now used to grade writing. We tested how easily a <mark>committee of LLM
-                  judges</mark> can be pushed into disagreeing, by feeding it deliberately manipulated essays.</p>
+              <p class="cs-intro">LLMs now grade writing. Can a <mark>committee of LLM judges</mark> be pushed into
+                disagreeing by deliberately manipulated essays?</p>
               <dl class="bias-facts">
-                <div><dt>Attacks</dt><dd>Word-embedding noise · scrambled sentences · token injection · lists ·
-                    controversial rewrites</dd></div>
-                <div><dt>Judge committees</dt><dd>Age, values and income personas · a mixed panel of Phi-4-mini and
-                    Llama 3.2</dd></div>
+                <div>
+                  <dt>Attacks</dt>
+                  <dd class="bias-chips"><span>Word-embedding noise</span><span>Scrambled sentences</span><span>Token
+                      injection</span><span>Lists</span><span>Controversial rewrites</span></dd>
+                </div>
+                <div>
+                  <dt>Judges</dt>
+                  <dd class="bias-chips"><span>Age personas</span><span>Values personas</span><span>Income
+                      personas</span><span>Phi-4-mini + Llama 3.2 panel</span></dd>
+                </div>
               </dl>
-              <p class="cs-takeaway">Key finding: noisy, scrambled essays still scored well. Judges <mark>miss
+              <p class="cs-takeaway"><b>Key finding:</b> noisy, scrambled essays still scored well. Judges <mark>miss
                   broken meaning</mark> as long as the words read fluently.</p>
             </div>
             <figure class="bias-figure">
