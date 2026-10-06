@@ -9182,13 +9182,6 @@ body::before {
   color: var(--text);
 }
 
-/* Teleco · centre figure captions so short and wrapped labels line up under their media */
-.tc-body .cs-row figcaption {
-  margin-top: 0;
-  text-align: center;
-  text-wrap: balance;
-}
-
 /* Teleco · why an external camera: two reasons, then the map/camera proof shots */
 .cs-parts.cs-parts-2 {
   grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -9688,4 +9681,22 @@ body::before {
   .pdf-tools {
     display: none;
   }
+}
+
+/* --- Figure captions · one style in every project panel: centred, sitting directly
+   under the image or video with the same gap, so rows of figures line up --- */
+.detail-content .cs figure > figcaption {
+  margin-top: 0;
+  padding-top: 0.5rem;
+  font-size: 0.78rem;
+  line-height: 1.45;
+  text-align: center;
+  text-wrap: balance;
+}
+
+/* titled captions (title + notes under the comparison videos) keep their body font */
+.detail-content .cs .cs-nearmiss figure > figcaption {
+  justify-items: center;
+  padding: 0.6rem 0.35rem 0.2rem;
+  font-size: 0.88rem;
 }
