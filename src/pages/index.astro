@@ -325,6 +325,30 @@ import Base from '../layouts/Base.astro';
 
     <!-- ===== PROJECT TEMPLATES ===== -->
     <template id="tpl-boxbunny">
+      <!-- Outline · its own rail on the left of the panel (chip strip on phones) -->
+      <nav class="cs-toc" aria-label="Sections in this project">
+        <span class="cs-toc-label">On this page</span>
+        <ol>
+          <li class="cs-toc-top"><a href="#bb-overview">Overview</a></li>
+          <li><a href="#bb-demo"><b>01</b> See it work</a></li>
+          <li><a href="#bb-model"><b>02</b> Building the model</a>
+            <ol>
+              <li><a href="#bb-model-data">Record + label</a></li>
+              <li><a href="#bb-model-tries">Nine iterations</a></li>
+              <li><a href="#bb-model-check">Grad-CAM check</a></li>
+              <li><a href="#bb-model-final">The final model</a></li>
+            </ol>
+          </li>
+          <li><a href="#bb-runtime"><b>03</b> Running it live</a></li>
+          <li><a href="#bb-app"><b>04</b> Phone app + AI coach</a>
+            <ol>
+              <li><a href="#bb-app-dash">Phone dashboard</a></li>
+              <li><a href="#bb-app-coach">AI coach</a></li>
+              <li><a href="#bb-app-tuning">Tuning</a></li>
+            </ol>
+          </li>
+        </ol>
+      </nav>
       <article class="detail-project">
         <div class="project-head">
           <div>
@@ -340,13 +364,10 @@ import Base from '../layouts/Base.astro';
           </div>
           <span class="pill">Final Year Project</span>
         </div>
-        <div class="project-body boxing-body">
-          <p class="deep-dive-note">This page covers <span class="signal-strong">my Robot Intelligence subsystem</span>.
-            Click <strong>Read the Full Deep-Dive</strong> to open my full report and see the other subsystems
-            (mechanism, upper, lower) built by my teammates.</p>
+        <div class="project-body boxing-body cs">
           <div class="links cta-top" style="align-items: center;">
             <a href="https://cheer-up-dimbo.github.io/IS431/pages/robot-intelligence.html" class="btn btn-primary"
-              target="_blank" rel="noopener noreferrer">Read the Full Deep-Dive →</a>
+              target="_blank" rel="noopener noreferrer">Read the Full Deep-Dive</a>
             <a href="https://github.com/Yogee-s/boxing_action_recognition" class="card-repo-btn" target="_blank"
               rel="noopener noreferrer">
               <svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true">
@@ -366,342 +387,443 @@ import Base from '../layouts/Base.astro';
               ROS 2 Repo
             </a>
           </div>
-          <div class="boxing-top">
-            <div class="project-copy">
-              <p><span class="signal-strong">Adaptive boxing sparring partner</span> · I owned the AI brain: perception,
-                real-time ROS 2 runtime, and on-device LLM coach. Built end-to-end so the robot actually reacts to real
-                punches, not just scripted drills.</p>
-              <ul>
-                <li>Built a <span class="signal-tech">custom GUI</span> to annotate synchronized <span
-                    class="signal-tech">RGB-D boxing videos</span></li>
-                <li>Compared multiple pipelines: <span class="signal-tech">3D pose skeletons</span>, <span
-                    class="signal-tech">bounding-box RGB-D pixels</span>, and <span class="signal-tech">segmented
-                    inputs</span></li>
-                <li>Used <span class="signal-tech">Grad-CAM</span> for <span class="signal-strong">model
-                    interpretability</span> to validate what the model attends to during punch classification</li>
-                <li>Fine-tuned a <span class="signal-tech">Gemma 4 E2B LLM</span> (on-device, no cloud) to turn model
-                  outputs into personalized coaching cues</li>
-                <li>Converged on a <span class="signal-tech">dual-branch Voxel-Pose Transformer</span> hitting <span
-                    class="signal-metric">96.8%</span> validation accuracy at <span class="signal-metric">30 fps</span>
-                  on Jetson Orin NX</li>
-              </ul>
+
+          <!-- Overview · problem → my part → result, then the headline numbers -->
+          <section class="cs-overview" id="bb-overview">
+            <dl class="cs-brief">
+              <div>
+                <dt>The problem</dt>
+                <dd>Boxing robots run scripted drills. We wanted one that <mark>reacts to real punches</mark>, even
+                  with gloves hiding the hands.</dd>
+              </div>
+              <div>
+                <dt>My part</dt>
+                <dd>I built the <mark>robot's brain</mark>: punch recognition, real-time software, phone app and AI
+                  coach.</dd>
+              </div>
+              <div>
+                <dt>The result</dt>
+                <dd>Real-time punch recognition <mark>running fully on the robot</mark>, demoed at the CDE AI Fair.</dd>
+              </div>
+            </dl>
+            <div class="cs-stats">
+              <div><b>96.8%</b><span>Accuracy on unseen boxers</span></div>
+              <div><b>30 fps</b><span>Real-time on the robot</span></div>
+              <div><b>9</b><span>Model versions to get there</span></div>
+              <div><b>On-device</b><span>No cloud, all on the robot</span></div>
             </div>
-            <div class="boxing-side-media">
-              <figure>
+            <div class="cs-hero" style="--ar-sum: 2.333">
+              <figure style="--ar: 1">
                 <img class="js-lightbox" src="assets/boxbunny_capstone/concept_design.jpg"
                   alt="BoxBunny concept design" loading="lazy">
                 <figcaption>Concept design</figcaption>
               </figure>
-              <figure>
+              <figure style="--ar: 1.333">
                 <img class="js-lightbox" src="assets/boxbunny_capstone/cde_fair_setup.jpg"
                   alt="BoxBunny deployed at CDE AI Fair" loading="lazy">
                 <figcaption>Deployed at CDE AI Fair</figcaption>
               </figure>
             </div>
-          </div>
-          <div class="boxing-flow">
-            <h4 class="boxing-flow-title">Action Recognition Development Flow</h4>
-            <div class="boxing-flow-columns">
-              <article class="boxing-column boxing-column-data">
-                <h5>Data + Annotation</h5>
-                <p>Built a custom annotation GUI for synchronized RGB-D clips, then generated cleaner labels for
-                  training.</p>
-                <div class="boxing-column-media">
-                  <figure class="boxing-media-gui"><img class="js-lightbox media-fit-contain"
-                      src="assets/boxbunny_capstone/annotation_gui.webp" alt="RGB-D annotation GUI" loading="lazy">
-                    <figcaption>RGB-D annotation GUI</figcaption>
-                  </figure>
-                  <figure class="boxing-media-pose"><img class="js-lightbox media-fit-contain"
-                      src="assets/boxbunny_capstone/3d_pose_estimation.webp" alt="3D pose estimation" loading="lazy">
-                    <figcaption>3D pose baseline (occlusion issues)</figcaption>
-                  </figure>
-                </div>
-              </article>
-              <article class="boxing-column boxing-column-model">
-                <h5>Model Exploration + Diagnostics</h5>
-                <ul class="boxing-mini-list">
-                  <li>Bounding-box RGB-D features gave a stronger proof-of-concept baseline.</li>
-                  <li><span class="signal-strong">Grad-CAM</span> confirmed early models focused on wrong regions
-                    instead of true motion.</li>
-                  <li><span class="signal-strong">Voxel + colour tracking</span> (iter 6, ~96%) was the breakthrough
-                    that showed 3D motion was the right primary signal, but coloured gloves were impractical.</li>
-                </ul>
-                <div class="boxing-column-media">
-                  <figure class="boxing-media-poc"><video controls autoplay loop muted playsinline preload="none" poster="assets/boxbunny_capstone/inference_trained_model_work_in_progress_poster.webp">
-                      <source src="assets/boxbunny_capstone/inference_trained_model_work_in_progress.mp4"
-                        type="video/mp4">
-                    </video>
-                    <figcaption>Bounding-box RGB-D inference (PoC)</figcaption>
-                  </figure>
-                  <figure class="boxing-media-gradcam"><video controls autoplay loop muted playsinline
-                      preload="none" poster="assets/boxbunny_capstone/multimodal_inference_poster.webp">
-                      <source src="assets/boxbunny_capstone/multimodal_inference.mp4" type="video/mp4">
-                    </video>
-                    <figcaption>Voxel + colour tracking (iter 6, ~96%) · real-time but needed coloured gloves
-                    </figcaption>
-                  </figure>
-                </div>
-                <figure class="exploration-gradcam">
-                  <video controls autoplay loop muted playsinline preload="none" poster="assets/boxbunny_capstone/freestyle_gradcam_poster.webp">
-                    <source src="assets/boxbunny_capstone/freestyle_gradcam.mp4" type="video/mp4">
-                  </video>
-                  <figcaption>Grad-CAM attention diagnosis · confirms the model focuses on arms and shoulders, not
-                    background</figcaption>
+          </section>
+
+          <!-- 01 · Demo first, so the reader knows what the rest of the page builds towards -->
+          <section class="cs-section" id="bb-demo">
+            <header class="cs-section-head">
+              <span class="cs-num">01</span>
+              <div>
+                <h3>See it work</h3>
+                <p class="cs-lead">Watch the label in the top-left corner: the model names each punch <mark>the
+                    moment it lands</mark>. Two different boxers, same model.</p>
+              </div>
+            </header>
+            <div class="media-layout media-layout-2 cs-video-pair">
+              <figure>
+                <video controls autoplay loop muted playsinline preload="none" poster="assets/boxbunny_capstone/inference_person_1_poster.webp">
+                  <source src="assets/boxbunny_capstone/inference_person_1.mp4" type="video/mp4">
+                </video>
+                <figcaption>Person 1 · newer boxer, looser form</figcaption>
+              </figure>
+              <figure>
+                <video controls autoplay loop muted playsinline preload="none" poster="assets/boxbunny_capstone/inference_person_2_poster.webp">
+                  <source src="assets/boxbunny_capstone/inference_person_2.mp4" type="video/mp4">
+                </video>
+                <figcaption>Person 2 · trained boxer, cleaner technique</figcaption>
+              </figure>
+            </div>
+          </section>
+
+          <!-- 02 · The model journey: data → 9 iterations → Grad-CAM check → final model -->
+          <section class="cs-section" id="bb-model">
+            <header class="cs-section-head">
+              <span class="cs-num">02</span>
+              <div>
+                <h3>Building the punch-recognition model</h3>
+                <p class="cs-lead">The challenge: teach a small onboard computer to tell jabs, hooks, uppercuts and
+                  blocks apart <mark>in a split second</mark>, while gloves hide the hands.</p>
+              </div>
+            </header>
+
+            <div class="cs-journey">
+            <div class="cs-step" id="bb-model-data">
+              <h4>Record punches, then label every one</h4>
+              <p class="cs-takeaway">I recorded boxers with a depth camera and built my own tool to label every
+                punch.</p>
+              <p>An early test exposed the big problem straight away: <mark>boxing gloves hide the wrists</mark>, so
+                normal skeleton tracking loses the hands.</p>
+              <div class="cs-media-lg">
+                <figure style="--ar: 1.792"><img class="js-lightbox"
+                    src="assets/boxbunny_capstone/annotation_gui.webp" alt="RGB-D annotation GUI" loading="lazy">
+                  <figcaption>My labelling tool for colour + depth clips</figcaption>
                 </figure>
-              </article>
-              <article class="boxing-column boxing-column-current">
-                <h5>Final Model + Integration (Deployed v11)</h5>
-                <p>Dual-branch Voxel-Pose Transformer + TensorRT FP16, integrated into a 10-node ROS 2 Humble runtime
-                  with CV + IMU fusion and an on-device LLM coach. Real-time prediction <em>as the punch lands</em>,
-                  not after.</p>
-                <div class="boxing-column-media interpret-row">
-                  <figure>
-                    <video controls autoplay loop muted playsinline preload="none" poster="assets/boxbunny_capstone/inference_person_1_poster.webp">
-                      <source src="assets/boxbunny_capstone/inference_person_1.mp4" type="video/mp4">
-                    </video>
-                    <figcaption>Person 1 · newer boxer, looser form</figcaption>
-                  </figure>
-                  <figure>
-                    <video controls autoplay loop muted playsinline preload="none" poster="assets/boxbunny_capstone/inference_person_2_poster.webp">
-                      <source src="assets/boxbunny_capstone/inference_person_2.mp4" type="video/mp4">
-                    </video>
-                    <figcaption>Person 2 · trained boxer, cleaner technique</figcaption>
-                  </figure>
-                </div>
-                <p class="interpret-label">Interpretability</p>
-                <div class="boxing-column-media interpret-row">
-                  <figure><img class="js-lightbox media-fit-contain"
-                      src="assets/boxbunny_capstone/confusion_matrix.png"
-                      alt="Confusion matrix showing 96.8% validation accuracy on unseen users" loading="lazy">
-                    <figcaption>Confusion matrix · 96.8% accuracy on unseen users</figcaption>
-                  </figure>
-                  <figure><img class="js-lightbox media-fit-contain"
-                      src="assets/boxbunny_capstone/tsne_embeddings.png"
-                      alt="t-SNE projection of learned embeddings showing clean class separation" loading="lazy">
-                    <figcaption>t-SNE · learned embeddings cluster cleanly</figcaption>
-                  </figure>
-                </div>
-                <p class="boxing-stage-note"><span class="signal-metric">96.8%</span> val accuracy ·
-                  <span class="signal-metric">30 fps</span> on Jetson · 10-node ROS 2 · 146 unit + 28 integration tests.
-                </p>
-              </article>
-            </div>
-          </div>
-
-          <!-- How 9 iterations across 3 phases converged on Voxel + Pose Fusion -->
-          <div class="boxing-flow">
-            <h4 class="boxing-flow-title">How 9 iterations converged · three phases, one fusion</h4>
-            <p>Each phase of exploration failed on its own, but taught something the final architecture needed.
-              <span class="signal-strong">Pose</span> gave hand identity but broke under glove occlusion.
-              <span class="signal-strong">Raw pixels</span> hit 87% but were too heavy for the Jetson.
-              <span class="signal-strong">Voxels</span> captured 3D motion but couldn't tell left from right.
-              Fusing voxels with pose closed the loop at <span class="signal-metric">97.3%</span>, deployed at
-              <span class="signal-metric">96.8%</span> after TensorRT + the block-annotation fix.</p>
-
-            <div class="phases-diagram">
-              <div class="phases-grid">
-                <div class="phase-col phase-pose">
-                  <div class="phase-head">Pose (iter 1–2)</div>
-                  <div class="phase-arrow">↓</div>
-                  <div class="phase-step">
-                    <strong>1. 2D Pose + LSTM</strong>
-                    <span class="fail">✗ Wrong camera angle</span>
-                  </div>
-                  <div class="phase-arrow">↓</div>
-                  <div class="phase-step">
-                    <strong>2. 3D Pose</strong> (depth lifting, ~67%)
-                    <span class="fail">✗ Glove occlusion blocks wrists</span>
-                  </div>
-                  <div class="phase-arrow">↓</div>
-                  <div class="phase-lesson">
-                    <strong>Lesson:</strong> skeleton joints carry hand identity, but pose alone is not reliable under
-                    occlusion.
-                  </div>
-                  <div class="phase-note">Pose returns later ↓</div>
-                </div>
-
-                <div class="phase-col phase-pixels">
-                  <div class="phase-head">Raw Pixels (iter 3–4)</div>
-                  <div class="phase-arrow">↓</div>
-                  <div class="phase-step">
-                    <strong>3. Raw RGBD + 3D CNN</strong> (87.2%)
-                    <span class="fail">✗ 88M params, too large for Jetson</span>
-                  </div>
-                  <div class="phase-arrow">↓</div>
-                  <div class="phase-step">
-                    <strong>4. RGBD + Segmentation</strong>
-                    <span class="fail">✗ Still pixel-based, still required Colab</span>
-                  </div>
-                  <div class="phase-arrow">↓</div>
-                  <div class="phase-lesson">
-                    <strong>Lesson:</strong> need compact, engineered features; raw pixels are too heavy for edge
-                    deployment.
-                  </div>
-                  <div class="phase-note">Dead end, redirected the search</div>
-                </div>
-
-                <div class="phase-col phase-voxel">
-                  <div class="phase-head">Voxels (iter 5–7)</div>
-                  <div class="phase-arrow">↓</div>
-                  <div class="phase-step">
-                    <strong>5. Z-Mask</strong> (2D depth grid)
-                    <span class="fail">✗ Lost 3D spatial information</span>
-                  </div>
-                  <div class="phase-arrow">↓</div>
-                  <div class="phase-step">
-                    <strong>6. Voxel + Colour</strong> (~96%)
-                    <span class="fail">✗ Impractical coloured gloves</span>
-                    <span class="insight">★ Insight: voxels need hand info</span>
-                  </div>
-                  <div class="phase-arrow">↓</div>
-                  <div class="phase-step">
-                    <strong>7. Voxel-Only</strong> (80.6%)
-                    <span class="fail">✗ Left/right confusion (34% jab error)</span>
-                    <span class="insight">★ Insight: need pose back for L/R</span>
-                  </div>
-                  <div class="phase-arrow">↓</div>
-                  <div class="phase-lesson">
-                    <strong>Lesson:</strong> 3D motion is the right primary signal, but voxels alone cannot distinguish
-                    left from right hand.
-                  </div>
-                </div>
-              </div>
-
-              <div class="phase-merge" aria-hidden="true">
-                <svg viewBox="0 0 960 80" xmlns="http://www.w3.org/2000/svg">
-                  <line x1="160" y1="0" x2="160" y2="30" stroke="#1565c0" stroke-width="2"/>
-                  <line x1="800" y1="0" x2="800" y2="30" stroke="#2e7d32" stroke-width="2"/>
-                  <line x1="160" y1="30" x2="480" y2="30" stroke="#1565c0" stroke-width="2"/>
-                  <line x1="480" y1="30" x2="800" y2="30" stroke="#2e7d32" stroke-width="2"/>
-                  <text x="160" y="50" text-anchor="middle" font-size="14" font-weight="700" fill="#1565c0">Pose</text>
-                  <text x="800" y="50" text-anchor="middle" font-size="14" font-weight="700" fill="#2e7d32">Voxel</text>
-                  <line x1="480" y1="30" x2="480" y2="72" stroke="#555" stroke-width="2"/>
-                  <polygon points="474,68 480,78 486,68" fill="#555"/>
-                </svg>
-              </div>
-
-              <div class="phase-final">
-                <strong>8. Voxel + Pose Fusion · 97.3%</strong>
-                <span>Pose solves left/right confusion. Voxels capture 3D motion. Full circle.</span>
-                <span class="phase-final-note">Works with any gloves · YOLO finds the wrist visually.</span>
-              </div>
-              <div class="phase-arrow">↓</div>
-              <div class="phase-final phase-deployed">
-                <strong>9. Production (v11) · 96.8% deployed</strong>
-                <span>TensorRT FP16, block-annotation fix, parallel threads.</span>
+                <figure style="--ar: 1.741"><img class="js-lightbox"
+                    src="assets/boxbunny_capstone/3d_pose_estimation.webp" alt="3D pose estimation" loading="lazy">
+                  <figcaption>Skeleton tracking losing the gloved hands</figcaption>
+                </figure>
               </div>
             </div>
 
-            <figure class="feature-compare-video">
-              <video controls autoplay loop muted playsinline preload="none" poster="assets/boxbunny_capstone/feature_comparison_poster.webp">
-                <source src="assets/boxbunny_capstone/feature_comparison.mp4" type="video/mp4">
-              </video>
-              <figcaption>Eight feature pipelines running on the same clip · visual failure modes at a glance
-              </figcaption>
-            </figure>
-          </div>
+            <div class="cs-step" id="bb-model-tries">
+              <h4>Nine iterations to find what works</h4>
+              <p class="cs-takeaway">Every approach failed in a different way, and each failure pointed to the next
+                idea.</p>
 
-          <!-- System Deep-Dive · 3 extra sections showing the finished system -->
-          <div class="boxing-flow">
-            <h4 class="boxing-flow-title">Under the Hood · how the final system ships</h4>
-            <p>Camera frames flow through a <span class="flow-node"><span class="signal-tech">TensorRT
-                  FP16 YOLO pose</span>&nbsp;(16 ms)</span> and the
-              <span class="flow-node"><span class="signal-tech">action model</span>&nbsp;(8 ms)</span>, comfortably
-              inside the <span class="signal-metric">33 ms</span> real-time budget. A
-              <span class="signal-strong">10-node ROS 2 Humble</span> graph orchestrates perception, IMU impact events,
-              CV + IMU fusion, motor control, and the dashboard bridge.</p>
+              <div class="cs-sub">
+                <p class="cs-sub-label">First, eight ways to "see" a punch</p>
+                <p>The same clip, shown eight ways. Each panel is a different kind of input the model could learn
+                  from: skeletons, 3D blocks (voxels), cropped images, outlines and glove tracking.</p>
+              </div>
+              <figure class="feature-compare-video">
+                <video controls autoplay loop muted playsinline preload="none" poster="assets/boxbunny_capstone/feature_comparison_poster.webp">
+                  <source src="assets/boxbunny_capstone/feature_comparison.mp4" type="video/mp4">
+                </video>
+                <figcaption>Eight input types running on the same clip</figcaption>
+              </figure>
+
+              <div class="cs-sub">
+                <p class="cs-sub-label">How the nine iterations played out</p>
+                <p>Pose, pixels and voxels each failed on their own. <mark>Fusing voxels with pose</mark> fixed both
+                  weaknesses.</p>
+              </div>
+              <div class="phases-diagram">
+                <div class="phases-grid">
+                  <div class="phase-col phase-pose">
+                    <div class="phase-head">Pose (iter 1–2)</div>
+                    <div class="phase-arrow">↓</div>
+                    <div class="phase-step">
+                      <strong>1. 2D Pose + LSTM</strong>
+                      <span class="fail">✗ Wrong camera angle</span>
+                    </div>
+                    <div class="phase-arrow">↓</div>
+                    <div class="phase-step">
+                      <strong>2. 3D Pose</strong> (depth lifting, ~67%)
+                      <span class="fail">✗ Glove occlusion blocks wrists</span>
+                    </div>
+                    <div class="phase-arrow">↓</div>
+                    <div class="phase-lesson">
+                      <strong>Lesson:</strong> skeleton joints carry hand identity, but pose alone is not reliable
+                      under occlusion.
+                    </div>
+                    <div class="phase-note">Pose returns later ↓</div>
+                  </div>
+
+                  <div class="phase-col phase-pixels">
+                    <div class="phase-head">Raw Pixels (iter 3–4)</div>
+                    <div class="phase-arrow">↓</div>
+                    <div class="phase-step">
+                      <strong>3. Raw RGBD + 3D CNN</strong> (87.2%)
+                      <span class="fail">✗ 88M params, too large for Jetson</span>
+                    </div>
+                    <div class="phase-arrow">↓</div>
+                    <div class="phase-step">
+                      <strong>4. RGBD + Segmentation</strong>
+                      <span class="fail">✗ Still pixel-based, still required Colab</span>
+                    </div>
+                    <div class="phase-arrow">↓</div>
+                    <div class="phase-lesson">
+                      <strong>Lesson:</strong> need compact, engineered features; raw pixels are too heavy for edge
+                      deployment.
+                    </div>
+                    <div class="phase-note">Dead end, redirected the search</div>
+                  </div>
+
+                  <div class="phase-col phase-voxel">
+                    <div class="phase-head">Voxels (iter 5–7)</div>
+                    <div class="phase-arrow">↓</div>
+                    <div class="phase-step">
+                      <strong>5. Z-Mask</strong> (2D depth grid)
+                      <span class="fail">✗ Lost 3D spatial information</span>
+                    </div>
+                    <div class="phase-arrow">↓</div>
+                    <div class="phase-step">
+                      <strong>6. Voxel + Colour</strong> (~96%)
+                      <span class="fail">✗ Impractical coloured gloves</span>
+                      <span class="insight">★ Insight: voxels need hand info</span>
+                    </div>
+                    <div class="phase-arrow">↓</div>
+                    <div class="phase-step">
+                      <strong>7. Voxel-Only</strong> (80.6%)
+                      <span class="fail">✗ Left/right confusion (34% jab error)</span>
+                      <span class="insight">★ Insight: need pose back for L/R</span>
+                    </div>
+                    <div class="phase-arrow">↓</div>
+                    <div class="phase-lesson">
+                      <strong>Lesson:</strong> 3D motion is the right primary signal, but voxels alone cannot
+                      distinguish left from right hand.
+                    </div>
+                  </div>
+                </div>
+
+                <div class="phase-merge" aria-hidden="true">
+                  <svg viewBox="0 0 960 80" xmlns="http://www.w3.org/2000/svg">
+                    <line x1="160" y1="0" x2="160" y2="30" stroke="#1565c0" stroke-width="2"/>
+                    <line x1="800" y1="0" x2="800" y2="30" stroke="#2e7d32" stroke-width="2"/>
+                    <line x1="160" y1="30" x2="480" y2="30" stroke="#1565c0" stroke-width="2"/>
+                    <line x1="480" y1="30" x2="800" y2="30" stroke="#2e7d32" stroke-width="2"/>
+                    <text x="160" y="50" text-anchor="middle" font-size="14" font-weight="700" fill="#1565c0">Pose</text>
+                    <text x="800" y="50" text-anchor="middle" font-size="14" font-weight="700" fill="#2e7d32">Voxel</text>
+                    <line x1="480" y1="30" x2="480" y2="72" stroke="#555" stroke-width="2"/>
+                    <polygon points="474,68 480,78 486,68" fill="#555"/>
+                  </svg>
+                </div>
+
+                <div class="phase-final">
+                  <strong>8. Voxel + Pose Fusion · 97.3%</strong>
+                  <span>Pose solves left/right confusion. Voxels capture 3D motion. Full circle.</span>
+                  <span class="phase-final-note">Works with any gloves · YOLO finds the wrist visually.</span>
+                </div>
+                <div class="phase-arrow">↓</div>
+                <div class="phase-final phase-deployed">
+                  <strong>9. Production (v11) · 96.8% deployed</strong>
+                  <span>TensorRT FP16, block-annotation fix, parallel threads.</span>
+                </div>
+              </div>
+              <div class="cs-sub">
+                <p class="cs-sub-label">Two approaches that came close</p>
+                <p>Before the final model, these two gave the best results, but each had a deal-breaker for a robot
+                  in a real gym. The final model in <a class="cs-inline-link" href="#bb-demo">01</a> fixes both.</p>
+              </div>
+              <div class="media-layout media-layout-2 cs-video-pair cs-nearmiss">
+                <figure><video controls autoplay loop muted playsinline preload="none" poster="assets/boxbunny_capstone/inference_trained_model_work_in_progress_poster.webp">
+                    <source src="assets/boxbunny_capstone/inference_trained_model_work_in_progress.mp4"
+                      type="video/mp4">
+                  </video>
+                  <figcaption>
+                    <b>Bounding-box RGB-D · proof of concept</b>
+                    <span class="cs-good">Strongest early baseline</span>
+                    <span class="cs-bad">Not real-time</span>
+                  </figcaption>
+                </figure>
+                <figure><video controls autoplay loop muted playsinline preload="none" poster="assets/boxbunny_capstone/multimodal_inference_poster.webp">
+                    <source src="assets/boxbunny_capstone/multimodal_inference.mp4" type="video/mp4">
+                  </video>
+                  <figcaption>
+                    <b>Voxel + colour tracking · iteration 6, ~96%</b>
+                    <span class="cs-good">Real-time, and showed 3D motion is the right signal</span>
+                    <span class="cs-bad">Only worked with coloured gloves</span>
+                  </figcaption>
+                </figure>
+              </div>
+            </div>
+
+            <div class="cs-step" id="bb-model-check">
+              <h4>Checking what the model pays attention to</h4>
+              <p class="cs-takeaway">Grad-CAM heat maps show where the model is looking. Red means attention.</p>
+              <p>Early models focused on the wrong regions instead of the punch itself. The final model <mark>watches
+                  the arms and shoulders</mark>, like a coach would.</p>
+              <figure class="exploration-gradcam">
+                <video controls autoplay loop muted playsinline preload="none" poster="assets/boxbunny_capstone/freestyle_gradcam_poster.webp">
+                  <source src="assets/boxbunny_capstone/freestyle_gradcam.mp4" type="video/mp4">
+                </video>
+                <figcaption>Heat map · attention on the arms and shoulders, not the background</figcaption>
+              </figure>
+            </div>
+
+            <div class="cs-step" id="bb-model-final">
+              <h4>The final model: two views, combined</h4>
+              <div class="cs-final-top">
+              <figure class="cs-final-demo">
+                <video controls autoplay loop muted playsinline preload="none" poster="assets/boxbunny_capstone/inference_person_2_poster.webp">
+                  <source src="assets/boxbunny_capstone/inference_person_2.mp4" type="video/mp4">
+                </video>
+                <figcaption>The final model running live · Person 2</figcaption>
+              </figure>
+              <div class="cs-parts">
+                <div>
+                  <h5>Voxel branch</h5>
+                  <p>Sees the <mark>3D motion</mark> of the punch from the depth camera.</p>
+                </div>
+                <div>
+                  <h5>Pose branch</h5>
+                  <p>Tracks the skeleton, so it knows the <mark>left hand from the right</mark>.</p>
+                </div>
+                <div>
+                  <h5>Transformer</h5>
+                  <p>Looks at the <mark>last 12 frames together</mark> and decides which punch it was.</p>
+                </div>
+              </div>
+              </div>
+              <div class="cs-media-arch">
+                <figure class="cs-arch-main"><img class="js-lightbox media-fit-contain" src="assets/boxbunny_capstone/model_architecture.png"
+                    alt="Dual-branch Voxel-Pose Transformer architecture" loading="lazy">
+                  <figcaption>Architecture</figcaption>
+                </figure>
+                <figure><img class="js-lightbox media-fit-contain"
+                    src="assets/boxbunny_capstone/confusion_matrix.png"
+                    alt="Confusion matrix showing 96.8% validation accuracy on unseen users" loading="lazy">
+                  <figcaption>Confusion matrix · 96.8% on unseen boxers</figcaption>
+                </figure>
+                <figure><img class="js-lightbox media-fit-contain"
+                    src="assets/boxbunny_capstone/tsne_embeddings.png"
+                    alt="t-SNE projection of learned embeddings showing clean class separation" loading="lazy">
+                  <figcaption>t-SNE · each punch type forms its own cluster</figcaption>
+                </figure>
+              </div>
+            </div>
+            </div>
+          </section>
+
+          <!-- 03 · Real-time runtime on the robot -->
+          <section class="cs-section" id="bb-runtime">
+            <header class="cs-section-head">
+              <span class="cs-num">03</span>
+              <div>
+                <h3>Running it live on the robot</h3>
+                <p class="cs-lead">A new camera frame arrives every 33 ms, and the robot has to <mark>react before the
+                    next one</mark>.</p>
+              </div>
+            </header>
+            <div class="cs-budget" role="img"
+              aria-label="Per-frame budget. Before, in PyTorch: YOLO26n-pose 33 ms plus the punch model 8 ms is 41 ms, which misses the 33 ms ceiling for 30 fps. After TensorRT FP16: 16 ms plus 8 ms is 24 ms, with 9 ms spare.">
+              <p class="cs-budget-title">Per-frame budget · <span>33 ms ceiling for 30 fps</span></p>
+              <div class="cs-budget-row is-before">
+                <span class="cs-budget-label"><b>Before</b><i>PyTorch</i></span>
+                <div class="cs-budget-track">
+                  <span class="seg seg-yolo" style="width: 78.57%"><b>YOLO26n-pose</b> ~33 ms</span>
+                  <span class="seg seg-model" style="width: 19.05%">~8 ms</span>
+                </div>
+                <span class="cs-budget-result">~41 ms · misses 30 fps</span>
+              </div>
+              <div class="cs-budget-row is-after">
+                <span class="cs-budget-label"><b>After</b><i>TensorRT FP16</i></span>
+                <div class="cs-budget-track">
+                  <span class="seg seg-yolo" style="width: 38.10%"><b>YOLO26n-pose</b> ~16 ms</span>
+                  <span class="seg seg-model" style="width: 19.05%">~8 ms</span>
+                  <span class="seg seg-free" style="width: 21.43%">9 ms <b>spare</b></span>
+                </div>
+                <span class="cs-budget-result">~24 ms · fits 30 fps</span>
+              </div>
+              <p class="cs-budget-key"><span><i class="k-yolo"></i>YOLO26n-pose · finds the skeleton</span><span><i
+                    class="k-model"></i>Punch model · Voxel-Pose Transformer</span><span>The punch model needs YOLO's
+                  output, so they run back to back. <mark>Converting YOLO to TensorRT</mark> is what made it fit.</span></p>
+            </div>
+            <p>Everything runs as <mark>10 ROS 2 nodes</mark>: camera perception, punch detection from the impact
+              sensors (IMU), camera + IMU fusion, motor control and the link to the phone dashboard.</p>
             <div class="media-layout media-layout-2">
               <figure>
                 <img class="js-lightbox media-fit-contain" src="assets/boxbunny_capstone/perception_pipeline.png"
-                  alt="Real-time perception pipeline · RGB + depth to action prediction" loading="lazy">
-                <figcaption>Perception pipeline · RGB + depth to action prediction</figcaption>
+                  alt="Training pipeline and real-time perception pipeline · RGB + depth to action prediction"
+                  loading="lazy">
+                <figcaption>Training (top) + live pipeline on the robot (bottom)</figcaption>
               </figure>
               <figure>
                 <img class="js-lightbox media-fit-contain" src="assets/boxbunny_capstone/ros2_node_graph.png"
                   alt="ROS 2 node graph · 10 nodes, 40+ topics" loading="lazy">
-                <figcaption>ROS 2 graph · 10 nodes, 40+ topics</figcaption>
+                <figcaption>ROS 2 node graph · how the 10 nodes connect</figcaption>
               </figure>
             </div>
-          </div>
+            <p class="callout-strip"><span class="callout-chip">10 nodes</span><span class="callout-chip">40+
+                topics</span><span class="callout-chip">146 unit tests</span><span class="callout-chip">28 integration
+                tests</span></p>
+          </section>
 
-          <div class="boxing-flow">
-            <h4 class="boxing-flow-title">Dual-Branch Voxel-Pose Transformer · 1.75 M params</h4>
-            <p>Boxing gloves occlude the hands exactly when a punch matters most, which breaks standard pose
-              estimation. The model pairs a <span class="signal-tech">depth-voxel branch</span> (12³ grid, fast 67 ms
-              and slow 267 ms timescales) with a <span class="signal-tech">YOLO pose branch</span>, then fuses them in a
-              <span class="signal-strong">4-layer Transformer</span> encoder over a 12-frame rolling window. Voxels
-              fill in exactly where the pose fails.</p>
-            <figure class="arch-compact">
-              <img class="js-lightbox media-fit-contain" src="assets/boxbunny_capstone/model_architecture.png"
-                alt="Dual-branch Voxel-Pose Transformer architecture" loading="lazy">
-              <figcaption>Dual-branch architecture · voxel + pose fused in a Transformer encoder</figcaption>
-            </figure>
-          </div>
+          <!-- 04 · What the user touches: phone dashboard + on-device LLM coach -->
+          <section class="cs-section" id="bb-app">
+            <header class="cs-section-head">
+              <span class="cs-num">04</span>
+              <div>
+                <h3>Phone app + on-device AI coach</h3>
+                <p class="cs-lead">Feedback a boxer can actually use, <mark>without taking their gloves off</mark>.
+                </p>
+              </div>
+            </header>
 
-          <div class="boxing-flow">
-            <h4 class="boxing-flow-title">Phone Dashboard · designed and built end-to-end</h4>
-            <p>I designed the full phone dashboard so users never have to bend over the robot's 7-inch touchscreen
-              with gloves on. To pair, the touchscreen GUI displays a <span class="signal-strong">QR code</span>: scan
-              it and the dashboard opens in the phone browser. Under the hood a
-              <span class="signal-tech">localhost.run</span> reverse tunnel publishes the FastAPI server over a
-              unique HTTPS URL, so the phone doesn't need to be on the same WiFi as the robot. It works on gym
-              WiFi, cellular, or any network. A local-access fallback kicks in if outbound internet is unavailable.</p>
-            <figure class="dashboard-walkthrough">
-              <video controls autoplay loop muted playsinline preload="none" poster="assets/boxbunny_capstone/dashboard_walkthrough_poster.webp">
-                <source src="assets/boxbunny_capstone/dashboard_walkthrough.mp4" type="video/mp4">
-              </video>
-              <figcaption>Live walkthrough · setup, robot control, analytics, AI coach chat</figcaption>
-            </figure>
-          </div>
+            <div class="cs-step" id="bb-app-dash">
+              <h4><span class="cs-step-tag">App</span> A phone dashboard, built end-to-end</h4>
+              <div class="cs-phone-stage">
+                <figure class="dashboard-walkthrough">
+                  <video controls autoplay loop muted playsinline preload="none" poster="assets/boxbunny_capstone/dashboard_walkthrough_poster.webp">
+                    <source src="assets/boxbunny_capstone/dashboard_walkthrough.mp4" type="video/mp4">
+                  </video>
+                  <figcaption>Setup, robot control, stats, AI coach chat</figcaption>
+                </figure>
+                <ol class="cs-stepper">
+                  <li>
+                    <b>Scan</b>
+                    <span>Scan the QR code on the robot's screen.</span>
+                  </li>
+                  <li>
+                    <b>Open</b>
+                    <span>The dashboard opens in your phone browser. Nothing to install.</span>
+                  </li>
+                  <li>
+                    <b>Any network</b>
+                    <span>Gym Wi-Fi or mobile data. Still works locally with no internet.</span>
+                  </li>
+                  <li>
+                    <b>Control + review</b>
+                    <span>Start drills, see your stats and <mark>chat with the AI coach</mark>.</span>
+                  </li>
+                </ol>
+              </div>
+            </div>
 
-          <div class="boxing-flow">
-            <h4 class="boxing-flow-title">AI Coach · three interaction patterns</h4>
-            <p>The on-device <span class="signal-strong">Gemma 4 E2B</span> coach is exposed to the phone via FastAPI
-              and surfaces as three distinct flows. Motivated by
-              <span class="signal-tech">CDE AI Fair</span> feedback: users wanted to chat with the coach but the
-              touchscreen keyboard was awkward with gloves, so the conversation moved to the phone.</p>
-            <div class="ai-coach-grid">
-              <figure>
-                <img class="js-lightbox media-fit-contain"
-                  src="assets/boxbunny_capstone/ai_coach_training_analysis.jpg"
-                  alt="AI coach training analysis screen" loading="lazy">
-                <figcaption><strong>Training analysis</strong> spots weak areas with specific stats</figcaption>
-              </figure>
-              <figure>
-                <img class="js-lightbox media-fit-contain"
-                  src="assets/boxbunny_capstone/ai_coach_training_suggestion.jpg"
-                  alt="AI coach training suggestion screen" loading="lazy">
-                <figcaption><strong>Training suggestion</strong> one-tap drill, loads and starts the robot</figcaption>
-              </figure>
-              <figure>
-                <img class="js-lightbox media-fit-contain"
-                  src="assets/boxbunny_capstone/ai_coach_photo_support.jpg"
-                  alt="AI coach photo support screen" loading="lazy">
-                <figcaption><strong>Photo support</strong> multimodal, identifies gear from uploaded photos
-                </figcaption>
+            <div class="cs-step" id="bb-app-coach">
+              <h4><span class="cs-step-tag">Coach</span> An AI coach that lives on the robot</h4>
+              <p class="cs-takeaway">A small language model (Gemma 4 E2B) runs on the robot itself, so nothing goes
+                to the cloud.</p>
+              <p>At the CDE AI Fair, people wanted to chat with the coach, but typing on the large touchscreen mounted
+                on the robot was clumsy. So the conversation moved to the phone, where <mark>asking questions is far
+                  easier</mark>.</p>
+              <div class="ai-coach-grid">
+                <figure>
+                  <img class="js-lightbox media-fit-contain"
+                    src="assets/boxbunny_capstone/ai_coach_training_analysis.jpg"
+                    alt="AI coach training analysis screen" loading="lazy">
+                  <figcaption><strong>Analyse</strong> spots your weak areas with real stats</figcaption>
+                </figure>
+                <figure>
+                  <img class="js-lightbox media-fit-contain"
+                    src="assets/boxbunny_capstone/ai_coach_training_suggestion.jpg"
+                    alt="AI coach training suggestion screen" loading="lazy">
+                  <figcaption><strong>Suggest</strong> one tap loads a drill and starts the robot</figcaption>
+                </figure>
+                <figure>
+                  <img class="js-lightbox media-fit-contain"
+                    src="assets/boxbunny_capstone/ai_coach_photo_support.jpg"
+                    alt="AI coach photo support screen" loading="lazy">
+                  <figcaption><strong>Photo help</strong> snap your gear and it identifies it</figcaption>
+                </figure>
+              </div>
+            </div>
+
+            <div class="cs-step" id="bb-app-tuning">
+              <h4><span class="cs-step-tag">Tuning</span> Making a small AI give good advice</h4>
+              <p class="cs-takeaway">Out of the box, a 2-billion-parameter model gives vague, made-up tips. Two fixes:
+              </p>
+              <ul class="cs-list">
+                <li><b>A tuning tool I built</b> to test prompts and settings side by side against real training
+                  sessions</li>
+                <li><b>A boxing handbook it can look things up in</b> (17 documents, via RAG), so it quotes real
+                  technique instead of <mark>making things up</mark></li>
+              </ul>
+              <figure class="llm-tuning-figure cs-media-wide">
+                <img class="js-lightbox media-fit-contain" src="assets/boxbunny_capstone/llm_tuning_gui.png"
+                  alt="PySide6 LLM tuning GUI used to iterate on prompts, parameters, and outputs side by side"
+                  loading="lazy">
+                <figcaption>My LLM tuning tool · prompts, settings and live replies side by side</figcaption>
               </figure>
             </div>
-          </div>
-
-          <div class="boxing-flow">
-            <h4 class="boxing-flow-title">LLM Tuning &amp; RAG · not just an off-the-shelf drop-in</h4>
-            <p>Getting coherent coaching out of a 2B-parameter on-device model took real tuning. I built a standalone
-              <span class="signal-tech">PySide6 tuning GUI</span> to iterate on system prompts, temperature, top-p,
-              context length, and generation parameters while watching streaming outputs side-by-side. Every parameter
-              was tuned against real session transcripts before shipping to production.</p>
-            <p>Prompt alone was not enough. I grounded the model with a
-              <span class="signal-strong">retrieval-augmented generation (RAG)</span> layer over a
-              <span class="signal-metric">17-document</span> boxing knowledge base (techniques, defence, combinations,
-              training plans), injected into the context window during coaching analysis so the model quotes verified
-              boxing advice instead of hallucinating plausible-sounding fluff a beginner could never verify.</p>
-            <figure class="llm-tuning-figure">
-              <img class="js-lightbox media-fit-contain" src="assets/boxbunny_capstone/llm_tuning_gui.png"
-                alt="PySide6 LLM tuning GUI used to iterate on prompts, parameters, and outputs side by side"
-                loading="lazy">
-              <figcaption>Custom LLM tuning GUI · iterate on prompts, parameters, and streaming outputs side by side
-              </figcaption>
-            </figure>
-          </div>
+          </section>
         </div>
       </article>
     </template>
@@ -721,60 +843,86 @@ import Base from '../layouts/Base.astro';
           </div>
           <span class="pill">Deployed</span>
         </div>
-        <div class="project-body teleco-body">
-          <div class="teleco-top">
-            <div class="project-copy">
-              <p><span class="signal-strong">Camera-to-SLAM localization pipeline</span> for socially aware robot gaze
-                at <span class="signal-event">Expo scale</span>.</p>
-              <ul>
-                <li><span class="signal-strong">Hard problem:</span> image-plane camera detections had to be projected
-                  into the SLAM map in the <span class="signal-tech">robot perspective/frame</span>, despite view-angle
-                  changes, depth ambiguity, and detection noise</li>
-                <li><span class="signal-tech">YOLOv12 keypoint detection</span> + <span class="signal-tech">Kabsch
-                    camera-to-map transform</span></li>
-                <li><span class="signal-tech">Pixel-to-height calibration</span> for gaze control via Teleco reference
-                </li>
-                <li><span class="signal-metric">0.02–0.06 m</span> mapping error, <span class="signal-metric">&lt;10
-                    cm</span> height error</li>
-                <li>Deployed at Yoshikawa Lab pavilion, <span class="signal-event">Osaka Expo 2025</span></li>
-              </ul>
-              <div class="links" style="align-items: center;">
-                <a href="assets/frontier/frontier_report.pdf" target="_blank" rel="noopener noreferrer">Frontier
-                  Report</a>
-                <a href="https://github.com/Yogee-s/human_detector_ws" class="card-repo-btn" target="_blank"
-                  rel="noopener noreferrer">
-                  <svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true">
-                    <path
-                      d="M8 0c-4.42 0-8 3.58-8 8 0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38a8.013 8.013 0 0 0-5.55-7.97z">
-                    </path>
-                  </svg>
-                  GitHub
-                </a>
+        <div class="project-body cs tc-body">
+          <div class="links cta-top">
+            <a href="assets/frontier/frontier_report.pdf" class="btn btn-primary" target="_blank"
+              rel="noopener noreferrer">Read the Frontier Report</a>
+            <a href="https://github.com/Yogee-s/human_detector_ws" class="card-repo-btn" target="_blank" rel="noopener noreferrer">
+              <svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true">
+                <path
+                  d="M8 0c-4.42 0-8 3.58-8 8 0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38a8.013 8.013 0 0 0-5.55-7.97z">
+                </path>
+              </svg>
+              GitHub Repo
+            </a>
+          </div>
+
+          <section class="cs-overview tc-overview">
+            <div class="tc-intro">
+              <p class="cs-intro">Teleco is a social robot that <mark>looks visitors in the eye</mark>. I built the
+                system that tells it where each person is standing, and it ran live at the Yoshikawa Lab pavilion,
+                Osaka Expo 2025.</p>
+              <div class="cs-stats cs-stats-3">
+                <div><b>2–6 cm</b><span>Position error on the map</span></div>
+                <div><b>&lt;10 cm</b><span>Height error for eye contact</span></div>
+                <div><b>Live</b><span>Deployed at Osaka Expo 2025</span></div>
               </div>
             </div>
-            <figure class="teleco-side-photo">
+            <figure class="tc-robot">
               <img class="js-lightbox" src="assets/frontier/close_up_teleco_robot.jpg" alt="Teleco robot"
                 loading="lazy">
               <figcaption>Teleco robot</figcaption>
             </figure>
-          </div>
-          <div class="teleco-layout">
-            <figure class="teleco-video"><video controls autoplay loop muted playsinline preload="none" poster="assets/frontier/expo_project_poster.webp">
-                <source src="assets/frontier/expo_project.mp4" type="video/mp4">
-              </video>
-              <figcaption>Camera-to-SLAM system setup</figcaption>
-            </figure>
-            <div class="teleco-photo-grid">
-              <figure><img class="js-lightbox" src="assets/frontier/teleco_tracking.jpg" alt="Tracking interface"
+          </section>
+
+          <section class="cs-section">
+            <header class="cs-section-head">
+              <div>
+                <h3>From camera pixels to eye contact</h3>
+                <p class="cs-lead">A camera only sees pixels. The robot needs to know <mark>where you are standing
+                    in the room</mark>, despite changing view angles, unclear depth and noisy detections.</p>
+              </div>
+            </header>
+            <ol class="tc-steps">
+              <li>
+                <b>Find people</b>
+                <span>A YOLOv12 keypoint model I trained spots each visitor in the camera image.</span>
+              </li>
+              <li>
+                <b>Place them on the map</b>
+                <span>Kabsch alignment converts each camera position into the robot's SLAM map, in the robot's own
+                  frame.</span>
+              </li>
+              <li>
+                <b>Look them in the eye</b>
+                <span>Pixel-to-height calibration, using Teleco as the reference, works out where to aim the robot's
+                  gaze.</span>
+              </li>
+            </ol>
+          </section>
+
+          <section class="cs-section">
+            <header class="cs-section-head">
+              <div>
+                <h3>The system at work</h3>
+              </div>
+            </header>
+            <div class="cs-row">
+              <figure style="--ar: 0.5625"><video controls autoplay loop muted playsinline preload="none" poster="assets/frontier/expo_project_poster.webp">
+                  <source src="assets/frontier/expo_project.mp4" type="video/mp4">
+                </video>
+                <figcaption>Camera-to-SLAM system setup</figcaption>
+              </figure>
+              <figure style="--ar: 1.39"><img class="js-lightbox" src="assets/frontier/teleco_tracking.jpg" alt="Tracking interface"
                   loading="lazy">
                 <figcaption>Tracking interface</figcaption>
               </figure>
-              <figure><img class="js-lightbox" src="assets/frontier/people_tracking.jpg" alt="Localization view"
+              <figure style="--ar: 1.55"><img class="js-lightbox" src="assets/frontier/people_tracking.jpg" alt="Localization view"
                   loading="lazy">
-                <figcaption>Localization view</figcaption>
+                <figcaption>Localization view · keypoints on each person</figcaption>
               </figure>
             </div>
-          </div>
+          </section>
         </div>
       </article>
     </template>
@@ -792,55 +940,106 @@ import Base from '../layouts/Base.astro';
           </div>
           <span class="pill">Research</span>
         </div>
-        <div class="project-body">
-          <div class="project-copy">
-            <p>Porting a <span class="signal-tech">dexterous manipulation RL pipeline</span> from Adroit to Inspire hand
-              in <span class="signal-tech">simulation</span>.</p>
-            <ul>
-              <li><span class="signal-tech">URDF → MuJoCo XML conversion</span> with collision and damping fixes</li>
-              <li><span class="signal-tech">Adroit 39D → Inspire 21D observation remapping</span> for <span
-                  class="signal-tech">DAPG</span></li>
-              <li><span class="signal-tech">6-actuator joint grouping</span> and reward-shaping debugging</li>
-            </ul>
-            <div class="links" style="align-items: center;">
-              <a href="assets/artc_internship/eg3612_final_report.pdf" target="_blank"
-                rel="noopener noreferrer">Report</a>
-              <a href="assets/artc_internship/internship_final_presentation.pdf" target="_blank"
-                rel="noopener noreferrer">Presentation</a>
-              <a href="https://github.com/Yogee-s/dexterous_hand-simulation" class="card-repo-btn" target="_blank"
-                rel="noopener noreferrer">
-                <svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true">
-                  <path
-                    d="M8 0c-4.42 0-8 3.58-8 8 0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38a8.013 8.013 0 0 0-5.55-7.97z">
-                  </path>
-                </svg>
-                RL Repo
-              </a>
-              <a href="https://github.com/Yogee-s/dexterous_hand-learning" class="card-repo-btn" target="_blank"
-                rel="noopener noreferrer">
-                <svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true">
-                  <path
-                    d="M8 0c-4.42 0-8 3.58-8 8 0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38a8.013 8.013 0 0 0-5.55-7.97z">
-                  </path>
-                </svg>
-                Algorithm Repo
-              </a>
+        <div class="project-body cs rl-body">
+          <div class="links cta-top">
+            <a href="assets/artc_internship/eg3612_final_report.pdf" class="btn btn-primary" target="_blank"
+              rel="noopener noreferrer">Read the Report</a>
+            <a href="assets/artc_internship/internship_final_presentation.pdf" target="_blank"
+              rel="noopener noreferrer">Presentation</a>
+            <a href="https://github.com/Yogee-s/dexterous_hand-simulation" class="card-repo-btn" target="_blank" rel="noopener noreferrer">
+              <svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true">
+                <path
+                  d="M8 0c-4.42 0-8 3.58-8 8 0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38a8.013 8.013 0 0 0-5.55-7.97z">
+                </path>
+              </svg>
+              RL Repo
+            </a>
+            <a href="https://github.com/Yogee-s/dexterous_hand-learning" class="card-repo-btn" target="_blank" rel="noopener noreferrer">
+              <svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true">
+                <path
+                  d="M8 0c-4.42 0-8 3.58-8 8 0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38a8.013 8.013 0 0 0-5.55-7.97z">
+                </path>
+              </svg>
+              Algorithm Repo
+            </a>
+          </div>
+
+          <p class="cs-intro">Teaching a robot hand to <mark>grasp and move objects</mark> in MuJoCo simulation with
+            DAPG, a reinforcement learning method that starts from human demonstrations. The pipeline only worked
+            for the Adroit research hand, so I <mark>ported it to the Inspire hand</mark>.</p>
+
+          <section class="cs-section">
+            <header class="cs-section-head">
+              <div>
+                <h3>What it took to switch hands</h3>
+              </div>
+            </header>
+            <div class="cs-parts">
+              <div>
+                <h5>The robot model</h5>
+                <p>Converted the hand from URDF to MuJoCo's format, then fixed collisions and damping so it
+                  <mark>behaves like the real hand</mark>.</p>
+              </div>
+              <div>
+                <h5>What the AI sees</h5>
+                <p>Remapped Adroit's 39 observation values to the Inspire's 21, so <mark>DAPG could train on the
+                    new hand</mark>.</p>
+              </div>
+              <div>
+                <h5>Joints + rewards</h5>
+                <p>Grouped the hand's joints onto its <mark>6 actuators</mark> and debugged the reward shaping.</p>
+              </div>
             </div>
-          </div>
-          <div class="media-layout media-layout-2">
-            <figure><video controls autoplay loop muted playsinline preload="none" poster="assets/artc_internship/reinforcement_learning_model_trying_poster.webp">
-                <source src="assets/artc_internship/reinforcement_learning_model_trying.mp4" type="video/mp4">
-                <source src="assets/artc_internship/reinforcement_learning_model_trying.webm" type="video/webm">
-              </video>
-              <figcaption>Training exploration</figcaption>
-            </figure>
-            <figure><video controls autoplay loop muted playsinline preload="none" poster="assets/artc_internship/reinforcement_learning_model_succeeds_but_wrongly_poster.webp">
-                <source src="assets/artc_internship/reinforcement_learning_model_succeeds_but_wrongly.mp4"
-                  type="video/mp4">
-              </video>
-              <figcaption>Unintended strategy</figcaption>
-            </figure>
-          </div>
+            <div class="rl-map">
+              <div class="rl-map-text">
+                <p class="rl-map-label">Matching the joints</p>
+                <p>The training demonstrations were recorded for Adroit's 30 joints. I matched each circled Adroit
+                  joint to the Inspire joint in the same spot, so the existing data could <mark>train the new
+                    hand</mark>.</p>
+                <p class="rl-map-note">The 9 hand, object and target positions carry over as they are, giving the
+                  Inspire's 21 observation values.</p>
+              </div>
+              <div class="rl-map-hands">
+                <figure><img class="js-lightbox" src="assets/artc_internship/adroit_joints_mapped.webp"
+                    alt="Adroit hand with the mapped joints circled and numbered" loading="lazy">
+                  <figcaption>Adroit · 30 joints</figcaption>
+                </figure>
+                <span class="rl-map-arrow" aria-hidden="true">→</span>
+                <figure><img class="js-lightbox" src="assets/artc_internship/inspire_joints_mapped.webp"
+                    alt="Inspire hand with the matching joints circled" loading="lazy">
+                  <figcaption>Inspire · 12 joints</figcaption>
+                </figure>
+              </div>
+            </div>
+          </section>
+
+          <section class="cs-section">
+            <header class="cs-section-head">
+              <div>
+                <h3>Watching it learn</h3>
+              </div>
+            </header>
+            <div class="cs-row rl-clips cs-nearmiss">
+              <figure style="--ar: 1.111"><video controls autoplay loop muted playsinline preload="none" poster="assets/artc_internship/reinforcement_learning_model_trying_poster.webp">
+                  <source src="assets/artc_internship/reinforcement_learning_model_trying.mp4" type="video/mp4">
+                  <source src="assets/artc_internship/reinforcement_learning_model_trying.webm" type="video/webm">
+                </video>
+                <figcaption>
+                  <b>Training exploration</b>
+                  <span>The hand tries different ways to reach and grip the object.</span>
+                </figcaption>
+              </figure>
+              <figure style="--ar: 1.163"><video controls autoplay loop muted playsinline preload="none" poster="assets/artc_internship/reinforcement_learning_model_succeeds_but_wrongly_poster.webp">
+                  <source src="assets/artc_internship/reinforcement_learning_model_succeeds_but_wrongly.mp4"
+                    type="video/mp4">
+                </video>
+                <figcaption>
+                  <b>Unintended strategy</b>
+                  <span>It reaches the goal, but not in the way we wanted.</span>
+                </figcaption>
+              </figure>
+            </div>
+          </section>
         </div>
       </article>
     </template>
@@ -850,7 +1049,7 @@ import Base from '../layouts/Base.astro';
         <div class="project-head">
           <div>
             <h2>Breaking Bias in LLMs</h2>
-            <p class="meta"><span class="signal-strong">AI Safety Research</span> · Jan – May 2024</p>
+            <p class="meta"><span class="signal-strong">AI Safety Research</span> · University of Toronto exchange (ECE324) · Jan – May 2024</p>
             <div class="tech-tags">
               <span class="tech-tag">Large Language Models</span><span class="tech-tag">Python</span>
               <span class="tech-tag">PyTorch</span><span class="tech-tag">Bias Analysis</span>
@@ -858,81 +1057,103 @@ import Base from '../layouts/Base.astro';
           </div>
           <span class="pill">LLM Research</span>
         </div>
-        <div class="project-body">
-          <div class="bias-top">
-            <div class="project-copy">
-              <p>Evaluating and mitigating <span class="signal-strong">social biases</span> (gender, race, religion) in
-                state-of-the-art Large Language Models.
-              </p>
-              <ul>
-                <li>Developed a <span class="signal-tech">comprehensive evaluation framework</span> using standard
-                  benchmarks (CrowS-Pairs, StereoSet).</li>
-                <li>Analyzed bias propagation in <span class="signal-tech">Llama 2</span> and <span
-                    class="signal-tech">GPT-3.5</span>.</li>
-                <li>Proposed mitigation strategies involving <span class="signal-strong">prompt engineering</span> and
-                  <span class="signal-strong">fine-tuning checks</span>.
-                </li>
-              </ul>
-              <div class="links">
-                <a href="https://github.com/gin-guo/breaking-bias" class="card-repo-btn" target="_blank"
-                  rel="noopener noreferrer">
-                  <svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true">
-                    <path
-                      d="M8 0c-4.42 0-8 3.58-8 8 0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38a8.013 8.013 0 0 0-5.55-7.97z">
-                    </path>
-                  </svg>
-                  GitHub
-                </a>
-              </div>
+        <div class="project-body cs bias-body">
+          <div class="links cta-top">
+            <a href="https://github.com/gin-guo/breaking-bias" class="card-repo-btn" target="_blank" rel="noopener noreferrer">
+              <svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true">
+                <path
+                  d="M8 0c-4.42 0-8 3.58-8 8 0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38a8.013 8.013 0 0 0-5.55-7.97z">
+                </path>
+              </svg>
+              GitHub Repo
+            </a>
+          </div>
+
+          <div class="bias-overview">
+            <div class="bias-text">
+              <p class="cs-intro">LLMs are now used to grade writing. We tested how easily a <mark>committee of LLM
+                  judges</mark> can be pushed into disagreeing, by feeding it deliberately manipulated essays.</p>
+              <dl class="bias-facts">
+                <div><dt>Attacks</dt><dd>Word-embedding noise · scrambled sentences · token injection · lists ·
+                    controversial rewrites</dd></div>
+                <div><dt>Judge committees</dt><dd>Age, values and income personas · a mixed panel of Phi-4-mini and
+                    Llama 3.2</dd></div>
+              </dl>
+              <p class="cs-takeaway">Key finding: noisy, scrambled essays still scored well. Judges <mark>miss
+                  broken meaning</mark> as long as the words read fluently.</p>
             </div>
-            <figure class="bias-side-node">
+            <figure class="bias-figure">
               <img class="js-lightbox" src="assets/breaking_bias/Breaking_bias_node.png"
-                alt="Breaking Bias project node visual" loading="lazy">
-              <figcaption>Project node visual</figcaption>
+                alt="Breaking Bias pipeline · essay generation strategies feeding four judging committees" loading="lazy">
+              <figcaption>Pipeline · six essay strategies, four judging committees</figcaption>
             </figure>
           </div>
 
-          <!-- Embedded PDF Section -->
-          <div class="pdf-section">
-            <div class="pdf-item">
-              <h4 class="pdf-title">Final Presentation</h4>
-              <div class="pdf-actions" aria-label="Presentation PDF actions">
-                <a class="pdf-action-btn" href="assets/breaking_bias/breaking_bias_final_presentation.pdf"
-                  target="_blank" rel="noopener noreferrer">Open PDF</a>
-                <a class="pdf-action-btn" href="assets/breaking_bias/breaking_bias_final_presentation.pdf"
-                  download>Download</a>
+          <section class="cs-section">
+            <header class="cs-section-head">
+              <div>
+                <h3>Presentation + report</h3>
               </div>
-              <div class="pdf-embed-container">
-                <object class="pdf-embed"
-                  data="assets/breaking_bias/breaking_bias_final_presentation.pdf#toolbar=0&navpanes=0&scrollbar=0"
-                  type="application/pdf">
-                  <p class="pdf-fallback">This device cannot preview PDFs inline. <a
-                      href="assets/breaking_bias/breaking_bias_final_presentation.pdf" target="_blank"
-                      rel="noopener noreferrer">Open the presentation PDF</a>.</p>
-                </object>
+            </header>
+            <div class="pdf-section bias-pdfs">
+              <div class="pdf-item">
+                <div class="pdf-head">
+                  <h4 class="pdf-title">Final Presentation</h4>
+                  <div class="pdf-tools">
+                    <button type="button" class="pdf-tool-btn pdf-fs-btn" data-pdf="assets/breaking_bias/breaking_bias_final_presentation.pdf">
+                      <svg viewBox="0 0 16 16" width="13" height="13" aria-hidden="true"><path fill="none"
+                          stroke="currentColor" stroke-width="1.6" d="M1.5 5.5v-4h4M10.5 1.5h4v4M14.5 10.5v4h-4M5.5 14.5h-4v-4"/></svg>
+                      Full screen
+                    </button>
+                    <a class="pdf-tool-btn" href="assets/breaking_bias/breaking_bias_final_presentation.pdf" target="_blank" rel="noopener noreferrer">New
+                      tab</a>
+                  </div>
+                </div>
+                <div class="pdf-actions" aria-label="Final Presentation PDF actions">
+                  <a class="pdf-action-btn" href="assets/breaking_bias/breaking_bias_final_presentation.pdf" target="_blank"
+                    rel="noopener noreferrer">Open PDF</a>
+                  <a class="pdf-action-btn" href="assets/breaking_bias/breaking_bias_final_presentation.pdf" download>Download</a>
+                </div>
+                <div class="pdf-embed-container">
+                  <button type="button" class="pdf-fs-exit" aria-label="Exit full screen">✕ Exit full screen</button>
+                  <object class="pdf-embed" data="assets/breaking_bias/breaking_bias_final_presentation.pdf#toolbar=0&navpanes=0&scrollbar=0"
+                    type="application/pdf">
+                    <p class="pdf-fallback">This device cannot preview PDFs inline. <a
+                        href="assets/breaking_bias/breaking_bias_final_presentation.pdf" target="_blank" rel="noopener noreferrer">Open the presentation
+                        PDF</a>.</p>
+                  </object>
+                </div>
+              </div>
+              <div class="pdf-item">
+                <div class="pdf-head">
+                  <h4 class="pdf-title">Research Report</h4>
+                  <div class="pdf-tools">
+                    <button type="button" class="pdf-tool-btn pdf-fs-btn" data-pdf="assets/breaking_bias/breaking_bias_final_report.pdf">
+                      <svg viewBox="0 0 16 16" width="13" height="13" aria-hidden="true"><path fill="none"
+                          stroke="currentColor" stroke-width="1.6" d="M1.5 5.5v-4h4M10.5 1.5h4v4M14.5 10.5v4h-4M5.5 14.5h-4v-4"/></svg>
+                      Full screen
+                    </button>
+                    <a class="pdf-tool-btn" href="assets/breaking_bias/breaking_bias_final_report.pdf" target="_blank" rel="noopener noreferrer">New
+                      tab</a>
+                  </div>
+                </div>
+                <div class="pdf-actions" aria-label="Research Report PDF actions">
+                  <a class="pdf-action-btn" href="assets/breaking_bias/breaking_bias_final_report.pdf" target="_blank"
+                    rel="noopener noreferrer">Open PDF</a>
+                  <a class="pdf-action-btn" href="assets/breaking_bias/breaking_bias_final_report.pdf" download>Download</a>
+                </div>
+                <div class="pdf-embed-container">
+                  <button type="button" class="pdf-fs-exit" aria-label="Exit full screen">✕ Exit full screen</button>
+                  <object class="pdf-embed" data="assets/breaking_bias/breaking_bias_final_report.pdf#toolbar=0&navpanes=0&scrollbar=0"
+                    type="application/pdf">
+                    <p class="pdf-fallback">This device cannot preview PDFs inline. <a
+                        href="assets/breaking_bias/breaking_bias_final_report.pdf" target="_blank" rel="noopener noreferrer">Open the report
+                        PDF</a>.</p>
+                  </object>
+                </div>
               </div>
             </div>
-
-            <div class="pdf-item">
-              <h4 class="pdf-title">Research Report</h4>
-              <div class="pdf-actions" aria-label="Report PDF actions">
-                <a class="pdf-action-btn" href="assets/breaking_bias/breaking_bias_final_report.pdf" target="_blank"
-                  rel="noopener noreferrer">Open PDF</a>
-                <a class="pdf-action-btn" href="assets/breaking_bias/breaking_bias_final_report.pdf"
-                  download>Download</a>
-              </div>
-              <div class="pdf-embed-container">
-                <object class="pdf-embed"
-                  data="assets/breaking_bias/breaking_bias_final_report.pdf#toolbar=0&navpanes=0&scrollbar=0"
-                  type="application/pdf">
-                  <p class="pdf-fallback">This device cannot preview PDFs inline. <a
-                      href="assets/breaking_bias/breaking_bias_final_report.pdf" target="_blank"
-                      rel="noopener noreferrer">Open the report PDF</a>.</p>
-                </object>
-              </div>
-            </div>
-          </div>
-
+          </section>
         </div>
       </article>
     </template>
@@ -951,129 +1172,153 @@ import Base from '../layouts/Base.astro';
           </div>
           <span class="pill">Foundation</span>
         </div>
-        <div class="project-body">
-          <div class="project-copy">
-            <p>NUS Innovation &amp; Design Programme · my entry point into robotics. Where I first learned to design,
-              <span class="signal-strong">build, and program physical systems</span> from scratch.
-            </p>
-            <div class="links">
-              <a href="https://github.com/BookSWave/EG3301R_BalancingStandard" class="card-repo-btn" target="_blank"
-                rel="noopener noreferrer">
-                <svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true">
-                  <path
-                    d="M8 0c-4.42 0-8 3.58-8 8 0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38a8.013 8.013 0 0 0-5.55-7.97z">
-                  </path>
-                </svg>
-                Balancing Repo
-              </a>
-            </div>
+        <div class="project-body cs idp-body">
+          <div class="links cta-top">
+            <a href="https://github.com/BookSWave/EG3301R_BalancingStandard" class="card-repo-btn" target="_blank" rel="noopener noreferrer">
+              <svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true">
+                <path
+                  d="M8 0c-4.42 0-8 3.58-8 8 0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38a8.013 8.013 0 0 0-5.55-7.97z">
+                </path>
+              </svg>
+              Balancing Repo
+            </a>
           </div>
 
-          <div class="idp-intro-row">
-            <figure class="idp-first">
-              <video controls autoplay loop muted playsinline preload="none" poster="assets/idp_projects/eg2310_first_ever_project_idp_poster.webp">
+          <p class="cs-intro">NUS Innovation &amp; Design Programme, <mark>my entry point into robotics</mark>. Where I
+            first learned to design, build and program physical systems from scratch.</p>
+
+          <!-- My first robotics project · its own small section, video beside a short note -->
+          <section class="cs-section idp-first">
+            <figure class="idp-first-video"><video controls autoplay loop muted playsinline preload="none" poster="assets/idp_projects/eg2310_first_ever_project_idp_poster.webp">
                 <source src="assets/idp_projects/eg2310_first_ever_project_idp.mp4" type="video/mp4">
               </video>
-              <figcaption>First robotics project</figcaption>
             </figure>
-            <figure class="idp-final-preview">
-              <img class="js-lightbox" src="assets/idp_projects/eg3301r_2_legged_balancing.jpg"
-                alt="Self-balancing 2-legged robot" loading="lazy">
-              <figcaption>Self-balancing 2-legged robot</figcaption>
-            </figure>
-          </div>
+            <div class="idp-first-text">
+              <p class="idp-first-eyebrow">Where it started</p>
+              <h3>My first robotics project</h3>
+              <p>A <mark>TurtleBot running ROS</mark>: my first time programming a real robot.</p>
+              <div class="tech-tags">
+                <span class="tech-tag">TurtleBot</span><span class="tech-tag">ROS</span>
+              </div>
+            </div>
+          </section>
 
-          <h4 class="idp-subhead">Chassis Iterations</h4>
-          <p class="idp-chassis-desc">Three chassis iterations evolved from a first prototype into a full balancing
-            system. The key novelty was <span class="signal-tech">3-axis active gimbal stabilization</span>, which kept
-            the robot's <span class="signal-strong">first-person camera view</span> steady so pilots could track
-            opponents and aim more reliably during competition.</p>
-          <div class="idp-iterations">
-            <figure><video controls autoplay loop muted playsinline preload="none" poster="assets/idp_projects/evolution_of_balancing_robot/eg2606_balancing_robot_1st_prototype_poster.webp">
-                <source src="assets/idp_projects/evolution_of_balancing_robot/eg2606_balancing_robot_1st_prototype.mp4"
-                  type="video/mp4">
-              </video>
-              <figcaption>v1</figcaption>
-            </figure>
-            <figure><video controls autoplay loop muted playsinline preload="none"
-                poster="assets/idp_projects/evolution_of_balancing_robot/eg3301r_2_legged_balancing_2nd_prototype_poster.webp">
-                <source
-                  src="assets/idp_projects/evolution_of_balancing_robot/eg3301r_2_legged_balancing_2nd_prototype.mp4"
-                  type="video/mp4">
-              </video>
-              <figcaption>v2</figcaption>
-            </figure>
-            <figure><video controls autoplay loop muted playsinline preload="none" poster="assets/idp_projects/evolution_of_balancing_robot/eg3301r_2_legged_balancing_final_poster.webp">
-                <source src="assets/idp_projects/evolution_of_balancing_robot/eg3301r_2_legged_balancing_final.mp4"
-                  type="video/mp4">
-              </video>
-              <figcaption>v3 (final)</figcaption>
-            </figure>
-          </div>
+          <!-- The highlight · the balancing robot and how it evolved -->
+          <section class="cs-section">
+            <header class="cs-section-head">
+              <div>
+                <h3>The highlight: a two-legged balancing robot</h3>
+                <p class="cs-lead">How it evolved over three chassis versions, and how it was <mark>simulated and
+                    tuned</mark> until it could stand on its own.</p>
+              </div>
+            </header>
 
-          <div class="idp-pair-grid idp-pair-grid-extra" style="margin-top: 1rem;">
-            <figure><img class="js-lightbox" src="assets/idp_projects/initial_prototype.jpg" alt="Chassis prototype"
-                loading="lazy">
-              <figcaption>Chassis prototype</figcaption>
-            </figure>
-            <figure><img class="js-lightbox idp-gimbal-img" src="assets/idp_projects/3_axis_gimbal.jpg"
-                alt="3-axis gimbal" loading="lazy">
-              <figcaption>3-axis gimbal</figcaption>
-            </figure>
-          </div>
+            <div class="cs-step">
+              <h4><span class="cs-step-tag">Evolution</span> Three chassis versions</h4>
+              <div class="cs-row">
+                <figure style="--ar: 0.5625"><video controls autoplay loop muted playsinline preload="none" poster="assets/idp_projects/evolution_of_balancing_robot/eg2606_balancing_robot_1st_prototype_poster.webp">
+                    <source src="assets/idp_projects/evolution_of_balancing_robot/eg2606_balancing_robot_1st_prototype.mp4" type="video/mp4">
+                  </video>
+                  <figcaption>v1</figcaption>
+                </figure>
+                <figure style="--ar: 0.5625"><video controls autoplay loop muted playsinline preload="none" poster="assets/idp_projects/evolution_of_balancing_robot/eg3301r_2_legged_balancing_2nd_prototype_poster.webp">
+                    <source src="assets/idp_projects/evolution_of_balancing_robot/eg3301r_2_legged_balancing_2nd_prototype.mp4" type="video/mp4">
+                  </video>
+                  <figcaption>v2</figcaption>
+                </figure>
+                <figure style="--ar: 1.778"><video controls autoplay loop muted playsinline preload="none" poster="assets/idp_projects/evolution_of_balancing_robot/eg3301r_2_legged_balancing_final_poster.webp">
+                    <source src="assets/idp_projects/evolution_of_balancing_robot/eg3301r_2_legged_balancing_final.mp4" type="video/mp4">
+                  </video>
+                  <figcaption>v3 (final)</figcaption>
+                </figure>
+              </div>
+              <div class="idp-idea">
+                <div class="cs-row">
+                  <figure style="--ar: 1"><img class="js-lightbox" src="assets/idp_projects/3_axis_gimbal.jpg" alt="3-axis gimbal" loading="lazy">
+                    <figcaption>3-axis gimbal</figcaption>
+                  </figure>
+                  <figure style="--ar: 1"><img class="js-lightbox" src="assets/idp_projects/initial_prototype.jpg" alt="Chassis prototype" loading="lazy">
+                    <figcaption>Chassis prototype</figcaption>
+                  </figure>
+                </div>
+                <p class="idp-idea-text">The key idea: a <mark>3-axis gimbal</mark> that keeps the robot's
+                  first-person camera steady, so pilots can track opponents and aim during competition.</p>
+              </div>
+            </div>
 
-          <h4 class="idp-subhead">Simulation</h4>
-          <div class="idp-sim-grid">
-            <article class="idp-sim-panel idp-sim-panel-fea">
-              <h5 class="idp-sim-title">FEA &amp; Structural Analysis</h5>
-              <p class="idp-sim-text">Experience using <span class="signal-tech">FEA workflows</span> to evaluate <span
-                  class="signal-tech">chassis stiffness</span> and stress distribution before fabrication.</p>
-              <figure><img class="js-lightbox"
-                  src="assets/idp_projects/simulation/structural_analysis_chassis_final_balancing_robot.jpg"
-                  alt="Chassis structural analysis" loading="lazy">
-                <figcaption>Chassis structural analysis</figcaption>
-              </figure>
-            </article>
-            <article class="idp-sim-panel idp-sim-panel-simulink">
-              <h5 class="idp-sim-title">MATLAB / Simulink for LQR</h5>
-              <p class="idp-sim-text">Built and tested control models in <span
-                  class="signal-tech">MATLAB/Simulink</span>, then iterated <span class="signal-tech">LQR tuning</span>
-                in simulation before applying gains to hardware.</p>
-              <div class="idp-sim-videos">
-                <figure><video controls autoplay loop muted playsinline preload="none" poster="assets/idp_projects/simulation/simulink_before_tuning_poster.webp">
+            <div class="cs-step">
+              <h4><span class="cs-step-tag">Simulation</span> Simulate before building</h4>
+              <div class="idp-sim">
+                <div class="idp-sim-card">
+                  <h5>Structure · FEA</h5>
+                  <p>Checked <mark>chassis stiffness and stress</mark> before anything was fabricated.</p>
+                  <div class="cs-row">
+                <figure style="--ar: 1.534"><img class="js-lightbox" src="assets/idp_projects/simulation/structural_analysis_chassis_final_balancing_robot.jpg" alt="Chassis structural analysis" loading="lazy">
+                  <figcaption>Chassis structural analysis</figcaption>
+                </figure>
+                  </div>
+                </div>
+                <div class="idp-sim-card">
+                  <h5>Control · MATLAB / Simulink</h5>
+                  <p>Modelled the robot and <mark>tuned LQR in simulation</mark> before putting the gains on
+                    hardware.</p>
+                  <div class="cs-row">
+                <figure style="--ar: 1.778"><video controls autoplay loop muted playsinline preload="none" poster="assets/idp_projects/simulation/simulink_before_tuning_poster.webp">
                     <source src="assets/idp_projects/simulation/simulink_before_tuning.mp4" type="video/mp4">
                   </video>
                   <figcaption>Before LQR tuning</figcaption>
                 </figure>
-                <figure><video controls autoplay loop muted playsinline preload="none" poster="assets/idp_projects/simulation/simulink_after_tuning_poster.webp">
+                <figure style="--ar: 1.778"><video controls autoplay loop muted playsinline preload="none" poster="assets/idp_projects/simulation/simulink_after_tuning_poster.webp">
                     <source src="assets/idp_projects/simulation/simulink_after_tuning.mp4" type="video/mp4">
                   </video>
                   <figcaption>After LQR tuning</figcaption>
                 </figure>
+                  </div>
+                </div>
               </div>
-            </article>
-          </div>
+            </div>
 
-          <h4 class="idp-subhead">PID/LQR Tuning</h4>
-          <p class="idp-chassis-desc">Controller tuning progression from first prototype to <span
-              class="signal-strong">final standing behavior</span>.</p>
-          <div class="idp-iterations idp-iterations-two">
-            <figure><video controls autoplay loop muted playsinline preload="none" poster="assets/idp_projects/tuning/prototype_pid_tuning_poster.webp">
-                <source src="assets/idp_projects/tuning/prototype_pid_tuning.mp4" type="video/mp4">
-              </video>
-              <figcaption>First prototype PID/LQR tuning</figcaption>
-            </figure>
-            <figure><video controls autoplay loop muted playsinline preload="none" poster="assets/idp_projects/tuning/standing_balancing_poster.webp">
-                <source src="assets/idp_projects/tuning/standing_balancing.mp4" type="video/mp4">
-              </video>
-              <figcaption>Final prototype standing balance</figcaption>
-            </figure>
-          </div>
+            <div class="cs-step">
+              <h4><span class="cs-step-tag">Tuning</span> Tuning it to stand</h4>
+              <p>PID/LQR tuning, from the first prototype to a robot that <mark>stands and balances on its
+                  own</mark>.</p>
+              <div class="cs-row">
+                <figure style="--ar: 1.778"><video controls autoplay loop muted playsinline preload="none" poster="assets/idp_projects/tuning/prototype_pid_tuning_poster.webp">
+                    <source src="assets/idp_projects/tuning/prototype_pid_tuning.mp4" type="video/mp4">
+                  </video>
+                  <figcaption>First prototype PID/LQR tuning</figcaption>
+                </figure>
+                <figure style="--ar: 0.891"><video controls autoplay loop muted playsinline preload="none" poster="assets/idp_projects/tuning/standing_balancing_poster.webp">
+                    <source src="assets/idp_projects/tuning/standing_balancing.mp4" type="video/mp4">
+                  </video>
+                  <figcaption>Final prototype standing balance</figcaption>
+                </figure>
+                <figure style="--ar: 1.333"><img class="js-lightbox" src="assets/idp_projects/eg3301r_2_legged_balancing.jpg" alt="Self-balancing 2-legged robot" loading="lazy">
+                  <figcaption>Self-balancing 2-legged robot</figcaption>
+                </figure>
+              </div>
+            </div>
+          </section>
         </div>
       </article>
     </template>
 
     <template id="tpl-robotic-companion">
+      <!-- Outline · its own rail on the left of the panel (chip strip on phones) -->
+      <nav class="cs-toc" aria-label="Sections in this project">
+        <span class="cs-toc-label">On this page</span>
+        <ol>
+          <li class="cs-toc-top"><a href="#rc-overview">Overview</a></li>
+          <li><a href="#rc-reacts"><b>01</b> How it reacts</a></li>
+          <li><a href="#rc-turn"><b>02</b> One conversation turn</a></li>
+          <li><a href="#rc-hardware"><b>03</b> The hardware</a>
+            <ol>
+              <li><a href="#rc-hardware-mech">Mechanism</a></li>
+              <li><a href="#rc-hardware-wiring">Wiring</a></li>
+            </ol>
+          </li>
+        </ol>
+      </nav>
       <article class="detail-project companion-detail">
         <div class="project-head">
           <div>
@@ -1089,10 +1334,10 @@ import Base from '../layouts/Base.astro';
           </div>
           <span class="pill">UREx · Solo</span>
         </div>
-        <div class="project-body boxing-body">
+        <div class="project-body boxing-body cs">
           <div class="links cta-top" style="align-items: center;">
             <a href="https://yogee-s.github.io/robotic-companion/" class="btn btn-primary" target="_blank"
-              rel="noopener noreferrer">Read the Full Docs →</a>
+              rel="noopener noreferrer">Read the Full Docs</a>
             <a href="https://github.com/Yogee-s/robotic-companion" class="card-repo-btn" target="_blank"
               rel="noopener noreferrer">
               <svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true">
@@ -1103,148 +1348,214 @@ import Base from '../layouts/Base.astro';
               GitHub Repo
             </a>
           </div>
-          <div class="boxing-top">
-            <div class="project-copy">
-              <p><span class="signal-strong">A robot that comforts · without compromising privacy.</span> Companion
-                looks at you, reads your mood, and replies with a face that reflects what it feels. Every model runs
-                <span class="signal-strong">offline on a single Jetson Orin Nano</span>, so it works without Wi-Fi and
-                nothing ever leaves the device.</p>
-              <div class="metric-strip">
-                <div class="metric-tile">
-                  <span class="metric-value">≤800 ms</span>
-                  <span class="metric-label">Speech → first audio reply</span>
-                </div>
-                <div class="metric-tile">
-                  <span class="metric-value">100%</span>
-                  <span class="metric-label">On-device · no cloud</span>
-                </div>
-                <div class="metric-tile">
-                  <span class="metric-value">2-DOF</span>
-                  <span class="metric-label">Differential bevel head</span>
-                </div>
-                <div class="metric-tile">
-                  <span class="metric-value">13</span>
-                  <span class="metric-label">Affect-driven expressions</span>
-                </div>
+
+          <!-- Overview · problem → my part → result, then the headline numbers -->
+          <section class="cs-overview" id="rc-overview">
+            <dl class="cs-brief">
+              <div>
+                <dt>The problem</dt>
+                <dd>An elderly-care companion has to feel personal, but cloud assistants <mark>send private
+                    conversations off the device</mark> and stop working without Wi-Fi.</dd>
               </div>
+              <div>
+                <dt>My part</dt>
+                <dd>I built the <mark>whole robot solo</mark>: the moving head, the electronics, and the vision, voice
+                  and AI software.</dd>
+              </div>
+              <div>
+                <dt>The result</dt>
+                <dd>A robot that <mark>reads your mood and replies with a matching face</mark>, running fully offline
+                  on one Jetson Orin Nano.</dd>
+              </div>
+            </dl>
+            <div class="cs-stats">
+              <div><b>≤800 ms</b><span>From your last word to its reply</span></div>
+              <div><b>Offline</b><span>Nothing leaves the robot</span></div>
+              <div><b>13</b><span>Mood-matched expressions</span></div>
+              <div><b>6</b><span>Hardware versions of the head</span></div>
             </div>
-            <div class="boxing-side-media">
-              <figure>
+            <div class="cs-hero" style="--ar-sum: 1.559">
+              <figure style="--ar: 0.75">
                 <img class="js-lightbox" src="assets/robotic_companion/robot_happy_face.jpg"
                   alt="Final prototype" loading="lazy">
                 <figcaption>Final prototype</figcaption>
               </figure>
-              <figure>
+              <figure style="--ar: 0.809">
                 <img class="js-lightbox" src="assets/robotic_companion/final_side.png"
-                  alt="Robotic Companion final prototype side view" loading="lazy">
-                <figcaption>Side view</figcaption>
+                  alt="Robotic Companion head design in SolidWorks, side view" loading="lazy">
+                <figcaption>Head design in SolidWorks</figcaption>
               </figure>
             </div>
-          </div>
+          </section>
 
-          <figure class="companion-video">
-            <video controls autoplay loop muted playsinline preload="none" poster="assets/robotic_companion/live_motor_control_with_kinematics_poster.webp">
-              <source src="assets/robotic_companion/live_motor_control_with_kinematics.mp4" type="video/mp4">
-            </video>
-            <figcaption>Live kinematics demo · I drag the simulated head in the Jetson&rsquo;s 3D viewer and the
-              physical 2-DOF bevel-gear head mirrors it in real time. End-to-end validation of the forward and
-              inverse kinematics driving the actual servos.</figcaption>
-          </figure>
-
-          <div class="companion-personality">
-            <div class="project-copy">
-              <h4 class="boxing-flow-title">It doesn't just listen · it reacts.</h4>
-              <p>Every reply ends with an <span class="signal-tech">[affect]</span> tag that drives one of
-                <span class="signal-strong">13 animated expressions</span> on the ESP32 touchscreen face.
-                <span class="signal-tech">YOLO26n-pose + HSEmotion</span> continuously measure the user's valence and
-                arousal and feed that signal into the LLM prompt · so the robot's mood is a direct response to yours.
-              </p>
+          <!-- 01 · What the user experiences -->
+          <section class="cs-section" id="rc-reacts">
+            <header class="cs-section-head">
+              <span class="cs-num">01</span>
+              <div>
+                <h3>It doesn't just listen · it reacts</h3>
+                <p class="cs-lead">The robot's mood is a <mark>direct response to yours</mark>.</p>
+              </div>
+            </header>
+            <div class="cs-parts rc-loop">
+              <div>
+                <h5>Sees you</h5>
+                <p>The camera finds your face and keeps it in view.</p>
+              </div>
+              <div>
+                <h5>Reads your mood</h5>
+                <p>It measures <mark>how positive and how energetic</mark> you look, and passes that to the AI.</p>
+              </div>
+              <div>
+                <h5>Shows how it feels</h5>
+                <p>Every reply carries a mood tag that picks one of <mark>13 animated faces</mark> on its screen.</p>
+              </div>
             </div>
-            <div class="media-layout media-layout-2">
+            <div class="media-layout media-layout-2 cs-face-pair">
               <figure>
                 <img class="js-lightbox" src="assets/robotic_companion/robot_neutral_face.jpg"
                   alt="ESP32 touchscreen face with neutral expression" loading="lazy">
-                <figcaption>Neutral affect · one of 13 animated states</figcaption>
+                <figcaption>Neutral face · one of 13 expressions</figcaption>
               </figure>
               <figure>
                 <img class="js-lightbox media-fit-contain" src="assets/robotic_companion/gui_emotion_circumplex.png"
                   alt="Emotion circumplex plot with live valence/arousal data" loading="lazy">
-                <figcaption>Live valence/arousal readout from the user's face</figcaption>
+                <figcaption>Live mood readout · positive → right, energetic → up</figcaption>
               </figure>
             </div>
-          </div>
+          </section>
 
-          <div class="boxing-flow">
-            <h4 class="boxing-flow-title">Under the Hood · a full robotics stack, built solo</h4>
-            <div class="boxing-flow-columns flow-columns-3">
-              <article class="boxing-column">
-                <h5>Mechanical</h5>
-                <p>Custom <span class="signal-tech">2-DOF differential bevel-gear head</span> in SolidWorks.
-                  <span class="signal-strong">6 prototype iterations</span> fixed cable routing, pivot alignment, and
-                  print warping to reach smooth independent pan/tilt.</p>
-                <figure>
-                  <img class="js-lightbox media-fit-contain flow-col-img"
-                    src="assets/robotic_companion/differential_bevel.svg"
-                    alt="Differential bevel-gear head mechanism" loading="lazy">
-                  <figcaption>Differential bevel-gear head</figcaption>
-                </figure>
-              </article>
-              <article class="boxing-column">
-                <h5>Perception + Affect</h5>
-                <p>Camera feed runs through <span class="signal-tech">YOLO26n-pose</span> for face tracking and
-                  <span class="signal-tech">HSEmotion</span> for affect. Output is injected into the LLM prompt so
-                  replies carry an <span class="signal-strong">[affect]</span> tag that animates the face live.
-                </p>
-                <figure>
-                  <img class="js-lightbox media-fit-contain flow-col-img"
-                    src="assets/robotic_companion/vision_pipeline.svg"
-                    alt="Vision pipeline · face detection to emotion classification" loading="lazy">
-                  <figcaption>Vision + affect pipeline</figcaption>
-                </figure>
-              </article>
-              <article class="boxing-column">
-                <h5>Voice Loop</h5>
-                <p>Sub-second streaming loop:
-                  <span class="flow-node"><span class="signal-tech">VAD (Silero)</span>&nbsp;→</span>
-                  <span class="flow-node"><span class="signal-tech">Parakeet STT</span>&nbsp;→</span>
-                  <span class="flow-node"><span class="signal-strong">on-device LLM</span>&nbsp;→</span>
-                  <span class="flow-node"><span class="signal-tech">Piper TTS</span></span>.
-                  <span class="signal-tech">Rhubarb</span>-driven lip-sync visemes stream to the face at ~30 Hz.
-                </p>
-                <figure>
-                  <img class="js-lightbox media-fit-contain flow-col-img"
-                    src="assets/robotic_companion/audio_pipeline.svg"
-                    alt="Audio pipeline · mic array to speech output" loading="lazy">
-                  <figcaption>Audio pipeline</figcaption>
-                </figure>
-              </article>
+          <!-- 02 · Software: voice loop + face in parallel -->
+          <section class="cs-section" id="rc-turn">
+            <header class="cs-section-head">
+              <span class="cs-num">02</span>
+              <div>
+                <h3>What happens in one conversation turn</h3>
+                <p class="cs-lead">You stop talking, and it starts replying <mark>in under 0.8 seconds</mark>, all on
+                  the robot.</p>
+              </div>
+            </header>
+            <div class="rc-turn-grid">
+              <div class="rc-turn-col">
+                <p class="cs-sub-label">The voice loop</p>
+                <ol class="cs-flow">
+                  <li><b>Hears you finish</b> and cuts out the clip of your speech.</li>
+                  <li><b>Writes down</b> what you said, as you say it.</li>
+                  <li><b>Thinks of a reply</b>, with your mood and the chat so far in the prompt.</li>
+                  <li><b>Speaks it</b> sentence by sentence, so it <mark>starts talking before the full reply is
+                      ready</mark>.</li>
+                </ol>
+              </div>
+              <div class="rc-turn-col rc-turn-side">
+                <p class="cs-sub-label">Meanwhile, the face</p>
+                <ul class="cs-list">
+                  <li><b>Expression</b> switches to match the reply's mood tag.</li>
+                  <li><b>Lips move</b> in time with the voice, about 30 times a second.</li>
+                </ul>
+                <p class="cs-note">It runs on a separate branch, so the face <mark>never holds up the voice</mark>.</p>
+              </div>
             </div>
-          </div>
-
-          <div class="companion-architecture">
-            <h4 class="boxing-flow-title">System Architecture · the full robot at a glance</h4>
-            <p>Six peripheral subsystems, one compute hub. Every line below is an actual physical cable running on
-              the robot today · a Jetson Orin Nano orchestrates sensors, display, speaker, and two servos through a
-              single CH343 bus adapter.</p>
-            <figure class="arch-figure">
-              <img class="js-lightbox media-fit-contain" src="assets/robotic_companion/hardware_topology.svg"
-                alt="Hardware topology · Jetson Orin Nano hub connected to camera, mic, ESP32 face, speaker, bus adapter and two servos"
-                loading="lazy">
-              <figcaption>Hardware topology · Jetson is the hub, every peripheral is a direct point-to-point link.
-              </figcaption>
-            </figure>
             <figure class="arch-figure">
               <img class="js-lightbox media-fit-contain" src="assets/robotic_companion/turn_sequence.svg"
                 alt="Conversation turn sequence · voice pipeline from microphone to TTS, with face branch for affect and visemes"
                 loading="lazy">
-              <figcaption>One conversation turn · the voice spine runs left to right; the face branch drops down in
-                parallel so expression and lip-sync reach the ESP32 face without blocking the spoken reply.</figcaption>
+              <figcaption>One turn · voice runs left to right, the face branch drops down in parallel</figcaption>
             </figure>
-          </div>
+            <div class="media-layout media-layout-2 rc-pipes">
+              <figure>
+                <img class="js-lightbox media-fit-contain" src="assets/robotic_companion/audio_pipeline.svg"
+                  alt="Audio pipeline · mic array to speech output" loading="lazy">
+                <figcaption>Audio pipeline · mic to speaker</figcaption>
+              </figure>
+              <figure>
+                <img class="js-lightbox media-fit-contain" src="assets/robotic_companion/vision_pipeline.svg"
+                  alt="Vision pipeline · face detection to emotion classification" loading="lazy">
+                <figcaption>Vision pipeline · camera to mood</figcaption>
+              </figure>
+            </div>
+          </section>
 
-          <p class="callout-strip"><span class="callout-chip">6 hardware iterations</span><span
-              class="callout-chip">Config-swappable LLM/STT/TTS</span><span class="callout-chip">Watchdog + graceful
-              degradation</span><span class="callout-chip">Jetson + ESP32 multi-MCU</span></p>
+          <!-- 03 · Hardware: mechanism + wiring -->
+          <section class="cs-section" id="rc-hardware">
+            <header class="cs-section-head">
+              <span class="cs-num">03</span>
+              <div>
+                <h3>The hardware · designed and built solo</h3>
+                <p class="cs-lead">A custom head that can <mark>nod and turn</mark>, and one computer wired to every
+                  part.</p>
+              </div>
+            </header>
+
+            <div class="cs-step" id="rc-hardware-mech">
+              <h4><span class="cs-step-tag">Mechanism</span> Two motors, one gear, a head that nods and turns</h4>
+              <p class="cs-takeaway">Both motors drive a shared gear, so together they control both directions of
+                movement.</p>
+              <div class="cs-parts rc-motion">
+                <div>
+                  <h5>Nod (tilt)</h5>
+                  <p>Both motors turn <mark>the same way</mark>.</p>
+                </div>
+                <div>
+                  <h5>Turn (pan)</h5>
+                  <p>The motors turn <mark>opposite ways</mark>.</p>
+                </div>
+              </div>
+              <div class="cs-mech-row">
+                <figure class="companion-video">
+                  <video controls autoplay loop muted playsinline preload="none" poster="assets/robotic_companion/live_motor_control_with_kinematics_poster.webp">
+                    <source src="assets/robotic_companion/live_motor_control_with_kinematics.mp4" type="video/mp4">
+                  </video>
+                  <figcaption>I move the 3D head on screen · the real head follows live</figcaption>
+                </figure>
+                <figure>
+                  <img class="js-lightbox media-fit-contain"
+                    src="assets/robotic_companion/differential_bevel.svg"
+                    alt="Differential bevel-gear head mechanism" loading="lazy">
+                  <figcaption>The gear layout + the maths behind it</figcaption>
+                </figure>
+              </div>
+              <div class="cs-sub">
+                <p class="cs-sub-label">Six versions to get it smooth</p>
+                <p>Designed in SolidWorks. Each version fixed a problem: <mark>cable routing, pivot alignment and
+                    3D-print warping</mark>.</p>
+              </div>
+              <div class="cs-media-3 rc-evolution">
+                <figure>
+                  <img class="js-lightbox media-fit-contain" src="assets/robotic_companion/prototype_1.png"
+                    alt="Head design, version 1" loading="lazy">
+                  <figcaption>Version 1</figcaption>
+                </figure>
+                <figure>
+                  <img class="js-lightbox media-fit-contain" src="assets/robotic_companion/prototype_5.png"
+                    alt="Head design, version 5" loading="lazy">
+                  <figcaption>Version 5</figcaption>
+                </figure>
+                <figure>
+                  <img class="js-lightbox media-fit-contain" src="assets/robotic_companion/final_front.png"
+                    alt="Final head mechanism, front view" loading="lazy">
+                  <figcaption>Final</figcaption>
+                </figure>
+              </div>
+            </div>
+
+            <div class="cs-step" id="rc-hardware-wiring">
+              <h4><span class="cs-step-tag">Wiring</span> The full robot at a glance</h4>
+              <p class="cs-takeaway">One Jetson Orin Nano in the middle. The camera, mic, face screen, speaker and
+                both motors each plug straight into it.</p>
+              <p>Every line below is a <mark>real cable on the robot today</mark>. Both motors share a single bus
+                adapter (CH343).</p>
+              <figure class="arch-figure">
+                <img class="js-lightbox media-fit-contain" src="assets/robotic_companion/hardware_topology.svg"
+                  alt="Hardware topology · Jetson Orin Nano hub connected to camera, mic, ESP32 face, speaker, bus adapter and two servos"
+                  loading="lazy">
+                <figcaption>Hardware map · every part is a direct link to the Jetson</figcaption>
+              </figure>
+            </div>
+
+            <p class="callout-strip"><span class="callout-chip">6 hardware iterations</span><span
+                class="callout-chip">Config-swappable LLM/STT/TTS</span><span class="callout-chip">Watchdog + graceful
+                degradation</span><span class="callout-chip">Jetson + ESP32 multi-MCU</span></p>
+          </section>
         </div>
       </article>
     </template>

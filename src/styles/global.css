@@ -7487,3 +7487,2038 @@ body::before {
     margin-top: 0.45rem;
   }
 }
+
+/* ============================================================
+   CASE-STUDY DETAIL LAYOUT (.cs) — BoxBunny + Companion modals
+   Overview (problem → my part → result) · jump links · numbered
+   sections, each opening with a one-line lead.
+   ============================================================ */
+/* Case-study panels get a wider canvas than the other project modals */
+.detail-content:has(.cs) {
+  max-width: 1200px;
+}
+
+.cs.project-body {
+  gap: 1.75rem;
+}
+
+.cs > .links.cta-top {
+  margin-bottom: 0;
+}
+
+/* --- Overview --- */
+.cs-overview {
+  display: grid;
+  gap: 1.75rem;
+}
+
+.cs-brief {
+  margin: 0;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1.75rem;
+}
+
+.cs-brief > div {
+  padding-left: 0.85rem;
+  border-left: 2px solid var(--cs-brief-color, var(--accent-1));
+}
+
+.cs-brief > div:nth-child(1) { --cs-brief-color: #f59e0b; }
+.cs-brief > div:nth-child(2) { --cs-brief-color: #06b6d4; }
+.cs-brief > div:nth-child(3) { --cs-brief-color: #10b981; }
+
+.cs-brief dt {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--cs-brief-color);
+  margin-bottom: 0.2rem;
+}
+
+.cs-brief dd {
+  margin: 0;
+  color: var(--text-secondary);
+  font-size: 0.96rem;
+  line-height: 1.6;
+}
+
+/* --- Outline · its own full-height rail on the left edge of the panel, like a
+   document's navigation pane. Becomes a sticky chip strip on narrow screens. --- */
+.detail-content:has(> .cs-toc) {
+  --cs-bar: 67px;
+  max-width: none;
+  padding: 0;
+  display: grid;
+  grid-template-columns: 340px minmax(0, 1fr);
+}
+
+.detail-content:has(> .cs-toc) > .detail-project {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 3rem 2.75rem 4rem;
+  box-sizing: border-box;
+}
+
+.cs-toc {
+  display: block;
+  position: sticky;
+  top: var(--cs-bar);
+  align-self: start;
+  height: calc(100vh - var(--cs-bar));
+  overflow-y: auto;
+  padding: 2.8rem 1.6rem 2rem 2rem;
+  background: hsl(240 12% 7.5%);
+  border-right: 1px solid hsl(240 14% 14%);
+  scrollbar-width: thin;
+}
+
+.cs-toc-label {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin: 0 0 1.25rem 1.25rem;
+}
+
+.cs-toc ol {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+/* the outline's spine · the active entry lights up its stretch of it */
+.cs-toc > ol {
+  border-left: 1px solid var(--glass-border);
+}
+
+.cs-toc a {
+  position: relative;
+  display: flex;
+  margin-left: -1px;
+  gap: 0.7rem;
+  padding: 0.65rem 0.7rem 0.65rem 1.25rem;
+  border-left: 3px solid transparent;
+  border-radius: 0 8px 8px 0;
+  font-family: var(--font-body);
+  font-size: 1.1rem;
+  line-height: 1.35;
+  color: var(--text-secondary);
+  text-decoration: none;
+  cursor: pointer;
+  transition: color var(--transition), border-color var(--transition), background var(--transition);
+}
+
+.cs-toc a b {
+  font-family: var(--font-mono);
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  transition: color var(--transition);
+}
+
+.cs-toc > ol > li + li {
+  margin-top: 0.55rem;
+}
+
+.cs-toc ol ol a {
+  padding: 0.42rem 0.7rem 0.42rem 3.25rem;
+  font-size: 0.98rem;
+  color: var(--text-muted);
+}
+
+.cs-toc a:hover {
+  color: var(--text);
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.cs-toc li.is-current > a,
+.cs-toc li.is-current > a b {
+  color: var(--text);
+}
+
+.cs-toc a.is-active {
+  color: var(--text);
+  border-left-color: var(--accent-1);
+  background: linear-gradient(90deg, rgba(6, 182, 212, 0.12), transparent);
+}
+
+.cs-toc a.is-active b {
+  color: var(--accent-1);
+}
+
+.cs-overview,
+.cs-step {
+  scroll-margin-top: 84px;
+}
+
+@media (max-width: 1180px) {
+  .detail-content:has(> .cs-toc) {
+    grid-template-columns: 280px minmax(0, 1fr);
+  }
+
+  .detail-content:has(> .cs-toc) > .detail-project {
+    padding-inline: 2rem;
+  }
+
+  .cs-toc {
+    padding-inline: 1rem 0.9rem;
+  }
+
+  .cs-toc a {
+    padding-left: 0.95rem;
+    font-size: 1rem;
+  }
+
+  .cs-toc ol ol a {
+    padding-left: 2.8rem;
+    font-size: 0.92rem;
+  }
+
+  .cs-toc-label {
+    margin-left: 0.75rem;
+  }
+}
+
+/* narrow screens · one sticky row of section chips under the header bar */
+@media (max-width: 900px) {
+  .detail-content:has(> .cs-toc) {
+    display: block;
+  }
+
+  .detail-content:has(> .cs-toc) > .detail-project {
+    padding: 1.75rem 1.25rem 3rem;
+  }
+
+  .cs-toc {
+    z-index: 4;
+    height: auto;
+    overflow-x: auto;
+    overflow-y: hidden;
+    padding: 0.6rem 1rem;
+    border-right: none;
+    border-bottom: 1px solid hsl(240 14% 14%);
+    background: hsl(240 12% 7% / 0.96);
+    backdrop-filter: blur(12px);
+    scrollbar-width: none;
+  }
+
+  .cs-toc::-webkit-scrollbar {
+    display: none;
+  }
+
+  .cs-toc-label,
+  .cs-toc ol ol,
+  .cs-toc .cs-toc-top {
+    display: none;
+  }
+
+  .cs-toc > ol {
+    display: flex;
+    gap: 0.5rem;
+    width: max-content;
+    border-left: none;
+  }
+
+  .cs-toc > ol > li + li {
+    margin-top: 0;
+  }
+
+  .cs-toc a {
+    margin: 0;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.4rem 0.8rem;
+    white-space: nowrap;
+    font-size: 0.84rem;
+    border: 1px solid var(--glass-border);
+    border-radius: 999px;
+  }
+
+  .cs-toc li.is-current > a {
+    border-color: rgba(6, 182, 212, 0.6);
+    background: rgba(6, 182, 212, 0.12);
+  }
+
+  .cs-toc li.is-current > a b {
+    color: var(--accent-1);
+  }
+}
+
+/* --- Numbered sections --- */
+.cs-section {
+  display: grid;
+  gap: 1.1rem;
+  padding: 1.6rem 1.75rem 1.75rem;
+  border: 1px solid var(--glass-border);
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.025);
+  scroll-margin-top: 84px;
+}
+
+.cs-section-head {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.9rem;
+}
+
+.cs-num {
+  font-family: var(--font-mono);
+  font-size: 1.8rem;
+  font-weight: 700;
+  line-height: 1;
+  padding-top: 0.1rem;
+  background: var(--gradient-primary);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.cs-section-head h3 {
+  margin: 0;
+  font-size: 1.4rem;
+  letter-spacing: -0.01em;
+  color: var(--text);
+}
+
+.cs-lead {
+  margin: 0.3rem 0 0;
+  color: var(--text-secondary);
+  font-size: 0.98rem;
+  line-height: 1.55;
+}
+
+.cs-section > p,
+.cs-step > p {
+  margin: 0;
+  color: var(--text-secondary);
+  font-size: 0.98rem;
+  line-height: 1.7;
+}
+
+/* Sub-steps inside a section */
+.cs-step {
+  display: grid;
+  gap: 0.85rem;
+  margin-top: 1rem;
+  scroll-margin-top: 84px;
+  padding: 0.2rem 0 0.4rem 1.4rem;
+  border-left: 2px solid rgba(6, 182, 212, 0.35);
+}
+
+.cs-step + .cs-step {
+  margin-top: 2.2rem;
+}
+
+.cs-step h4 {
+  margin: 0 0 0.15rem;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.7rem;
+  font-size: 1.22rem;
+  color: var(--text);
+}
+
+.cs-step-tag {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #a5f3fc;
+  background: rgba(6, 182, 212, 0.12);
+  border: 1px solid rgba(6, 182, 212, 0.3);
+  border-radius: 999px;
+  padding: 0.18rem 0.55rem;
+}
+
+/* Equal-height figure rows with bottom-aligned captions */
+.cs .media-layout-2 {
+  align-items: stretch;
+}
+
+.cs .media-layout-2 figure,
+.cs .cs-mech-row figure {
+  display: flex;
+  flex-direction: column;
+}
+
+.cs .media-layout-2 figure img,
+.cs .media-layout-2 figure video {
+  width: 100%;
+  height: 260px;
+  object-fit: contain;
+  background: rgba(0, 0, 0, 0.3);
+  aspect-ratio: auto;
+}
+
+.cs .media-layout-2 figcaption,
+.cs .cs-mech-row figcaption {
+  margin-top: auto;
+  padding-top: 0.35rem;
+}
+
+.cs .cs-video-pair video {
+  background: #000;
+}
+
+.cs .cs-face-pair img:not(.media-fit-contain) {
+  object-fit: cover;
+}
+
+.cs-cols-2 {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  align-items: stretch;
+}
+
+.cs-cols-2 .boxing-column {
+  display: flex;
+  flex-direction: column;
+}
+
+.cs-cols-2 .boxing-column > figure {
+  margin-top: auto;
+}
+
+.cs-mech-row {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.65rem;
+  align-items: stretch;
+}
+
+.cs-mech-row .companion-video {
+  margin: 0;
+}
+
+.cs-mech-row video,
+.cs-mech-row img {
+  height: 280px;
+  max-height: none;
+  object-fit: contain;
+  background: #000;
+}
+
+.cs-mech-row img {
+  background: rgba(0, 0, 0, 0.3);
+}
+
+/* Headline numbers · one tile each, value on top, one-line label underneath */
+.cs-stats {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0.75rem;
+}
+
+.cs-stats > div {
+  display: grid;
+  align-content: start;
+  gap: 0.25rem;
+  padding: 0.85rem 1.1rem;
+  border: 1px solid var(--glass-border);
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.cs-stats b {
+  font-size: 1.7rem;
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+  color: #67e8f9;
+  background: linear-gradient(90deg, #67e8f9, #a78bfa);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.cs-stats span {
+  font-size: 0.8rem;
+  line-height: 1.35;
+  color: var(--text-muted);
+}
+
+/* Large hero photo pair under the overview · each photo keeps its own
+   aspect ratio; flex-grow ∝ ratio gives both the same height, capped at ~460px */
+.cs-hero {
+  display: flex;
+  gap: 1rem;
+  width: 100%;
+  max-width: calc(460px * var(--ar-sum, 2) + 1rem);
+  margin: 0 auto;
+}
+
+.cs-hero figure {
+  flex: var(--ar, 1) 1 0;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.cs-hero img {
+  aspect-ratio: var(--ar, 1);
+  height: auto;
+  object-fit: cover;
+}
+
+.cs-hero figcaption {
+  margin-top: auto;
+  padding-top: 0.4rem;
+}
+
+/* Final-model parts · three short columns */
+.cs-parts {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1.5rem;
+}
+
+.cs-parts > div {
+  padding-left: 0.85rem;
+  border-left: 2px solid var(--accent-1);
+}
+
+.cs-parts h5 {
+  margin: 0 0 0.25rem;
+  font-size: 0.9rem;
+  color: var(--text);
+}
+
+.cs-parts p {
+  margin: 0;
+  font-size: 0.86rem;
+  line-height: 1.55;
+  color: var(--text-secondary);
+}
+
+.cs-media-3 {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.75rem;
+  align-items: stretch;
+}
+
+.cs-media-3 figure {
+  display: flex;
+  flex-direction: column;
+}
+
+.cs-media-3 img {
+  height: 320px;
+  object-fit: contain;
+  background: rgba(0, 0, 0, 0.3);
+}
+
+.cs-media-3 figcaption {
+  margin-top: auto;
+  padding-top: 0.35rem;
+}
+
+/* Text beside media: short copy on the left, the visual gets the room */
+.cs-split {
+  display: grid;
+  grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+  gap: 1.5rem;
+  align-items: start;
+}
+
+.cs-text {
+  display: grid;
+  gap: 0.6rem;
+  align-content: start;
+  padding-top: 0.4rem;
+}
+
+.cs-text-lead {
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  color: var(--text-muted);
+}
+
+.cs-split .arch-compact {
+  max-width: none;
+  margin: 0;
+}
+
+.cs-split .arch-compact img,
+.cs-split .llm-tuning-figure img {
+  max-height: 340px;
+}
+
+.cs-split .llm-tuning-figure {
+  margin: 0;
+}
+
+.cs-split .dashboard-walkthrough video {
+  max-height: 420px;
+}
+
+.cs-list {
+  margin: 0;
+  padding-left: 1.1rem;
+  display: grid;
+  gap: 0.45rem;
+}
+
+.cs-list li {
+  color: var(--text-secondary);
+  font-size: 0.92rem;
+  line-height: 1.55;
+}
+
+.cs-list li::marker {
+  color: var(--accent-1);
+}
+
+/* Labelled sub-parts inside a step (A / B / C) */
+.cs-sub {
+  display: grid;
+  gap: 0.25rem;
+  margin-top: 0.75rem;
+}
+
+.cs-sub p {
+  margin: 0;
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  line-height: 1.6;
+}
+
+.cs-sub .cs-sub-label {
+  font-size: 0.92rem;
+  font-weight: 600;
+  color: var(--text);
+}
+
+
+
+.cs-inline-link {
+  color: var(--accent-1);
+  font-family: var(--font-mono);
+  font-weight: 700;
+}
+
+/* Latency budget bar · how much of the 33 ms frame each stage uses */
+/* Per-frame budget · before/after rows against the 33 ms ceiling, after the report's chart */
+.cs-budget {
+  --ceiling: 78.57%;
+  display: grid;
+  gap: 0.6rem;
+  padding: 1rem 1.15rem;
+  border: 1px solid var(--glass-border);
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.cs .cs-budget-title {
+  margin: 0 0 0.35rem;
+  font-size: 0.92rem;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.cs-budget-title span {
+  color: #fca5a5;
+  font-weight: 500;
+}
+
+.cs-budget-row {
+  display: grid;
+  grid-template-columns: 7.5rem minmax(0, 1fr) 11rem;
+  gap: 1rem;
+  align-items: center;
+}
+
+.cs-budget-label {
+  display: grid;
+  text-align: right;
+}
+
+.cs-budget-label b {
+  font-size: 0.8rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+}
+
+.cs-budget-label i {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  font-style: normal;
+  color: var(--text-muted);
+}
+
+/* one joined bar per row · the dashed line marks the 33 ms ceiling */
+.cs-budget-track {
+  position: relative;
+  display: flex;
+  height: 2.4rem;
+}
+
+.cs-budget-track::after {
+  content: "";
+  position: absolute;
+  left: var(--ceiling);
+  top: -0.5rem;
+  bottom: -0.5rem;
+  border-left: 2px dashed rgba(248, 113, 113, 0.75);
+}
+
+.cs-budget-track .seg {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35rem;
+  min-width: 0;
+  padding: 0 0.5rem;
+  overflow: hidden;
+  white-space: nowrap;
+  font-family: var(--font-mono);
+  font-size: 0.74rem;
+}
+
+.cs-budget-track .seg + .seg {
+  border-left: 1px solid rgba(0, 0, 0, 0.45);
+}
+
+.cs-budget-track .seg:first-child {
+  border-radius: 6px 0 0 6px;
+}
+
+.cs-budget-track .seg:last-child {
+  border-radius: 0 6px 6px 0;
+}
+
+.cs-budget-track .seg b {
+  font-family: var(--font-body);
+  font-weight: 600;
+}
+
+.cs-budget-track .seg-free b {
+  font-family: inherit;
+  font-weight: inherit;
+}
+
+.is-before .seg-yolo { background: rgba(248, 113, 113, 0.32); color: #fee2e2; }
+.is-before .seg-model { background: rgba(248, 113, 113, 0.18); color: #fecaca; }
+.is-after .seg-yolo { background: rgba(52, 211, 153, 0.3); color: #d1fae5; }
+.is-after .seg-model { background: rgba(52, 211, 153, 0.16); color: #a7f3d0; }
+
+.is-after .seg-free {
+  background: transparent;
+  color: var(--text-muted);
+  border: 1px dashed var(--glass-border);
+  border-left: 1px dashed var(--glass-border);
+  font-style: italic;
+}
+
+.cs-budget-result {
+  font-size: 0.86rem;
+  font-weight: 700;
+}
+
+.is-before .cs-budget-result { color: #f87171; }
+.is-after .cs-budget-result { color: #34d399; }
+
+.cs .cs-budget-key {
+  margin: 0.5rem 0 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem 1.4rem;
+  font-size: 0.82rem;
+  line-height: 1.5;
+  color: var(--text-muted);
+}
+
+.cs-budget-key span {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+}
+
+.cs-budget-key i {
+  flex: none;
+  width: 0.7rem;
+  height: 0.7rem;
+  border-radius: 3px;
+}
+
+.cs-budget-key .k-yolo { background: rgba(52, 211, 153, 0.55); }
+.cs-budget-key .k-model { background: rgba(52, 211, 153, 0.25); }
+
+.cs-budget-key span:last-child {
+  flex-basis: 100%;
+  display: block;
+}
+
+@media (max-width: 760px) {
+  .cs-split {
+    grid-template-columns: 1fr;
+  }
+
+  .cs-split {
+    gap: 0.85rem;
+  }
+
+  .cs-hero {
+    flex-direction: column;
+  }
+
+  .cs-brief,
+  .cs-parts,
+  .cs-media-3 {
+    grid-template-columns: 1fr;
+  }
+
+  .cs-brief,
+  .cs-parts {
+    gap: 1rem;
+  }
+
+  .cs-stats {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.6rem;
+  }
+
+  .cs-stats > div {
+    padding: 0.75rem 0.9rem;
+  }
+
+  .cs-stats b {
+    font-size: 1.35rem;
+  }
+
+  .cs-hero img {
+    max-height: 380px;
+  }
+
+  .cs-media-3 img {
+    height: clamp(220px, 60vw, 300px);
+  }
+
+  .cs.project-body {
+    gap: 1.2rem;
+  }
+
+  .cs-budget {
+    padding: 0.85rem;
+  }
+
+  .cs-budget-row {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0.35rem;
+  }
+
+  .cs-budget-label {
+    display: flex;
+    gap: 0.5rem;
+    align-items: baseline;
+    text-align: left;
+  }
+
+  .cs-budget-track {
+    height: 2.1rem;
+  }
+
+  .cs-budget-track .seg {
+    padding: 0 0.3rem;
+    font-size: 0.64rem;
+  }
+
+  .cs-budget-track .seg b {
+    display: none;
+  }
+
+  .cs-budget-result {
+    font-size: 0.8rem;
+  }
+}
+
+@media (max-width: 760px) {
+  .cs-overview,
+  .cs-cols-2,
+  .cs-mech-row {
+    grid-template-columns: 1fr;
+  }
+
+  .cs-overview,
+  .cs-section {
+    padding: 0.9rem 0.85rem 1rem;
+  }
+
+  .cs-num {
+    font-size: 1.25rem;
+  }
+
+  .cs-section-head h3 {
+    font-size: 1.15rem;
+  }
+
+  .cs .media-layout-2 {
+    grid-template-columns: 1fr;
+  }
+
+  .cs .media-layout-2 figure img,
+  .cs .media-layout-2 figure video,
+  .cs-mech-row video,
+  .cs-mech-row img {
+    height: clamp(190px, 52vw, 280px);
+  }
+}
+
+/* ---- Readability layer: one key line per step, highlighted key phrases,
+   quiet tech-detail lines that skimmers can skip ---- */
+.cs mark {
+  font-weight: 600;
+  color: #d8b4fe;
+  background: none;
+  padding: 0;
+}
+
+/* the step's one-line summary · set apart from the title above and the detail below */
+.cs .cs-takeaway {
+  justify-self: start;
+  padding: 0.6rem 1rem;
+  border-left: 3px solid var(--accent-1);
+  border-radius: 0 10px 10px 0;
+  background: rgba(6, 182, 212, 0.07);
+  color: var(--text);
+  font-size: 0.98rem;
+  font-weight: 500;
+  line-height: 1.55;
+}
+
+.cs .cs-detail {
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: 0.74rem;
+  line-height: 1.5;
+  color: var(--text-muted);
+}
+
+.cs .cs-detail::before {
+  content: "tech · ";
+  color: var(--accent-1);
+}
+
+.cs .cs-note {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+.cs-sub .cs-sub-label {
+  font-size: 1rem;
+}
+
+.cs-sub p {
+  font-size: 0.96rem;
+}
+
+.cs-parts p {
+  font-size: 0.94rem;
+}
+
+.cs-parts h5 {
+  font-size: 1rem;
+}
+
+.cs-parts .cs-detail {
+  margin-top: 0.4rem;
+}
+
+.cs-list li {
+  font-size: 0.98rem;
+}
+
+.cs-list li b,
+.cs-flow li b {
+  color: var(--text);
+}
+
+/* What each approach got right / wrong */
+.cs-compare {
+  display: grid;
+  border: 1px solid var(--glass-border);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.cs-compare-row {
+  display: grid;
+  grid-template-columns: minmax(150px, 0.8fr) 1fr 1fr;
+  gap: 1rem;
+  align-items: center;
+  padding: 0.75rem 1rem;
+  font-size: 0.95rem;
+  border-top: 1px solid var(--line-soft);
+}
+
+.cs-compare-row:first-child {
+  border-top: none;
+}
+
+.cs-compare-name {
+  font-weight: 600;
+  color: var(--text);
+}
+
+.cs-good,
+.cs-bad {
+  color: var(--text-secondary);
+}
+
+.cs-good::before {
+  content: "✓ ";
+  color: #34d399;
+  font-weight: 700;
+}
+
+.cs-bad::before {
+  content: "✗ ";
+  color: #f87171;
+  font-weight: 700;
+}
+
+.cs-compare-win {
+  background: rgba(16, 185, 129, 0.1);
+}
+
+.cs-compare-win .cs-good {
+  grid-column: 2 / -1;
+  color: var(--text);
+}
+
+.cs-compare-win b {
+  color: #6ee7b7;
+}
+
+/* Numbered how-it-works steps */
+.cs-flow {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  counter-reset: csflow;
+  display: grid;
+  gap: 0.8rem;
+}
+
+.cs-flow li {
+  counter-increment: csflow;
+  position: relative;
+  padding-left: 2.3rem;
+  font-size: 0.98rem;
+  line-height: 1.55;
+  color: var(--text-secondary);
+}
+
+.cs-flow li::before {
+  content: counter(csflow);
+  position: absolute;
+  left: 0;
+  top: 0.05rem;
+  width: 1.6rem;
+  height: 1.6rem;
+  display: grid;
+  place-items: center;
+  border-radius: 6px;
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--accent-1);
+  border: 1px solid rgba(6, 182, 212, 0.4);
+}
+
+/* Frameless image pair · each keeps its own ratio, both share one height */
+.cs-media-lg {
+  display: flex;
+  gap: 1rem;
+}
+
+.cs-media-lg figure {
+  flex: var(--ar, 1) 1 0;
+  min-width: 0;
+  padding: 0;
+  border: none;
+  background: none;
+}
+
+.cs-media-lg img {
+  display: block;
+  aspect-ratio: var(--ar, 1);
+  height: auto;
+  object-fit: cover;
+  border-radius: 10px;
+  border: 1px solid var(--glass-border);
+}
+
+.cs-media-lg figcaption {
+  padding-top: 0.5rem;
+}
+
+.cs .cs-media-wide img {
+  max-height: 560px;
+}
+
+/* Phone dashboard · phone on the left, a connected 4-step flow on the right,
+   both centred as one group */
+.cs-phone-stage {
+  display: grid;
+  grid-template-columns: auto minmax(0, 420px);
+  justify-content: center;
+  align-items: stretch;
+  gap: 3rem;
+}
+
+.cs-phone-stage .dashboard-walkthrough {
+  width: 250px;
+  margin: 0;
+  padding: 0.45rem;
+  border-radius: 22px;
+}
+
+.cs-phone-stage .dashboard-walkthrough video {
+  width: 100%;
+  height: auto;
+  max-height: none;
+  aspect-ratio: 588 / 1280;
+  object-fit: cover;
+  border-radius: 16px;
+}
+
+.cs-stepper {
+  position: relative;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  counter-reset: csstep;
+  display: grid;
+  grid-auto-rows: 1fr;
+  gap: 1.9rem;
+  padding: 2.5rem 0;
+}
+
+/* each number links down to the next one, so the line ends at the last */
+.cs-stepper li:not(:last-child)::after {
+  content: "";
+  position: absolute;
+  left: 1.1rem;
+  top: 2.1rem;
+  bottom: -1.8rem;
+  width: 2px;
+  transform: translateX(-50%);
+  background: linear-gradient(180deg, rgba(6, 182, 212, 0.55), rgba(139, 92, 246, 0.55));
+}
+
+.cs-stepper li {
+  counter-increment: csstep;
+  position: relative;
+  display: grid;
+  align-content: start;
+  gap: 0.25rem;
+  padding-left: 3.4rem;
+}
+
+.cs-stepper li::before {
+  content: counter(csstep);
+  position: absolute;
+  left: 0;
+  top: -0.1rem;
+  width: 2.2rem;
+  height: 2.2rem;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  font-family: var(--font-mono);
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--accent-1);
+  background: #0d1117;
+  border: 2px solid rgba(6, 182, 212, 0.6);
+}
+
+.cs-stepper b {
+  font-size: 1.08rem;
+  color: var(--text);
+}
+
+.cs-stepper span {
+  font-size: 0.96rem;
+  line-height: 1.5;
+  color: var(--text-secondary);
+}
+
+/* Full-width diagrams in section 03 */
+.cs-diagram img {
+  max-height: 440px;
+  object-fit: contain;
+  background: rgba(0, 0, 0, 0.25);
+}
+
+@media (max-width: 760px) {
+  .cs-compare-row {
+    grid-template-columns: 1fr;
+    gap: 0.25rem;
+  }
+
+  .cs-compare-win .cs-good {
+    grid-column: auto;
+  }
+
+  .cs .cs-takeaway {
+    font-size: 1rem;
+  }
+
+  .cs-media-lg {
+    flex-direction: column;
+  }
+
+  .cs-phone-stage {
+    grid-template-columns: 1fr;
+    gap: 1.75rem;
+  }
+
+  .cs-stepper {
+    grid-auto-rows: auto;
+    padding: 0;
+  }
+
+  .cs-phone-stage .dashboard-walkthrough {
+    width: min(260px, 72vw);
+    justify-self: center;
+  }
+}
+
+/* --- Section 02 · the model journey as one numbered timeline, echoing the
+   phone-app stepper in section 04 --- */
+.cs-journey {
+  counter-reset: csjourney;
+  display: grid;
+}
+
+.cs-journey > .cs-step {
+  counter-increment: csjourney;
+  position: relative;
+  margin-top: 0;
+  padding: 0.1rem 0 2.6rem 3.4rem;
+  border-left: none;
+}
+
+.cs-journey > .cs-step:last-child {
+  padding-bottom: 0.2rem;
+}
+
+.cs-journey > .cs-step::before {
+  content: counter(csjourney);
+  position: absolute;
+  left: 0;
+  top: -0.25rem;
+  width: 2.2rem;
+  height: 2.2rem;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  font-family: var(--font-mono);
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--accent-1);
+  background: #0d1117;
+  border: 2px solid rgba(6, 182, 212, 0.6);
+  z-index: 1;
+}
+
+/* line from this step's number down to the next one */
+.cs-journey > .cs-step::after {
+  content: "";
+  position: absolute;
+  left: 1.1rem;
+  top: 2rem;
+  bottom: 0.25rem;
+  width: 2px;
+  transform: translateX(-50%);
+  background: linear-gradient(180deg, rgba(6, 182, 212, 0.5), rgba(139, 92, 246, 0.35));
+}
+
+.cs-journey > .cs-step:last-child::after {
+  display: none;
+}
+
+/* sub-blocks inside a step read as small labels, not a third heading level */
+.cs-journey .cs-sub {
+  margin-top: 0.6rem;
+}
+
+.cs-journey .cs-sub .cs-sub-label {
+  font-family: var(--font-mono);
+  font-size: 0.74rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--accent-1);
+}
+
+/* --- Final model · the live demo, then the architecture big enough to read with
+   results stacked beside it --- */
+.cs-final-demo video {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.cs-media-arch {
+  display: grid;
+  grid-template-columns: minmax(0, 2.1fr) minmax(0, 1fr);
+  grid-template-rows: 1fr 1fr;
+  gap: 1rem;
+}
+
+.cs-media-arch .cs-arch-main {
+  grid-row: 1 / -1;
+}
+
+.cs-media-arch figure {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  min-width: 0;
+}
+
+.cs-media-arch img {
+  flex: 1;
+  width: 100%;
+  min-height: 0;
+  object-fit: contain;
+  background: #fff;
+  border-radius: 8px;
+}
+
+.cs-media-arch figcaption {
+  padding-top: 0.5rem;
+}
+
+@media (max-width: 760px) {
+  .cs-journey > .cs-step {
+    padding-left: 2.8rem;
+  }
+
+  .cs-journey > .cs-step::before {
+    width: 1.9rem;
+    height: 1.9rem;
+    font-size: 0.85rem;
+  }
+
+  .cs-journey > .cs-step::after {
+    left: 0.95rem;
+  }
+
+  .cs-media-arch {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: none;
+  }
+
+  .cs-media-arch .cs-arch-main {
+    grid-row: auto;
+  }
+}
+
+/* --- Section 02 · the two near-misses, each with what worked and its deal-breaker --- */
+.cs-nearmiss figcaption {
+  display: grid;
+  gap: 0.2rem;
+  padding: 0.75rem 0.35rem 0.2rem;
+  font-family: var(--font-body);
+  font-size: 0.88rem;
+  letter-spacing: 0;
+  text-align: left;
+}
+
+.cs-nearmiss figcaption b {
+  margin-bottom: 0.15rem;
+  font-size: 0.95rem;
+  color: var(--text);
+}
+
+/* --- AI coach screens · phone-shaped frames at their real ratio, no letterboxing --- */
+.cs .ai-coach-grid {
+  grid-template-columns: repeat(3, minmax(0, 250px));
+  justify-content: center;
+  gap: 2.25rem;
+  margin-top: 0.75rem;
+}
+
+.cs .ai-coach-grid figure {
+  padding: 0.45rem;
+  border-radius: 22px;
+}
+
+.cs .ai-coach-grid img {
+  height: auto;
+  aspect-ratio: 649 / 1280;
+  object-fit: cover;
+  background: none;
+  border-radius: 16px;
+}
+
+.cs .ai-coach-grid figcaption {
+  padding: 0.6rem 0.4rem 0.3rem;
+  font-size: 0.8rem;
+}
+
+@media (max-width: 760px) {
+  /* swipe sideways through the three screens instead of a long stack */
+  .cs .ai-coach-grid {
+    grid-template-columns: none;
+    grid-auto-flow: column;
+    grid-auto-columns: min(68vw, 250px);
+    justify-content: start;
+    gap: 1rem;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    padding-bottom: 0.5rem;
+  }
+
+  .cs .ai-coach-grid figure {
+    scroll-snap-align: start;
+  }
+
+  .cs .ai-coach-grid img {
+    height: auto;
+  }
+}
+
+/* --- Final model · compact: live demo beside the three parts --- */
+.cs-final-top {
+  display: grid;
+  grid-template-columns: minmax(0, 1.55fr) minmax(0, 1fr);
+  gap: 1.25rem;
+  align-items: stretch;
+}
+
+.cs-final-top .cs-final-demo {
+  margin: 0;
+}
+
+.cs-final-top .cs-parts {
+  grid-template-columns: minmax(0, 1fr);
+  grid-auto-rows: 1fr;
+  gap: 0.75rem;
+}
+
+/* --- Softer accents · full cards and dividers instead of lone left bars --- */
+.cs-parts > div {
+  padding: 0.8rem 1rem;
+  border: 1px solid var(--glass-border);
+  border-left: 1px solid var(--glass-border);
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.cs-parts h5 {
+  color: var(--accent-1);
+}
+
+.cs .cs-takeaway {
+  padding: 0.7rem 1.1rem;
+  border: 1px solid rgba(6, 182, 212, 0.22);
+  border-radius: 10px;
+  background: rgba(6, 182, 212, 0.06);
+}
+
+/* steps outside the numbered timeline: separated by a hairline, no side rail */
+.cs-step {
+  padding-left: 0;
+  border-left: none;
+}
+
+.cs-step + .cs-step {
+  padding-top: 2.2rem;
+  border-top: 1px solid var(--glass-border);
+}
+
+.cs-journey > .cs-step + .cs-step {
+  padding-top: 0.1rem;
+  border-top: none;
+}
+
+@media (max-width: 760px) {
+  .cs-final-top {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .cs-final-top .cs-parts {
+    grid-auto-rows: auto;
+  }
+}
+
+/* --- Robotic Companion · same readability layer as BoxBunny, sized for its content --- */
+.companion-detail .cs-hero {
+  max-width: calc(360px * var(--ar-sum, 2) + 1rem);
+}
+
+.rc-turn-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr);
+  gap: 1.25rem;
+  align-items: stretch;
+}
+
+.rc-turn-col {
+  display: grid;
+  align-content: start;
+  gap: 0.75rem;
+  padding: 1rem 1.15rem;
+  border: 1px solid var(--glass-border);
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.rc-turn-col .cs-sub-label {
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: 0.74rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--accent-1);
+}
+
+.rc-turn-col .cs-list {
+  margin: 0;
+}
+
+.rc-turn-col .cs-note {
+  margin: auto 0 0;
+}
+
+.cs .rc-pipes img {
+  height: 300px;
+  max-height: none;
+  object-fit: contain;
+  background: #fff;
+}
+
+.rc-motion {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.cs .rc-evolution img {
+  height: 190px;
+  background: #fff;
+  border-radius: 8px;
+}
+
+@media (max-width: 760px) {
+  .rc-turn-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .cs .rc-motion {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.6rem;
+  }
+
+  .cs .rc-pipes img {
+    height: 240px;
+  }
+
+  .cs .rc-evolution {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .cs .rc-evolution img {
+    height: 110px;
+  }
+}
+
+/* ============================================================
+   Smaller project panels (Teleco, RL hand, Breaking Bias, IDP)
+   Same reading layer as BoxBunny/Companion, each laid out for
+   what that project needs to show.
+   ============================================================ */
+.cs .cs-intro {
+  margin: 0;
+  font-size: 1.05rem;
+  line-height: 1.65;
+  color: var(--text-secondary);
+}
+
+.cs-stats.cs-stats-3 {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+/* Teleco · the robot beside the intro and its numbers */
+.tc-overview {
+  grid-template-columns: minmax(0, 1fr) 180px;
+  align-items: center;
+}
+
+.tc-intro {
+  display: grid;
+  gap: 1.5rem;
+}
+
+.cs .tc-robot img {
+  aspect-ratio: 3 / 4;
+  height: auto;
+  object-fit: cover;
+}
+
+/* Teleco · camera → map → gaze as three connected step cards */
+.tc-steps {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 2rem;
+}
+
+.tc-steps li {
+  position: relative;
+  display: grid;
+  align-content: start;
+  gap: 0.4rem;
+  padding: 1rem 1.1rem 1.1rem;
+  border: 1px solid var(--glass-border);
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.03);
+}
+
+/* arrow into the next card */
+.tc-steps li + li::before {
+  content: "→";
+  position: absolute;
+  left: -1.55rem;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 1.2rem;
+  color: var(--accent-1);
+}
+
+.tc-steps b {
+  font-size: 1rem;
+  color: var(--accent-1);
+}
+
+.tc-steps li > span:last-child {
+  font-size: 0.92rem;
+  line-height: 1.55;
+  color: var(--text-secondary);
+}
+
+/* RL hand · the two clips at their real shape, captions underneath */
+.rl-clips {
+  width: 100%;
+  max-width: 760px;
+  margin-inline: auto;
+}
+
+.cs .rl-clips figcaption {
+  margin-top: 0;
+}
+
+/* RL hand · Adroit → Inspire joint mapping, explained beside the two hands */
+.rl-map {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 1.75rem;
+  align-items: start;
+  padding: 1rem 1.1rem;
+  border: 1px solid var(--glass-border);
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.rl-map-text {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.cs .rl-map-text > .rl-map-note {
+  font-size: 0.86rem;
+  color: var(--text-muted);
+}
+
+.cs .rl-map-label {
+  margin: 0;
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--accent-1);
+}
+
+.cs .rl-map-text > p:not(.rl-map-label) {
+  margin: 0;
+  font-size: 0.96rem;
+  line-height: 1.6;
+  color: var(--text-secondary);
+}
+
+.rl-map-hands {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.rl-map-hands figure {
+  margin: 0;
+  width: 165px;
+}
+
+.rl-map-hands img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 0.767;
+  object-fit: cover;
+  border-radius: 8px;
+  background: #000;
+}
+
+.rl-map-hands figcaption {
+  padding-top: 0.4rem;
+  text-align: center;
+}
+
+.rl-map-arrow {
+  font-size: 1.6rem;
+  color: var(--accent-1);
+}
+
+/* Breaking Bias · what was tested, beside the overview diagram */
+.bias-overview {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr);
+  gap: 1.75rem;
+  align-items: center;
+}
+
+.bias-text {
+  display: grid;
+  gap: 1.25rem;
+}
+
+.bias-facts {
+  margin: 0;
+  display: grid;
+  gap: 0.75rem;
+}
+
+.bias-facts > div {
+  padding: 0.7rem 0.9rem;
+  border: 1px solid var(--glass-border);
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.bias-facts dt {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--accent-1);
+  margin-bottom: 0.2rem;
+}
+
+.bias-facts dd {
+  margin: 0;
+  color: var(--text);
+  font-size: 0.94rem;
+}
+
+.bias-figure img {
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+}
+
+.bias-pdfs {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.bias-pdfs .pdf-title {
+  font-size: 1rem;
+}
+
+.bias-pdfs .pdf-embed-container {
+  height: 460px;
+}
+
+/* IDP · media rows where each item keeps its own shape and they share one height */
+.cs-row {
+  display: flex;
+  gap: 0.75rem;
+}
+
+.cs-row figure {
+  flex: var(--ar, 1) 1 0;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.cs-row img,
+.cs-row video {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: var(--ar, 1);
+  object-fit: cover;
+  border-radius: 8px;
+  background: #000;
+}
+
+.cs-row figcaption {
+  margin-top: auto;
+  padding-top: 0.4rem;
+}
+
+.cs-row-narrow {
+  max-width: 640px;
+}
+
+/* first robotics project · compact card, video on the left, short note on the right */
+.cs-section.idp-first {
+  grid-template-columns: minmax(0, 360px) minmax(0, 1fr);
+  gap: 1.75rem;
+  align-items: center;
+  padding: 1.1rem;
+}
+
+.idp-first-video {
+  margin: 0;
+}
+
+.idp-first-video video {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  border-radius: 8px;
+  background: #000;
+}
+
+.idp-first-text {
+  display: grid;
+  gap: 0.5rem;
+}
+
+.cs .idp-first-eyebrow {
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: 0.92rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent-1);
+}
+
+.idp-first-text h3 {
+  margin: 0;
+  font-size: 1.4rem;
+  color: var(--text);
+}
+
+.cs .idp-first-text > p:not(.idp-first-eyebrow) {
+  margin: 0;
+  font-size: 1rem;
+  line-height: 1.6;
+  color: var(--text-secondary);
+}
+
+.idp-first-text .tech-tags {
+  margin-top: 0.25rem;
+}
+
+/* the gimbal idea · one card with the parts it describes */
+.idp-idea {
+  display: grid;
+  grid-template-columns: 360px minmax(0, 1fr);
+  gap: 1.5rem;
+  align-items: center;
+  padding: 1rem;
+  border: 1px solid rgba(6, 182, 212, 0.22);
+  border-radius: 12px;
+  background: rgba(6, 182, 212, 0.06);
+}
+
+.cs .idp-idea-text {
+  margin: 0;
+  font-size: 1.02rem;
+  line-height: 1.6;
+  color: var(--text);
+}
+
+/* the simulation cards share a height · media sits in the middle of the space under the text */
+.idp-sim-card > .cs-row {
+  margin-block: auto;
+}
+
+.idp-body .cs-step {
+  display: grid;
+  gap: 0.85rem;
+}
+
+.idp-body .cs-step > p:not(.cs-takeaway) {
+  margin: 0;
+  color: var(--text-secondary);
+}
+
+.idp-sim {
+  display: grid;
+  grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+  gap: 1rem;
+}
+
+.idp-sim-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  padding: 0.9rem 1rem 1rem;
+  border: 1px solid var(--glass-border);
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.idp-sim-card h5 {
+  margin: 0;
+  font-size: 1rem;
+  color: var(--accent-1);
+}
+
+.idp-sim-card p {
+  margin: 0;
+  font-size: 0.94rem;
+  line-height: 1.55;
+  color: var(--text-secondary);
+}
+
+@media (max-width: 760px) {
+  .rl-map-hands {
+    justify-content: center;
+  }
+
+  .rl-map-hands figure {
+    width: min(40vw, 160px);
+  }
+
+
+  .cs-stats.cs-stats-3 {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .tc-steps {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 1.6rem;
+  }
+
+  .tc-steps li + li::before {
+    content: "↓";
+    left: 50%;
+    top: -1.45rem;
+    transform: translateX(-50%);
+  }
+
+  .tc-overview,
+  .rl-map,
+  .cs-section.idp-first,
+  .idp-idea,
+  .bias-overview,
+  .bias-pdfs,
+  .idp-sim {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .cs .tc-robot {
+    max-width: 200px;
+  }
+
+  .cs-row {
+    flex-wrap: wrap;
+  }
+
+  .cs-row figure {
+    flex-basis: 40%;
+  }
+}
+
+/* PDF title row · title on the left, full screen + new tab on the right */
+.pdf-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+
+.pdf-tools {
+  display: flex;
+  gap: 0.4rem;
+}
+
+.pdf-tool-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.3rem 0.7rem;
+  font: 600 0.78rem var(--font-body);
+  color: var(--accent-1);
+  text-decoration: none;
+  cursor: pointer;
+  border-radius: 999px;
+  border: 1px solid rgba(6, 182, 212, 0.28);
+  background: rgba(6, 182, 212, 0.08);
+  transition: all var(--transition);
+}
+
+.pdf-tool-btn:hover {
+  background: rgba(6, 182, 212, 0.16);
+  border-color: rgba(6, 182, 212, 0.45);
+}
+
+.pdf-embed-container {
+  position: relative;
+}
+
+.pdf-fs-exit {
+  display: none;
+}
+
+.pdf-embed-container:fullscreen {
+  height: 100vh;
+  border: none;
+  border-radius: 0;
+  background: #1a1a2e;
+}
+
+.pdf-embed-container:fullscreen .pdf-fs-exit {
+  display: inline-flex;
+  position: absolute;
+  top: 0.9rem;
+  right: 1.1rem;
+  z-index: 2;
+  padding: 0.45rem 0.9rem;
+  font: 700 0.8rem var(--font-body);
+  color: #fff;
+  cursor: pointer;
+  border: none;
+  border-radius: 8px;
+  background: #dc2626;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4);
+}
+
+@media (max-width: 768px) {
+  .pdf-tools {
+    display: none;
+  }
+}

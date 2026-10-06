@@ -608,6 +608,68 @@ import '@google/model-viewer';
         });
     });
 
+    // Detail-panel "jump to section" links are cloned in after load, so delegate
+    document.addEventListener('click', (e) => {
+        const link = e.target.closest('.cs a[href^="#"], .cs-toc a[href^="#"]');
+        if (!link) return;
+        e.preventDefault();
+        const target = document.getElementById(link.getAttribute('href').slice(1));
+        if (!target) return;
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+        // Lazy images above the target can load mid-scroll and push it down,
+        // so re-aim a few times until it actually sits under the header bar
+        const wanted = parseFloat(getComputedStyle(target).scrollMarginTop) || 0;
+        let tries = 0;
+        const settle = () => {
+            if (Math.abs(target.getBoundingClientRect().top - wanted) > 4 && tries++ < 4) {
+                target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                setTimeout(settle, 700);
+            }
+        };
+        setTimeout(settle, 900);
+    });
+
+    // PDF viewer · full screen with the viewer's zoom toolbar, back to the clean inline view on exit
+    const setPdfToolbar = (container, showToolbar) => {
+        const current = container.querySelector('.pdf-embed');
+        if (!current) return;
+        const base = current.getAttribute('data').split('#')[0];
+        const next = current.cloneNode(true);
+        next.setAttribute('data', showToolbar ? `${base}#view=FitH` : `${base}#toolbar=0&navpanes=0&scrollbar=0`);
+        current.replaceWith(next);
+    };
+
+    document.addEventListener('click', (e) => {
+        const openBtn = e.target.closest('.pdf-fs-btn');
+        if (openBtn) {
+            const container = openBtn.closest('.pdf-item')?.querySelector('.pdf-embed-container');
+            if (container?.requestFullscreen) {
+                container.requestFullscreen().then(() => setPdfToolbar(container, true)).catch(() => {
+                    window.open(openBtn.dataset.pdf, '_blank', 'noopener');
+                });
+            } else {
+                window.open(openBtn.dataset.pdf, '_blank', 'noopener');
+            }
+            return;
+        }
+        if (e.target.closest('.pdf-fs-exit') && document.fullscreenElement) {
+            document.exitFullscreen();
+        }
+    });
+
+    document.addEventListener('fullscreenchange', () => {
+        document.querySelectorAll('.pdf-embed-container').forEach((container) => {
+            if (container !== document.fullscreenElement && container.dataset.fs === 'on') {
+                container.dataset.fs = '';
+                setPdfToolbar(container, false);
+            }
+        });
+        if (document.fullscreenElement?.classList.contains('pdf-embed-container')) {
+            document.fullscreenElement.dataset.fs = 'on';
+        }
+    });
+
     /* ========================================
        INITIALIZE EVERYTHING
        ======================================== */
@@ -1157,6 +1219,65 @@ import '@google/model-viewer';
         playGuideSpotlightSequence(cueProjects, detail);
     }
 
+    // Case-study outline · highlight the entry for whatever is under the header bar
+    let detachCaseStudyToc = null;
+
+    function setupCaseStudyToc() {
+        if (detachCaseStudyToc) {
+            detachCaseStudyToc();
+            detachCaseStudyToc = null;
+        }
+        const toc = panelContent.querySelector('.cs-toc');
+        if (!toc) return;
+
+        const entries = [...toc.querySelectorAll('a[href^="#"]')]
+            .map((link) => ({ link, target: panelContent.querySelector(link.getAttribute('href')) }))
+            .filter((entry) => entry.target);
+        const sections = [...toc.querySelectorAll(':scope > ol > li')];
+        let lastSection = null;
+
+        const update = () => {
+            const line = 140;
+            let current = null;
+            entries.forEach((entry) => {
+                if (entry.target.getBoundingClientRect().top <= line) current = entry;
+            });
+            entries.forEach(({ link }) => link.classList.toggle('is-active', link === current?.link));
+            sections.forEach((li) => li.classList.toggle('is-current', !!current && li.contains(current.link)));
+
+            // phone layout: the outline is a sideways strip, so keep the current chip in view
+            const currentSection = sections.find((li) => li.classList.contains('is-current'));
+            if (currentSection && currentSection !== lastSection && toc.scrollWidth > toc.clientWidth) {
+                toc.scrollTo({ left: currentSection.offsetLeft - 16, behavior: 'smooth' });
+            }
+            lastSection = currentSection;
+        };
+
+        let frame = 0;
+        const onScroll = () => {
+            if (frame) return;
+            frame = requestAnimationFrame(() => {
+                frame = 0;
+                update();
+            });
+        };
+        // the outline sticks just under the header bar, whose height changes with the viewport
+        const headerBar = panel.querySelector('.detail-header-bar');
+        const syncBarHeight = () => {
+            if (headerBar) panelContent.style.setProperty('--cs-bar', `${headerBar.offsetHeight}px`);
+        };
+
+        panel.addEventListener('scroll', onScroll, { passive: true });
+        window.addEventListener('resize', syncBarHeight);
+        syncBarHeight();
+        update();
+        detachCaseStudyToc = () => {
+            panel.removeEventListener('scroll', onScroll);
+            window.removeEventListener('resize', syncBarHeight);
+            panelContent.style.removeProperty('--cs-bar');
+        };
+    }
+
     function openDetailPanel(projectId) {
         const config = PROJECTS[projectId];
         if (!config || !panel || !panelContent || !overlay) return;
@@ -1171,6 +1292,7 @@ import '@google/model-viewer';
         panelContent.innerHTML = '';
         panelContent.appendChild(template.content.cloneNode(true));
         panel.scrollTop = 0;
+        setupCaseStudyToc();
 
         panel.setAttribute('aria-hidden', 'false');
         overlay.classList.add('active');
@@ -1328,6 +1450,8 @@ import '@google/model-viewer';
 
     document.addEventListener('keydown', (event) => {
         if (event.key !== 'Escape') return;
+        // Esc while a PDF is full screen only leaves full screen
+        if (document.fullscreenElement) return;
         if (panel && panel.getAttribute('aria-hidden') === 'false') {
             closeDetailPanel();
             return;
