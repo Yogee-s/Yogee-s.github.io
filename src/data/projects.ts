@@ -266,7 +266,7 @@ export const projects: Project[] = [
 export const projectTone: Partial<Record<SceneId, string>> = {
   boxbunny: '244, 114, 182',
   teleco: '255, 181, 71',
-  'rl-hand': '167, 139, 250',
+  'rl-hand': '255, 127, 102',
   'legged-balance': '74, 222, 128',
 };
 
