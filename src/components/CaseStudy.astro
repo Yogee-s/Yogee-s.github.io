@@ -37,14 +37,15 @@ const i = projects.findIndex((x) => x.slug === slug);
 const next = projects[(i + 1) % projects.length];
 const featured = projects.filter((x) => x.featured);
 const lastFeatured = featured[featured.length - 1].slug === slug;
-// end of the page: the next project, except after the last featured one, where the reader goes
-// back to the homepage to choose (the rest are optional extras)
-const nextLink = lastFeatured
+const last = i === projects.length - 1;
+// end of the page: the next project, except after the last featured one and the very last one,
+// where the reader goes back to the homepage to choose (no wrapping round to the first)
+const nextLink = lastFeatured || last
   ? `
 <a class="lp-next" href="/#work" data-close data-then="more">
-  <small>That's the featured work</small>
+  <small>${last ? "That's every project" : "That's the featured work"}</small>
   <span class="is-back">Back to all projects</span>
-  <em>Pick another project, or see the smaller ones under “More”.</em>
+  <em>${last ? 'Pick another project to explore.' : 'Pick another project, or see the smaller ones under “More”.'}</em>
 </a>
 `
   : `
