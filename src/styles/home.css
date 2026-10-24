@@ -1,0 +1,2467 @@
+/* ==========================================================
+   Homepage sections
+   ========================================================== */
+
+/* faint engineering grid behind everything */
+body.home::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background-image:
+    linear-gradient(rgba(150, 180, 210, 0.045) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(150, 180, 210, 0.045) 1px, transparent 1px);
+  background-size: 64px 64px;
+  mask-image: radial-gradient(ellipse 80% 60% at 60% 20%, #000 20%, transparent 75%);
+}
+
+.scan-canvas {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 1;
+  pointer-events: none;
+}
+
+/* ==================== SECTIONS ==================== */
+.section {
+  padding-block: clamp(56px, 8vw, 104px);
+}
+
+/* section label: the hero's eyebrow style (cyan tick + name), then a rule that fades out,
+   so every section opens the same way the page does */
+.section-label {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: clamp(16px, 2vw, 22px);
+  color: var(--scan);
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.section-label::before {
+  content: '';
+  width: 22px;
+  height: 1px;
+  background: currentColor;
+  opacity: 0.7;
+}
+
+.section-label::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  margin-left: 4px;
+  background: linear-gradient(90deg, var(--line-strong), transparent 70%);
+}
+
+/* ==================== HERO ==================== */
+.hero {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding-top: calc(var(--nav-h) + clamp(40px, 7vh, 80px));
+  padding-bottom: clamp(32px, 5vh, 56px);
+}
+
+.hero-grid {
+  position: relative;
+  z-index: 2;
+}
+
+.hero-scan {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.scan-fallback {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 60% 50%;
+  mix-blend-mode: screen;
+  opacity: 0.85;
+  transition: opacity 0.8s var(--ease);
+}
+
+.scan-ready .scan-fallback {
+  opacity: 0;
+}
+
+/* keep the copy readable over the scan field, and fade the field out into the About section */
+.hero::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background:
+    linear-gradient(180deg, transparent 72%, var(--bg) 100%),
+    linear-gradient(90deg, rgba(7, 9, 12, 0.7) 0%, rgba(7, 9, 12, 0.35) 38%, transparent 62%);
+}
+
+.hero-copy {
+  display: grid;
+  gap: 18px;
+  justify-items: start;
+  max-width: 760px;
+}
+
+.hero-name {
+  font-size: var(--step-5);
+  font-weight: 700;
+  line-height: 1.04;
+  letter-spacing: -0.035em;
+}
+
+.hero-name span:last-child {
+  /* room for the descender of the "g", which background-clip would otherwise cut */
+  padding-bottom: 0.14em;
+  margin-bottom: -0.14em;
+  background: linear-gradient(100deg, var(--text) 10%, var(--scan) 120%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* phone-only: the photo beside the name and the intro line (About carries both on larger screens) */
+.hero-avatar {
+  display: none;
+}
+
+.hero-lead {
+  display: none;
+  max-width: 58ch;
+  color: var(--text-2);
+  font-size: var(--step-1);
+  line-height: 1.65;
+}
+
+.hero-cta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 6px;
+}
+
+.hud-label {
+  position: absolute;
+  z-index: 3;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(var(--scan-rgb), 0.75);
+  white-space: nowrap;
+  pointer-events: none;
+}
+
+.hud-label b {
+  color: var(--text);
+  font-weight: 500;
+}
+
+.hud-tl {
+  top: 10px;
+  left: 12px;
+}
+
+.hud-tr {
+  top: 10px;
+  right: 12px;
+}
+
+.hud-bl {
+  bottom: 10px;
+  left: 12px;
+}
+
+.hud-br {
+  bottom: 10px;
+  right: 12px;
+  color: var(--text-3);
+}
+
+/* rotating role line under the name (typed out by home.js) */
+.hero-role {
+  display: flex;
+  align-items: center;
+  min-height: 1.5em;
+  margin-top: -6px;
+  font-family: var(--font-mono);
+  font-size: clamp(0.9rem, 0.84rem + 0.3vw, 1.05rem);
+  letter-spacing: 0.02em;
+  color: var(--scan);
+}
+
+.hero-role::before {
+  content: '>';
+  margin-right: 0.6em;
+  color: var(--text-3);
+}
+
+.hero-caret {
+  display: inline-block;
+  width: 0.55em;
+  height: 1.1em;
+  margin-left: 3px;
+  background: rgba(var(--scan-rgb), 0.85);
+  animation: caret 1.05s steps(1) infinite;
+}
+
+@keyframes caret {
+  50% {
+    opacity: 0;
+  }
+}
+
+/* availability: a quiet status line, not a badge */
+.hero-status {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  color: var(--text-3);
+  font-size: 0.88rem;
+  line-height: 1.5;
+}
+
+.hero-status b {
+  color: var(--ok);
+  font-weight: 600;
+}
+
+.status-dot {
+  position: relative;
+  flex: none;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--ok);
+  transform: translateY(-1px);
+}
+
+.status-dot::after {
+  content: '';
+  position: absolute;
+  inset: -4px;
+  border-radius: 50%;
+  border: 1px solid var(--ok);
+  opacity: 0;
+  animation: status-ping 2.6s var(--ease) infinite;
+}
+
+@keyframes status-ping {
+  0% {
+    transform: scale(0.5);
+    opacity: 0.7;
+  }
+  70%,
+  100% {
+    transform: scale(1.5);
+    opacity: 0;
+  }
+}
+
+@media (max-width: 520px) {
+  .status-where {
+    display: block;
+  }
+
+  .status-sep {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-caret,
+  .status-dot::after {
+    animation: none;
+  }
+}
+
+@media (max-width: 900px) {
+  .hero {
+    min-height: auto;
+    padding-top: calc(var(--nav-h) + 32px);
+  }
+
+  .hero::after {
+    background: linear-gradient(180deg, rgba(7, 9, 12, 0.55), rgba(7, 9, 12, 0.2) 70%, transparent);
+  }
+
+}
+
+/* Compact layouts flow directly from the introduction to About, without a separate scan band. */
+@media (max-width: 1099px) {
+  .scan-canvas,
+  .hero-scan {
+    display: none;
+  }
+
+  .hero {
+    padding-top: calc(var(--nav-h) + clamp(32px, 6vw, 56px));
+    padding-bottom: 32px;
+  }
+
+  .hero::after {
+    display: none;
+  }
+
+  .hero-copy {
+    gap: 20px;
+  }
+}
+
+@media (max-width: 760px) {
+  .hero {
+    padding-top: calc(var(--nav-h) + 24px);
+    padding-bottom: 24px;
+  }
+
+  .hero-copy {
+    gap: 14px;
+  }
+
+  .hero-lead {
+    font-size: var(--step-0);
+    line-height: 1.5;
+  }
+
+  .hero-name {
+    font-size: clamp(1.9rem, 8.4vw, 3.8rem);
+  }
+
+  .hero-name span {
+    display: block;
+  }
+
+  /* the About photo and intro move up into the hero, so the two read as one piece */
+  .hero-id {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+
+  .hero-avatar {
+    display: block;
+    flex: none;
+    width: clamp(64px, 19vw, 84px);
+    aspect-ratio: 1;
+    object-fit: cover;
+    border-radius: 14px;
+    border: 1px solid rgba(var(--scan-rgb), 0.35);
+    box-shadow: 0 10px 30px -14px rgba(var(--scan-rgb), 0.6);
+  }
+
+  .hero-lead {
+    display: block;
+  }
+
+  .hero-cta .btn,
+  .sp-foot .btn {
+    min-height: 44px;
+  }
+
+  .hero-cta .btn-icon,
+  .sp-foot .btn-icon {
+    min-width: 44px;
+  }
+}
+
+@media (max-width: 520px) {
+  .btn-icon .btn-label {
+    display: none;
+  }
+
+  .btn-icon {
+    width: 40px;
+    padding: 0;
+  }
+
+}
+
+/* Reserve both lines for the longest role so typing never shifts the content below it. */
+@media (max-width: 360px) {
+  .hero-role {
+    min-height: 3.2em;
+    align-items: baseline;
+  }
+}
+
+/* ==================== WORK ==================== */
+/* stacked list by default (phones, no JS); a pinned, stepped stage on desktop */
+.work {
+  position: relative;
+  padding-top: clamp(40px, 5vw, 64px);
+}
+
+.stage-inner {
+  display: grid;
+  gap: 22px;
+}
+
+.stage-inner > .section-label {
+  margin-bottom: 0;
+}
+
+.stage-head {
+  display: grid;
+  gap: 16px;
+}
+
+.stage-title {
+  display: grid;
+  gap: 10px;
+}
+
+.stage-title h2 {
+  font-size: var(--step-3);
+  max-width: 24ch;
+}
+
+.stage-tabs {
+  display: none;
+  position: relative;
+  flex-wrap: wrap;
+  gap: 6px;
+  padding-bottom: 12px;
+}
+
+.js .stage-tabs {
+  display: flex;
+}
+
+/* project tabs: colour-coded buttons */
+.stage-tab {
+  --tone: var(--scan-rgb);
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  height: 36px;
+  padding: 0 14px 0 6px;
+  border: 1px solid rgba(var(--tone), 0.32);
+  border-radius: 999px;
+  background: rgba(var(--tone), 0.07);
+  color: var(--text);
+  font-size: 0.86rem;
+  font-weight: 500;
+  transition:
+    background 0.2s var(--ease),
+    border-color 0.2s var(--ease),
+    transform 0.2s var(--ease),
+    box-shadow 0.2s var(--ease);
+}
+
+.stage-tab-num {
+  display: inline-grid;
+  place-items: center;
+  min-width: 24px;
+  height: 24px;
+  border-radius: 999px;
+  background: rgba(var(--tone), 0.18);
+  color: rgb(var(--tone));
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+}
+
+.stage-tab:hover {
+  border-color: rgba(var(--tone), 0.6);
+  background: rgba(var(--tone), 0.14);
+  transform: translateY(-1px);
+}
+
+.stage-tab.is-active {
+  border-color: rgb(var(--tone));
+  background: rgba(var(--tone), 0.22);
+  box-shadow: 0 0 0 3px rgba(var(--tone), 0.12);
+}
+
+.stage-tab.is-active .stage-tab-num {
+  background: rgb(var(--tone));
+  color: #07090c;
+}
+
+.stage-tab-short {
+  display: none;
+}
+
+.stage-progress {
+  display: none;
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 2px;
+  border-radius: 2px;
+  background: var(--line);
+  overflow: hidden;
+}
+
+.stage-progress i {
+  display: block;
+  height: 100%;
+  background: var(--scan);
+  transform-origin: left;
+  transform: scaleX(0);
+}
+
+.stage-body {
+  display: grid;
+  gap: 28px;
+}
+
+.stage-scan {
+  display: none;
+}
+
+.stage-projects {
+  display: grid;
+  gap: 16px;
+}
+
+.sp {
+  display: grid;
+  gap: 14px;
+  padding: 12px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: rgba(14, 18, 24, 0.78);
+}
+
+.sp-media {
+  position: relative;
+  display: block;
+  aspect-ratio: 16 / 9;
+  border-radius: 9px;
+  background: #020304;
+  --c: rgba(var(--scan-rgb), 0.55);
+  --len: 12px;
+}
+
+.sp-media > video,
+.sp-media > img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 9px;
+}
+
+.sp-media > .is-contain {
+  object-fit: contain;
+  background: #fbfcfd;
+  padding: 12px;
+}
+
+.pane-label {
+  position: absolute;
+  z-index: 2;
+  padding: 3px 7px;
+  border-radius: 4px;
+  background: rgba(2, 4, 6, 0.72);
+  color: rgba(var(--scan-rgb), 0.95);
+  font-family: var(--font-mono);
+  font-size: 0.66rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  pointer-events: none;
+}
+
+.media-open {
+  position: absolute;
+  right: 12px;
+  bottom: 12px;
+  z-index: 2;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  border-radius: 999px;
+  background: rgba(2, 4, 6, 0.8);
+  border: 1px solid var(--line-strong);
+  font-size: 0.8rem;
+  opacity: 0;
+  transform: translateY(6px);
+  transition:
+    opacity 0.25s var(--ease),
+    transform 0.25s var(--ease);
+}
+
+.sp-media:hover .media-open {
+  opacity: 1;
+  transform: none;
+}
+
+.sp-body {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 2px 6px 6px;
+}
+
+.sp-kicker {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.sp-num {
+  min-width: 1.6em;
+  font-family: var(--font-mono);
+  font-size: 0.74rem;
+  color: var(--scan);
+}
+
+/* key phrases in the Work section, as on the project pages: bold lavender, no highlighter;
+   tools stay cyan; each project's title takes its tab colour */
+.work .kw {
+  background: none;
+  padding: 0;
+  color: #d8b4fe;
+  font-weight: 600;
+}
+
+.sp h3 a {
+  color: rgb(var(--tone, 233, 238, 244));
+}
+
+.sp-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 4px 16px;
+}
+
+.sp h3 {
+  font-size: var(--step-3);
+}
+
+.sp h3 a {
+  transition: color 0.2s var(--ease);
+}
+
+.sp h3 a:hover {
+  color: var(--scan);
+}
+
+.sp-meta {
+  color: var(--text-3);
+  font-size: 0.86rem;
+}
+
+.sp-sum {
+  max-width: 62ch;
+  color: var(--text);
+  line-height: 1.55;
+}
+
+/* key points: the bold lead carries the point, the rest is quiet */
+.sp-points {
+  display: grid;
+  gap: 5px;
+  list-style: none;
+  color: var(--text-3);
+  font-size: 0.93rem;
+  line-height: 1.45;
+}
+
+.sp-points li {
+  position: relative;
+  padding-left: 18px;
+}
+
+.sp-points li::before {
+  content: '';
+  position: absolute;
+  left: 2px;
+  top: 0.58em;
+  width: 6px;
+  height: 6px;
+  border-radius: 1px;
+  background: var(--scan);
+  box-shadow: 0 0 8px rgba(var(--scan-rgb), 0.6);
+  transform: rotate(45deg);
+}
+
+.sp-points .kw {
+  color: #d8b4fe;
+}
+
+.sp-foot {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+  margin-top: 6px;
+}
+
+.sp-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-left: auto;
+  list-style: none;
+}
+
+.sp-tags li {
+  display: inline-flex;
+  align-items: center;
+  height: 26px;
+  padding: 0 9px;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--text-3);
+}
+
+/* "More projects" panel */
+.poster-strip {
+  display: grid;
+  gap: 10px;
+  padding-top: 14px;
+  border-top: 1px solid var(--line);
+}
+
+.poster-label {
+  color: var(--text-3);
+  font-size: 0.86rem;
+}
+
+.poster-label .mono {
+  margin-right: 8px;
+  color: var(--scan);
+  font-size: 0.7rem;
+}
+
+.poster-row {
+  display: flex;
+  gap: 10px;
+}
+
+.poster-row img {
+  height: clamp(110px, 17vh, 170px);
+  aspect-ratio: 1800 / 2549;
+  object-fit: cover;
+  border-radius: 6px;
+  border: 1px solid var(--line);
+  cursor: zoom-in;
+  transition: transform 0.3s var(--ease);
+}
+
+.poster-row img:first-child {
+  box-shadow: 0 16px 40px -18px rgba(140, 80, 255, 0.55);
+}
+
+.poster-row img:hover {
+  transform: translateY(-3px);
+}
+
+.sp-more {
+  align-content: start;
+}
+
+/* the phone fold around the More rows; on larger screens it drops out of layout */
+@media (min-width: 761px) {
+  .more-body {
+    display: contents;
+  }
+}
+
+.more-list {
+  list-style: none;
+  display: grid;
+}
+
+.more-row {
+  display: grid;
+  grid-template-columns: 104px minmax(0, 1fr) auto;
+  gap: 16px;
+  align-items: center;
+  padding: 14px 6px;
+  border-top: 1px solid var(--line);
+  border-radius: 10px;
+  transition: background 0.2s var(--ease);
+}
+
+.more-row:hover {
+  background: rgba(255, 255, 255, 0.025);
+}
+
+.more-row img {
+  width: 104px;
+  height: 64px;
+  object-fit: cover;
+  border-radius: 6px;
+  background: #020304;
+}
+
+.more-row img.is-contain {
+  object-fit: contain;
+  background: #fbfcfd;
+  padding: 4px;
+}
+
+.more-row h4 {
+  font-size: 1.02rem;
+}
+
+.more-row h4 span {
+  font-family: var(--font-body);
+  font-weight: 400;
+  font-size: 0.82rem;
+  color: var(--text-3);
+}
+
+.more-row h4 a:hover {
+  color: var(--scan);
+}
+
+.more-row p {
+  margin-top: 3px;
+  color: var(--text-2);
+  font-size: 0.9rem;
+  line-height: 1.45;
+}
+
+.more-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.more-companion {
+  display: grid;
+  grid-template-columns: minmax(0, 0.42fr) minmax(0, 0.58fr);
+  gap: 18px;
+  align-items: center;
+  padding-top: 14px;
+  border-top: 1px solid var(--line);
+}
+
+.companion-preview {
+  min-width: 0;
+  margin: 0;
+}
+
+.companion-preview video {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16 / 9;
+  object-fit: contain;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #080c10;
+}
+
+.companion-preview figcaption,
+.poster-note {
+  margin-top: 6px;
+  color: var(--text-3);
+  font-size: 0.72rem;
+  line-height: 1.4;
+}
+
+.companion-copy {
+  display: grid;
+  justify-items: start;
+  gap: 7px;
+}
+
+.companion-copy h4,
+.lifequest h4 {
+  font-size: 1.02rem;
+}
+
+.companion-copy h4 a:hover {
+  color: var(--scan);
+}
+
+.companion-copy > p:not(.pill),
+.lifequest > p {
+  color: var(--text-2);
+  font-size: 0.9rem;
+  line-height: 1.45;
+}
+
+.more-creative {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 24px;
+  padding-top: 14px;
+  border-top: 1px solid var(--line);
+}
+
+.lifequest {
+  display: grid;
+  align-content: start;
+  justify-items: start;
+  gap: 8px;
+}
+
+.lifequest .more-pill {
+  display: block;
+  margin-top: 4px;
+  color: var(--text-3);
+  font-size: 0.75rem;
+  font-weight: 400;
+}
+
+.more-creative .poster-strip {
+  padding: 0;
+  border: 0;
+  gap: 7px;
+  align-content: start;
+}
+
+.more-creative .poster-label .mono {
+  display: block;
+  margin-bottom: 3px;
+}
+
+.more-creative .poster-row img {
+  width: auto;
+  height: clamp(80px, 11vh, 110px);
+}
+
+.more-creative .poster-note {
+  margin: 0;
+}
+
+/* scan frame: label row, the caption right under it, then the scene fills the rest */
+.scan-head {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.scan-head .hud-label {
+  position: static;
+}
+
+.scan-title {
+  color: var(--text) !important;
+  transition: opacity 0.16s;
+}
+
+.rail-caption {
+  margin-top: 6px;
+  overflow: hidden;
+  color: var(--text-2);
+  font-size: 0.9rem;
+  line-height: 1.45;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  transition: opacity 0.16s;
+}
+
+.rail-caption .kw {
+  background: none;
+  padding: 0;
+  color: var(--text);
+}
+
+.scan-view {
+  flex: 1;
+  min-height: 0;
+}
+
+.stage-scan.is-switching .rail-caption,
+.stage-scan.is-switching .scan-title {
+  opacity: 0;
+}
+
+@media (min-width: 1100px) {
+  .js .work {
+    padding-top: 0;
+  }
+
+  .js .work-track {
+    height: calc(100vh - var(--nav-h) + (var(--steps) - 1) * 62vh);
+  }
+
+  .js .work-stage {
+    position: sticky;
+    top: var(--nav-h);
+    height: calc(100vh - var(--nav-h));
+  }
+
+  .js .stage-inner {
+    height: 100%;
+    grid-template-rows: auto auto minmax(0, 1fr);
+    gap: clamp(14px, 2.6vh, 28px);
+    padding-block: clamp(18px, 3.4vh, 36px);
+  }
+
+  .js .stage-head {
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: end;
+    gap: 24px;
+  }
+
+  .js .stage-title h2 {
+    font-size: var(--step-2);
+  }
+
+  .js .stage-progress {
+    display: block;
+  }
+
+  /* the project column is exactly as wide as its 16:9 video; the scan takes the rest */
+  .js .stage-body {
+    --panel-w: min(calc(44vh * 16 / 9), calc(420px * 16 / 9));
+    grid-template-columns: minmax(0, min(var(--panel-w), 62%)) minmax(0, 1fr);
+    gap: 32px;
+    min-height: 0;
+    transition: grid-template-columns 0.5s var(--ease);
+  }
+
+  /* More combines research, a build preview and design work, so it keeps the full left column. */
+  .js .stage-body:has(.sp-more.is-active) {
+    grid-template-columns: minmax(0, 62%) minmax(0, 1fr);
+  }
+
+  .js .stage-scan {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    height: 100%;
+    padding: 12px 14px 8px;
+    --c: rgba(var(--scan-rgb), 0.45);
+    --len: 16px;
+  }
+
+  .js .stage-projects {
+    min-height: 0;
+    gap: 0;
+  }
+
+  .js .sp {
+    grid-area: 1 / 1;
+    align-content: start;
+    gap: 18px;
+    padding: 0;
+    border: 0;
+    background: none;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(26px);
+    transition:
+      opacity 0.4s var(--ease),
+      transform 0.5s var(--ease),
+      visibility 0s 0.4s;
+  }
+
+  .js .sp.is-before {
+    transform: translateY(-26px);
+  }
+
+  .js .sp.is-active {
+    opacity: 1;
+    visibility: visible;
+    transform: none;
+    transition:
+      opacity 0.5s 0.1s var(--ease),
+      transform 0.6s 0.1s var(--ease),
+      visibility 0s;
+  }
+
+  .js .stage-projects {
+    width: 100%;
+  }
+
+  .js .sp-media {
+    width: 100%;
+  }
+
+  .js .sp-body {
+    padding: 0;
+  }
+
+  .js .sp h3 {
+    font-size: var(--step-2);
+  }
+}
+
+@media (min-width: 1100px) and (max-height: 820px) {
+  .js .stage-body {
+    --panel-w: calc(36vh * 16 / 9);
+  }
+
+  /* short screens: the eyebrow and tabs are enough of a header (heading stays for screen readers) */
+  .js .stage-title h2 {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+  }
+
+  .js .stage-head {
+    align-items: center;
+  }
+
+  .js .sp-meta,
+  .js .sp-tags {
+    display: none;
+  }
+
+  .js .sp {
+    gap: 12px;
+  }
+
+  .js .sp-points {
+    gap: 2px;
+    font-size: 0.86rem;
+  }
+
+  /* "More" step: tighter rows and smaller posters so the whole panel fits */
+  .js .sp-more {
+    gap: 10px;
+  }
+
+  .js .sp-more .sp-sum {
+    font-size: 0.92rem;
+  }
+
+  .js .more-row {
+    grid-template-columns: 84px minmax(0, 1fr) auto;
+    gap: 14px;
+    padding: 8px 6px;
+  }
+
+  .js .more-row img {
+    width: 84px;
+    height: 50px;
+  }
+
+  .js .more-row p {
+    font-size: 0.85rem;
+    line-height: 1.4;
+  }
+
+  .js .poster-strip {
+    gap: 8px;
+    padding-top: 10px;
+  }
+
+  .js .poster-row img {
+    height: 12vh;
+  }
+
+  .js .more-companion {
+    padding-top: 10px;
+    gap: 14px;
+  }
+
+  .js .companion-copy {
+    gap: 5px;
+  }
+
+  .js .companion-copy > p:not(.pill),
+  .js .lifequest > p {
+    font-size: 0.85rem;
+    line-height: 1.4;
+  }
+
+  .js .more-creative {
+    padding-top: 10px;
+    gap: 18px;
+  }
+
+  .js .more-creative .poster-strip {
+    padding: 0;
+    gap: 5px;
+  }
+
+  .js .more-creative .poster-row img {
+    height: 10vh;
+  }
+}
+
+/* short laptop viewports (about 600-720px tall once the browser's bars are counted):
+   a smaller video, a text column that never gets narrower than 440px, tighter spacing,
+   and the Work label folded away (the nav already shows where you are) */
+@media (min-width: 1100px) and (max-height: 720px) {
+  .js .stage-body {
+    --panel-w: calc(30vh * 16 / 9);
+    grid-template-columns: minmax(0, max(var(--panel-w), 440px)) minmax(0, 1fr);
+  }
+
+  .js .sp-media {
+    width: min(100%, var(--panel-w));
+  }
+
+  .js .stage-inner > .section-label {
+    display: none;
+  }
+
+  .js .sp {
+    gap: 8px;
+  }
+
+  .js .sp h3 {
+    font-size: var(--step-1);
+  }
+}
+
+@media (min-width: 1100px) and (max-height: 650px) {
+  .js .more-companion {
+    grid-template-columns: 200px minmax(0, 1fr);
+  }
+}
+
+@media (max-width: 760px) {
+  .sp-more .sp-kicker {
+    display: none;
+  }
+
+  /* More projects starts folded on phones: one row naming what is inside */
+  .js .sp-more > .sp-body {
+    display: none;
+  }
+
+  .js .sp-more {
+    gap: 0;
+    padding-block: 4px;
+  }
+
+  .js .more-toggle {
+    min-height: 64px;
+    padding: 6px 6px;
+  }
+
+  .more-toggle > span {
+    display: grid;
+    gap: 3px;
+  }
+
+  .more-toggle b {
+    font-family: var(--font-display);
+    font-size: 1.12rem;
+    font-weight: 600;
+  }
+
+  .more-toggle small {
+    color: var(--text-3);
+    font-size: 0.8rem;
+    font-weight: 400;
+    line-height: 1.4;
+  }
+
+  .more-body {
+    display: grid;
+  }
+
+  .work {
+    padding-top: 28px;
+  }
+
+  /* More projects: Breaking Bias and the Companion share one row shape (thumbnail, title, line),
+     LifeQuest follows as a text row, and the posters get a strip of their own */
+  .more-companion {
+    position: relative;
+    grid-template-columns: 96px minmax(0, 1fr);
+    gap: 12px;
+    align-items: start;
+    padding: 12px 4px;
+    border-radius: 10px;
+  }
+
+  .companion-preview video {
+    width: 96px;
+    height: 54px;
+    margin-top: 3px;
+    object-fit: cover;
+    border-radius: 6px;
+  }
+
+  .companion-preview figcaption,
+  .companion-copy > .btn {
+    display: none;
+  }
+
+  .companion-copy {
+    gap: 0;
+  }
+
+  .companion-copy h4 {
+    order: -1;
+  }
+
+  .companion-copy > .pill {
+    margin-top: 3px;
+    padding: 0;
+    border: 0;
+    background: none;
+    color: var(--text-3);
+    font-family: var(--font-body);
+    font-size: 0.82rem;
+    letter-spacing: 0;
+    text-transform: none;
+  }
+
+  .companion-copy > p:not(.pill) {
+    margin-top: 3px;
+    font-size: 0.88rem;
+    line-height: 1.45;
+  }
+
+  .more-companion:active {
+    background: rgba(var(--scan-rgb), 0.06);
+  }
+
+  .more-creative {
+    grid-template-columns: 1fr;
+    gap: 0;
+    padding-top: 0;
+  }
+
+  .lifequest {
+    gap: 6px;
+    padding: 12px 4px;
+    border-top: 1px solid var(--line);
+  }
+
+  .lifequest h4 .more-pill {
+    font-size: 0.82rem;
+  }
+
+  .lifequest > p {
+    font-size: 0.88rem;
+    line-height: 1.45;
+  }
+
+  .more-links {
+    gap: 8px;
+    margin-top: 2px;
+  }
+
+  .more-links .btn {
+    min-height: 38px;
+    padding-inline: 12px;
+    font-size: 0.82rem;
+  }
+
+  .more-creative .poster-strip {
+    gap: 8px;
+    padding: 12px 4px 4px;
+    border-top: 1px solid var(--line);
+  }
+
+  .more-creative .poster-label {
+    font-size: 0.86rem;
+  }
+
+  .more-creative .poster-label .mono {
+    display: inline;
+    margin-bottom: 0;
+  }
+
+  .more-creative .poster-row {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 8px;
+  }
+
+  .more-creative .poster-row img {
+    width: 100%;
+    height: auto;
+  }
+
+  .stage-inner {
+    gap: 18px;
+  }
+
+  /* each card keeps the video, the pitch, the key points and the buttons; the role line and the
+     tag row go (as on short laptop screens): the timeline below has the roles, the points the tools */
+  .sp {
+    gap: 12px;
+    padding: 10px;
+  }
+
+  .sp-body {
+    gap: 7px;
+    padding: 0 4px 4px;
+  }
+
+  .sp-meta,
+  .sp-tags {
+    display: none;
+  }
+
+  .sp-sum {
+    line-height: 1.5;
+  }
+
+  .sp-points {
+    gap: 4px;
+    font-size: 0.9rem;
+    line-height: 1.42;
+  }
+
+  .sp-foot {
+    margin-top: 4px;
+  }
+
+  .pane-label {
+    font-size: 0.6rem;
+    padding: 2px 5px;
+  }
+
+  /* More projects: the whole row opens the project (an arrow badge after the title, as in
+     Experience), so there is no separate button eating a line */
+  .more-row {
+    position: relative;
+    grid-template-columns: 96px minmax(0, 1fr);
+    gap: 12px;
+    align-items: start;
+    padding: 12px 4px;
+  }
+
+  .more-row img {
+    width: 96px;
+    height: 54px;
+    margin-top: 3px;
+  }
+
+  .more-row p {
+    font-size: 0.88rem;
+    line-height: 1.45;
+  }
+
+  .more-row > .btn {
+    display: none;
+  }
+
+  .more-row h4 a::before,
+  .companion-copy h4 a::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    border-radius: 10px;
+  }
+
+  .more-row h4 a::after,
+  .companion-copy h4 a::after {
+    content: '';
+    display: inline-block;
+    width: 18px;
+    height: 18px;
+    margin-left: 7px;
+    border: 1px solid rgba(var(--scan-rgb), 0.45);
+    border-radius: 50%;
+    background:
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%233fe3f8' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 12h14m-5-5 5 5-5 5'/%3E%3C/svg%3E")
+        center / 12px no-repeat,
+      rgba(var(--scan-rgb), 0.12);
+    vertical-align: -3px;
+  }
+
+  .more-row h4 .more-pill {
+    display: block;
+    margin-top: 3px;
+  }
+
+  .more-row h4 .more-sep {
+    display: none;
+  }
+
+  .more-row:has(a):active {
+    background: rgba(var(--scan-rgb), 0.06);
+  }
+
+  .poster-row img {
+    width: min(92px, calc((100% - 20px) / 3));
+    height: auto;
+  }
+}
+
+/* ==================== EXPERIENCE + CONTACT ==================== */
+/* both use the same split: a short header on the left, the content on the right */
+.split {
+  display: grid;
+  grid-template-columns: minmax(0, 300px) minmax(0, 1fr);
+  gap: 24px clamp(32px, 5vw, 72px);
+  align-items: start;
+}
+
+.split-head {
+  display: grid;
+  justify-items: start;
+  gap: 12px;
+}
+
+.split-head h2 {
+  font-size: var(--step-2);
+}
+
+.split-head .btn {
+  margin-top: 6px;
+}
+
+.section.experience {
+  padding-block: clamp(40px, 4vw, 56px) clamp(24px, 2.5vw, 32px);
+}
+
+@media (min-width: 900px) {
+  .split-head {
+    position: sticky;
+    top: calc(var(--nav-h) + 24px);
+  }
+}
+
+/* timeline: date · node on a rail · role and one line (after the legacy layout) */
+.timeline {
+  list-style: none;
+  display: grid;
+}
+
+.tl-row {
+  position: relative;
+  display: grid;
+  grid-template-columns: 92px minmax(0, 1fr);
+  gap: 0 34px;
+  padding-bottom: 18px;
+}
+
+.tl-row:last-child {
+  padding-bottom: 0;
+}
+
+/* the rail, and a node per role */
+.tl-row::before {
+  content: '';
+  position: absolute;
+  left: calc(92px + 16px);
+  top: 12px;
+  bottom: -6px;
+  width: 1px;
+  background: linear-gradient(180deg, rgba(var(--scan-rgb), 0.35), var(--line));
+}
+
+.tl-row:last-child::before {
+  display: none;
+}
+
+.tl-row::after {
+  content: '';
+  position: absolute;
+  left: calc(92px + 16px - 4px);
+  top: 6px;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--bg);
+  border: 1.5px solid var(--scan);
+  box-shadow: 0 0 8px rgba(var(--scan-rgb), 0.45);
+}
+
+.tl-date {
+  padding-top: 3px;
+  color: var(--text-3);
+  font-family: var(--font-body);
+  font-size: 0.78rem;
+  letter-spacing: 0;
+  text-transform: none;
+  display: grid;
+  justify-items: end;
+  line-height: 1.5;
+  text-align: right;
+}
+
+.tl-body {
+  display: grid;
+  gap: 2px;
+}
+
+.tl-title {
+  font-family: var(--font-body);
+  font-size: 0.98rem;
+  font-weight: 600;
+  letter-spacing: 0;
+  line-height: 1.4;
+}
+
+.tl-title span {
+  color: var(--text-2);
+  font-weight: 400;
+}
+
+.tl-title .tl-role {
+  color: inherit;
+  font-weight: inherit;
+}
+
+.tl-tag {
+  display: inline-block;
+  margin-left: 6px;
+  padding: 0 6px;
+  border: 1px solid var(--line-strong);
+  border-radius: 999px;
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  font-style: normal;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--text-2);
+  vertical-align: 2px;
+}
+
+.tl-tag.is-live {
+  color: var(--signal);
+  border-color: rgba(var(--signal-rgb), 0.4);
+}
+
+.tl-line {
+  max-width: 78ch;
+  color: var(--text-3);
+  font-size: 0.92rem;
+  line-height: 1.5;
+}
+
+.tl-line .kt {
+  color: #8ff0ff;
+  font-weight: 500;
+}
+
+.tl-line .kw {
+  background: none;
+  padding: 0;
+  color: var(--text);
+  font-weight: 600;
+}
+
+/* roles with a case study: the title is the link */
+/* roles with a project page: an arrow badge after the title, and the whole row is the link
+   (a soft cyan wash on hover); no underline */
+.tl-title .tl-link-text {
+  color: var(--text);
+  font-weight: 600;
+}
+
+.tl-title a::after {
+  /* stretch the link over the whole row */
+  content: '';
+  position: absolute;
+  inset: -7px -12px -8px calc(-92px - 34px - 12px);
+  z-index: 1;
+  border-radius: 10px;
+  transition: background 0.2s var(--ease);
+}
+
+.tl-title a .arrow {
+  display: inline-block;
+  box-sizing: content-box;
+  width: 12px;
+  height: 12px;
+  margin-left: 8px;
+  padding: 3px;
+  border: 1px solid rgba(var(--scan-rgb), 0.45);
+  border-radius: 50%;
+  background: rgba(var(--scan-rgb), 0.12);
+  color: var(--scan);
+  vertical-align: -3px;
+  transition:
+    transform 0.2s var(--ease),
+    background 0.2s var(--ease);
+}
+
+.tl-row:has(a):hover .tl-link-text,
+.tl-row:has(a):hover .tl-link-text span {
+  color: var(--scan);
+}
+
+.tl-row:has(a):hover .tl-title a::after {
+  background: rgba(var(--scan-rgb), 0.06);
+}
+
+.tl-row:has(a):hover .arrow {
+  transform: translateX(3px);
+  background: rgba(var(--scan-rgb), 0.25);
+}
+
+.tl-row .tl-body {
+  position: relative;
+}
+
+@media (max-width: 899px) {
+  .split {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* phones: a quick overview, two lines per role (role + dates, then organisation + tag); the one-line
+   summaries live on the project pages each row links to */
+@media (max-width: 760px) {
+  .split {
+    gap: 18px;
+  }
+
+  .section.experience {
+    padding-block: 32px 16px;
+  }
+
+  .experience .section-label {
+    margin-bottom: 12px;
+  }
+
+  .experience .split {
+    gap: 14px;
+  }
+
+  .experience .split-head {
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: end;
+    gap: 12px;
+  }
+
+  .experience .split-head h2 {
+    font-size: var(--step-1);
+  }
+
+  .experience .split-head .btn {
+    min-height: 36px;
+    margin: 0;
+    padding: 0 12px;
+    font-size: 0.8rem;
+  }
+
+  .tl-row {
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 0 10px;
+    padding: 0 0 14px 22px;
+  }
+
+  .tl-row::before {
+    left: 4px;
+    top: 10px;
+  }
+
+  .tl-row::after {
+    left: 0;
+    top: 5px;
+  }
+
+  .tl-body {
+    grid-row: 1;
+    grid-column: 1;
+  }
+
+  .tl-date {
+    grid-row: 1;
+    grid-column: 2;
+    display: flex;
+    gap: 0.25em;
+    padding-top: 1px;
+    font-size: 0.74rem;
+    line-height: 1.4;
+    white-space: nowrap;
+  }
+
+  .tl-title {
+    font-size: 0.9rem;
+    line-height: 1.35;
+  }
+
+  .tl-org {
+    font-size: 0.8rem;
+  }
+
+  .tl-org::before {
+    content: '\A';
+    white-space: pre;
+  }
+
+  .tl-sep {
+    display: none;
+  }
+
+  /* the row (not the text column) holds the stretched link and the tag, so both reach the dates */
+  .tl-row .tl-body {
+    position: static;
+  }
+
+  .tl-title a::after {
+    inset: -6px -8px 4px -8px;
+  }
+
+  /* the link badge sits after the role, so the organisation line never wraps onto a third */
+  .tl-title a .arrow {
+    display: none;
+  }
+
+  .tl-role::after {
+    content: '';
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    margin-left: 6px;
+    border: 1px solid rgba(var(--scan-rgb), 0.45);
+    border-radius: 50%;
+    background:
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%233fe3f8' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 12h14m-5-5 5 5-5 5'/%3E%3C/svg%3E")
+        center / 10px no-repeat,
+      rgba(var(--scan-rgb), 0.12);
+    vertical-align: -3px;
+  }
+
+  .tl-tag {
+    position: absolute;
+    top: 21px;
+    right: 0;
+    margin: 0;
+  }
+
+  .tl-line {
+    display: none;
+  }
+}
+
+/* ==================== ABOUT ==================== */
+.section.about {
+  padding-block: clamp(8px, 1.5vw, 20px) clamp(8px, 1vw, 16px);
+}
+
+.about-grid {
+  display: grid;
+  grid-template-columns: 200px minmax(0, 1fr);
+  gap: clamp(28px, 4vw, 56px);
+  align-items: start;
+}
+
+.about-photo {
+  margin: 0;
+  --c: rgba(var(--scan-rgb), 0.55);
+  --len: 14px;
+}
+
+.about-photo img {
+  width: 100%;
+  aspect-ratio: 1;
+  object-fit: cover;
+  border-radius: 12px;
+}
+
+.about-body {
+  display: grid;
+  gap: 14px;
+}
+
+.about-body h2 {
+  font-size: var(--step-3);
+}
+
+.about-lead {
+  color: var(--text-2);
+  font-size: var(--step-1);
+  line-height: 1.55;
+  max-width: 66ch;
+}
+
+.about-facts {
+  display: grid;
+  grid-template-columns: 1fr 1.25fr 1fr;
+  margin-top: 4px;
+  border-top: 1px solid var(--line);
+}
+
+.about-facts .about-fact {
+  padding: 14px 20px 4px 0;
+}
+
+.about-facts .fold .about-fact {
+  padding-left: 20px;
+  border-left: 1px solid var(--line);
+}
+
+/* folds (phones only): on larger screens the toggle is hidden and the wrappers drop out of layout */
+.fold-toggle {
+  display: none;
+}
+
+.about-facts .fold,
+.about-facts .fold-body {
+  display: contents;
+}
+
+.about-facts .mono,
+.about-stack-body > .mono {
+  color: var(--scan);
+  font-size: 0.72rem;
+}
+
+.about-facts ul {
+  list-style: none;
+  display: grid;
+  gap: 7px;
+}
+
+.about-facts li {
+  position: relative;
+  padding-left: 14px;
+  color: var(--text-3);
+  font-size: 0.9rem;
+  line-height: 1.45;
+}
+
+.about-facts li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0.6em;
+  width: 5px;
+  height: 5px;
+  border-radius: 1px;
+  background: var(--scan);
+  transform: rotate(45deg);
+}
+
+/* in the fact lists the bold lead is enough; no highlighter stroke */
+.about-facts .kw {
+  background: none;
+  padding: 0;
+  color: var(--text);
+}
+
+.about-stack {
+  margin-top: 20px;
+  padding-top: 14px;
+  border-top: 1px solid var(--line);
+}
+
+.about-fact-content,
+.about-stack-body {
+  display: grid;
+  align-content: start;
+  gap: 10px;
+}
+
+.about-stack-body {
+  gap: 8px;
+}
+
+/* one column per area, like the facts above: the area name, then its tools as colour-coded chips */
+.stack-groups {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 14px 0;
+  margin: 0;
+}
+
+/* faint dividers between areas, like the facts above */
+.stack-group {
+  display: grid;
+  align-content: start;
+  gap: 8px;
+  padding: 2px 18px 4px;
+  border-left: 1px solid var(--line);
+}
+
+.stack-group:first-child {
+  padding-left: 0;
+  border-left: 0;
+}
+
+.stack-group dt {
+  color: var(--text-3);
+  font-size: 0.85rem;
+}
+
+.stack-group dd {
+  margin: 0;
+  max-width: 230px;
+}
+
+.stack-group .chip {
+  min-height: 26px;
+  padding: 0 8px;
+  font-size: 0.72rem;
+}
+
+@media (max-width: 1000px) {
+  .about-grid {
+    grid-template-columns: 160px minmax(0, 1fr);
+  }
+
+  .about-facts {
+    grid-template-columns: 1fr;
+  }
+
+  .stack-groups {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .stack-group:nth-child(3n + 1) {
+    padding-left: 0;
+    border-left: 0;
+  }
+
+  .about-facts .about-fact,
+  .about-facts .fold .about-fact {
+    padding: 12px 0;
+    border-left: 0;
+  }
+
+  .about-facts .fold .about-fact {
+    border-top: 1px solid var(--line);
+  }
+}
+
+/* phones: the hero already carries the photo and the intro, so About continues straight on from
+   it with the facts: Highlights stays open, the rest fold away and glide open (home.js) */
+@media (max-width: 760px) {
+  .section.about {
+    padding-block: 0 8px;
+  }
+
+  .about .section-label,
+  .about-photo,
+  .about-body > h2,
+  .about-lead {
+    display: none;
+  }
+
+  .about-grid {
+    display: block;
+  }
+
+  .about-facts {
+    margin-top: 0;
+  }
+
+  .about-facts .about-fact {
+    padding: 12px 0;
+  }
+
+  .about-fact-content {
+    gap: 8px;
+  }
+
+  /* Education + Leadership in one fold, each under its own small label */
+  .about-facts .fold {
+    display: block;
+    border-top: 1px solid var(--line);
+  }
+
+  .about-facts .fold-body {
+    display: grid;
+  }
+
+  .about-facts .fold .about-fact {
+    padding: 0 0 14px;
+    border-top: 0;
+  }
+
+  .about-stack > .fold-body > .mono {
+    display: none;
+  }
+
+  .about-stack-body {
+    padding-bottom: 14px;
+  }
+
+  .about-facts ul {
+    gap: 6px;
+  }
+
+  .about-facts li {
+    font-size: 0.9rem;
+    line-height: 1.45;
+  }
+
+  .about-stack {
+    margin-top: 0;
+    padding-top: 0;
+  }
+
+  /* the toggle: a full-width row with a chevron ring that turns over as it opens */
+  .js .fold-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    min-height: 48px;
+    gap: 12px;
+    color: var(--text);
+    font-size: 0.92rem;
+    font-weight: 500;
+    text-align: left;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .fold-toggle::after {
+    content: '';
+    flex: none;
+    width: 26px;
+    height: 26px;
+    border: 1px solid rgba(var(--scan-rgb), 0.3);
+    border-radius: 50%;
+    background:
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%233fe3f8' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E")
+        center / 14px no-repeat,
+      rgba(var(--scan-rgb), 0.08);
+    transition:
+      transform 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+      background-color 0.2s var(--ease);
+  }
+
+  .fold-toggle[aria-expanded='true']::after {
+    transform: rotate(180deg);
+    background-color: rgba(var(--scan-rgb), 0.18);
+  }
+
+  .fold-toggle:active::after {
+    background-color: rgba(var(--scan-rgb), 0.25);
+  }
+
+  .js [data-fold]:not(.is-open) > .fold-body {
+    display: none;
+  }
+
+  .stack-groups {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  .stack-group,
+  .stack-group:nth-child(n) {
+    grid-template-columns: 92px minmax(0, 1fr);
+    align-items: center;
+    gap: 12px;
+    padding: 0;
+    border-left: 0;
+  }
+
+  .stack-group dt {
+    font-size: 0.82rem;
+    line-height: 1.3;
+  }
+
+  .stack-group dd {
+    max-width: none;
+  }
+
+  .stack-group .chips {
+    gap: 5px;
+  }
+
+  .stack-group .chip {
+    min-height: 26px;
+    padding: 0 8px;
+    font-size: 0.72rem;
+  }
+}
+
+/* ==================== CONTACT ==================== */
+.section.contact {
+  padding-block: clamp(24px, 2.5vw, 32px) clamp(32px, 4vw, 48px);
+}
+
+.contact-body {
+  display: grid;
+  justify-items: start;
+  gap: 16px;
+}
+
+.contact-lead {
+  max-width: 60ch;
+  color: var(--text-2);
+}
+
+.contact-lead strong {
+  color: var(--text);
+  font-weight: 600;
+}
+
+.contact-mail {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px 14px;
+}
+
+.contact-address {
+  font-family: var(--font-display);
+  font-size: clamp(1.05rem, 0.95rem + 0.5vw, 1.3rem);
+  font-weight: 500;
+  border-bottom: 1px solid rgba(var(--scan-rgb), 0.5);
+  word-break: break-all;
+  transition: color 0.2s var(--ease);
+}
+
+.contact-address:hover {
+  color: var(--scan);
+}
+
+.contact-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+/* small phones: the address and Copy share a line, and the three links fit one row */
+@media (max-width: 520px) {
+  .contact-body {
+    gap: 14px;
+  }
+
+  .contact-mail {
+    gap: 8px 10px;
+  }
+
+  .contact-address {
+    font-size: 1rem;
+  }
+
+  .contact-mail .copy-btn {
+    min-height: 36px;
+    padding: 0 12px;
+  }
+
+  .contact-links {
+    gap: 6px;
+  }
+
+  .contact-links .btn {
+    padding: 0 13px;
+  }
+}
+
+/* ==================== COMPACT SCREENS: all project tabs in view ==================== */
+@media (max-width: 1099px) {
+  /* let the tab strip stick for the whole project list, not just the header */
+  .js .stage-head {
+    display: contents;
+  }
+
+  .js .stage-title {
+    margin-bottom: 6px;
+  }
+
+  .js .stage-tabs {
+    position: sticky;
+    top: var(--nav-h);
+    z-index: 5;
+    flex-wrap: wrap;
+    margin-inline: calc(-1 * var(--gutter));
+    padding: 10px var(--gutter);
+    overflow: visible;
+    background: rgba(7, 9, 12, 0.9);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+  }
+
+  .stage-tab {
+    flex: none;
+    height: 44px;
+  }
+
+  .sp {
+    scroll-margin-top: calc(var(--nav-h) + 80px);
+  }
+}
+
+.stage-glider,
+.stage-hint {
+  display: none;
+}
+
+/* phones: the tabs become one floating segmented pill; a highlight in the project's colour glides
+   to the active tab (home.js sets its position), and the pill rises into the bar's place while
+   the bar is tucked away */
+@media (max-width: 760px) {
+  .js .stage-tabs {
+    top: calc(var(--nav-h) + 8px);
+    flex-wrap: nowrap;
+    gap: 0;
+    margin-inline: 0;
+    padding: 4px;
+    overflow: visible;
+    border: 1px solid var(--line-strong);
+    border-radius: 999px;
+    background: rgba(12, 16, 22, 0.84);
+    backdrop-filter: blur(16px) saturate(1.3);
+    -webkit-backdrop-filter: blur(16px) saturate(1.3);
+    box-shadow:
+      0 14px 32px -14px rgba(0, 0, 0, 0.8),
+      inset 0 1px 0 rgba(255, 255, 255, 0.04);
+    transition: top 0.35s var(--ease);
+  }
+
+  .nav-tucked.js .stage-tabs {
+    top: 8px;
+  }
+
+  .stage-tab,
+  .stage-tab:hover,
+  .stage-tab.is-active {
+    position: relative;
+    z-index: 1;
+    flex: 1 1 auto;
+    justify-content: center;
+    height: 34px;
+    padding: 0 6px;
+    border: 0;
+    background: none;
+    box-shadow: none;
+    transform: none;
+    color: var(--text-2);
+    font-size: 0.78rem;
+    white-space: nowrap;
+    -webkit-tap-highlight-color: transparent;
+    transition: color 0.3s var(--ease);
+  }
+
+  .stage-tab.is-active {
+    color: var(--text);
+    font-weight: 600;
+  }
+
+  .stage-tab-num,
+  .stage-tab-title {
+    display: none;
+  }
+
+  .stage-tab-short {
+    display: inline;
+  }
+
+  /* one project at a time: the cards sit side by side and snap into place as they are swiped;
+     home.js sizes the row to the card in view */
+  .js .stage-projects {
+    display: flex;
+    align-items: flex-start;
+    gap: 0;
+    margin-inline: calc(-1 * var(--gutter));
+    overflow-x: auto;
+    overflow-y: hidden;
+    overscroll-behavior-x: contain;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+    transition: height 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .js .stage-projects::-webkit-scrollbar {
+    display: none;
+  }
+
+  .js .stage-hint {
+    display: block;
+    margin-top: -16px;
+    color: var(--text-3);
+    font-size: 0.78rem;
+    text-align: center;
+  }
+
+  .stage-hint b {
+    color: var(--text);
+    font-weight: 600;
+  }
+
+  /* a small arrow that drifts toward the next card until the first swipe */
+  .hint-arrow {
+    display: inline-block;
+    margin-left: 2px;
+    color: var(--scan);
+    font-style: normal;
+    animation: hint-drift 1.8s ease-in-out infinite;
+  }
+
+  .stage-hint.is-done .hint-arrow {
+    animation: none;
+  }
+
+  @keyframes hint-drift {
+    0%,
+    100% {
+      transform: translateX(0);
+      opacity: 0.55;
+    }
+
+    50% {
+      transform: translateX(4px);
+      opacity: 1;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .hint-arrow {
+      animation: none;
+    }
+  }
+
+  .js .stage-projects > .sp {
+    flex: 0 0 calc(100% - 2 * var(--gutter));
+    margin-inline: var(--gutter);
+    scroll-snap-align: center;
+    scroll-snap-stop: always;
+  }
+
+  .stage-glider {
+    --g-tone: var(--scan-rgb);
+    display: block;
+    position: absolute;
+    top: 4px;
+    bottom: 4px;
+    left: 0;
+    width: var(--gw, 0);
+    border: 1px solid rgba(var(--g-tone), 0.75);
+    border-radius: 999px;
+    background: rgba(var(--g-tone), 0.2);
+    box-shadow: 0 0 18px -6px rgba(var(--g-tone), 0.8);
+    transform: translateX(var(--gx, 0));
+    transition:
+      transform 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+      width 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+      background-color 0.3s var(--ease),
+      border-color 0.3s var(--ease),
+      box-shadow 0.3s var(--ease);
+  }
+
+  .sp {
+    scroll-margin-top: calc(var(--nav-h) + 70px);
+  }
+
+  /* touch feedback: buttons give a little under the finger */
+  .btn {
+    transition:
+      transform 0.15s var(--ease),
+      background 0.2s var(--ease),
+      border-color 0.2s var(--ease),
+      box-shadow 0.2s var(--ease);
+  }
+
+  .btn:active {
+    transform: scale(0.96);
+  }
+}
+
+/* phones: project cards and timeline rows rise in as they scroll into view (home.js adds .m-reveal) */
+@media (max-width: 760px) {
+  .js .m-reveal {
+    transition:
+      opacity 0.6s var(--ease),
+      transform 0.6s var(--ease);
+  }
+
+  .js .m-reveal:not(.is-in) {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+}

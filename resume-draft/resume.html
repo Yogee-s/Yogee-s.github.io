@@ -1,0 +1,214 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Muthukumaran Yogeeswaran Resume</title>
+<style>
+  @page { size: A4; margin: 14mm 15mm 14mm 15mm; }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 10pt;
+    line-height: 18px; /* whole pixels so every line lands on the same grid */
+    color: #111;
+  }
+  header { text-align: center; margin-bottom: 10px; }
+  h1 {
+    font-size: 16.5pt;
+    line-height: 30px;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    margin-bottom: 2px;
+  }
+  .contact { font-size: 9.5pt; color: #222; }
+  .contact a { color: inherit; text-decoration: none; }
+
+  section { margin-top: 10px; }
+  h2 {
+    font-size: 10.5pt;
+    line-height: 19px;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+    border-bottom: 2px solid #111;
+    padding-bottom: 2px;
+    margin-bottom: 5px;
+  }
+  .entry { break-inside: avoid; margin-bottom: 7px; }
+  .entry-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 12px;
+  }
+  .entry-title { font-weight: bold; }
+  .entry-title .sub { font-weight: normal; color: #333; }
+  .entry-date { font-weight: bold; white-space: nowrap; }
+  ul { margin: 1px 0 0 26px; }
+  li { margin-bottom: 3px; padding-left: 3px; }
+  li > ul { margin: 3px 0 0 18px; }
+
+  .skills-list li, .coursework-list li { margin-bottom: 3px; }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Muthukumaran Yogeeswaran</h1>
+  <p class="contact"><a href="mailto:yogeeswaran99@gmail.com">yogeeswaran99@gmail.com</a> | <a href="https://linkedin.com/in/yogee-s">linkedin.com/in/yogee-s</a> | <a href="https://yogee-s.github.io">yogee-s.github.io</a> | Singapore</p>
+</header>
+
+<section>
+  <h2>Experience</h2>
+
+  <div class="entry">
+    <div class="entry-head">
+      <span class="entry-title">Robotics Perception Intern, DSO National Laboratories</span>
+      <span class="entry-date">Sep 2026 – Nov 2026</span>
+    </div>
+    <ul>
+      <li>Built a <strong>real-time</strong>, camera-only perception pipeline for <strong>maritime robots</strong>, covering <strong>obstacle detection, tracking and depth estimation</strong>.</li>
+      <li>Adapted state-of-the-art <strong>open-vocabulary vision models</strong> to maritime scenes, so obstacles <strong>not seen in training</strong> are still detected.</li>
+    </ul>
+  </div>
+
+  <div class="entry">
+    <div class="entry-head">
+      <span class="entry-title">Research Student, NUS Immersive Reality Lab</span>
+      <span class="entry-date">Aug 2025 – May 2026</span>
+    </div>
+    <ul>
+      <li>Built a <strong>fully offline companion robot</strong> for eldercare with <strong>NUS Nursing</strong>, running the whole voice and perception stack (VAD, ASR, <strong>on-device LLM</strong>, TTS) on one <strong>NVIDIA Jetson</strong>.</li>
+      <li>Added <strong>YOLO-based face tracking</strong> and <strong>emotion recognition</strong> so the robot reads the user&rsquo;s mood and reacts in real time, with digital facial expressions and head movement on a custom <strong>3D-printed 2-DOF head</strong>.</li>
+    </ul>
+  </div>
+
+  <div class="entry">
+    <div class="entry-head">
+      <span class="entry-title">Robot Operator, Cortex AI</span>
+      <span class="entry-date">Nov 2025 – Jan 2026</span>
+    </div>
+    <ul>
+      <li>Collected <strong>Vision-Language-Action (VLA)</strong> training data via teleoperated <strong>YAM robot arms</strong> and <strong>egocentric data capture with a Meta Quest 3</strong>, designing new tasks to expand dataset coverage.</li>
+      <li>Worked hands-on with the <strong>LeRobot</strong> dataset framework and codebase, developing a strong intuition for evaluating <strong>data quality</strong> and separating usable demonstrations from low-quality or noisy ones.</li>
+    </ul>
+  </div>
+
+  <div class="entry">
+    <div class="entry-head">
+      <span class="entry-title">Research Intern, The University of Osaka</span>
+      <span class="entry-date">May 2025 – Aug 2025</span>
+    </div>
+    <ul>
+      <li>Built a real-time <strong>human localisation system</strong> for a social robot: trained a <strong>custom YOLO keypoint model</strong> and fused its detections into the robot&rsquo;s <strong>SLAM map</strong> via Kabsch alignment, reaching <strong style="white-space:nowrap">0.02–0.06 m</strong> <strong>accuracy</strong>.</li>
+      <li><strong>Deployed live at Osaka Expo 2025</strong> (Yoshikawa Lab pavilion), localising visitors in crowds so the robot could meet their gaze.</li>
+    </ul>
+  </div>
+
+  <div class="entry">
+    <div class="entry-head">
+      <span class="entry-title">Research Intern, A*STAR <span class="sub">(Advanced Remanufacturing &amp; Technology Centre)</span></span>
+      <span class="entry-date">May 2024 – Aug 2024</span>
+    </div>
+    <ul>
+      <li>Trained a <strong>dexterous robotic hand</strong> to grasp and relocate objects in <strong>MuJoCo physics simulation</strong> using <strong>DAPG</strong>, a reinforcement learning method bootstrapped from human demonstrations.</li>
+      <li>Adapted the entire <strong>simulation pipeline</strong> from a research hand (Adroit) to the 6-actuator Inspire hand, converting the robot model from URDF to MJCF and remapping the observation space.</li>
+    </ul>
+  </div>
+</section>
+
+<section>
+  <h2>Projects</h2>
+
+  <div class="entry">
+    <div class="entry-head">
+      <span class="entry-title">BoxBunny<span class="sub">: AI Boxing Sparring &amp; Coaching Robot (Final-Year Capstone)</span></span>
+      <span class="entry-date">Aug 2025 – May 2026</span>
+    </div>
+    <ul>
+      <li>Led robot intelligence for an adaptive boxing robot, achieving <strong>96.8% punch recognition at 30 fps</strong> on unseen users with a custom <strong>transformer model</strong> optimised with <strong>TensorRT</strong> on a <strong>Jetson Orin NX</strong>.</li>
+      <li>Architected the <strong>ROS 2</strong> runtime connecting perception, action recognition and an <strong>LLM-based coaching loop</strong>, hardened with unit and integration testing.</li>
+      <li>Curated a custom <strong>RGB-D action dataset</strong> with an <strong>Intel RealSense D435i</strong> and built an in-house annotation GUI for labelling and evaluation.</li>
+      <li>Presented the project at the <strong>International Senior Project Conference 2026</strong> (KMUTT, Bangkok) and demoed it live at the NUS CDE AI Fair.</li>
+    </ul>
+  </div>
+
+  <div class="entry">
+    <div class="entry-head">
+      <span class="entry-title">Breaking Bias<span class="sub">: Bias Evaluation &amp; Mitigation in LLMs (University of Toronto exchange)</span></span>
+      <span class="entry-date">Jan 2025 – May 2025</span>
+    </div>
+    <ul>
+      <li>Investigated how <strong>biased and easily manipulated</strong> LLMs are when used to <strong>score essays</strong>: attacked them with <strong>prompt injection</strong>, word-embedding noise and sentence scrambling, then tested whether a <strong>committee of different LLMs</strong> (Phi-4-mini, Llama 3.2) scores more fairly than a single model.</li>
+    </ul>
+  </div>
+
+  <div class="entry">
+    <div class="entry-head">
+      <span class="entry-title">NUS RoboMaster<span class="sub">: Two-Legged Self-Balancing Robot (DJI RoboMaster Championships)</span></span>
+      <span class="entry-date">Aug 2023 – Dec 2024</span>
+    </div>
+    <ul>
+      <li>Software team member in a team of 4: <strong>simulated the robot dynamics and tuned LQR/PID control in Simulink</strong> before deploying to <strong>STM32</strong>.</li>
+      <li>Contributed to the chassis <strong>CAD design</strong> and prototyped a <strong>computer vision aim-bot</strong> for auto-targeting.</li>
+    </ul>
+  </div>
+
+</section>
+
+<section style="break-before: page;">
+  <h2>Technical Skills and Professional Certifications</h2>
+  <ul class="skills-list">
+    <li><strong>Programming Languages:</strong> <strong>Python</strong>, <strong>C++</strong>, C, MATLAB, JavaScript, Assembly</li>
+    <li><strong>Machine Learning &amp; AI:</strong> <strong>PyTorch</strong>, <strong>Computer Vision</strong>, Neural Networks, Action Recognition (Pose / Temporal Models), <strong>Reinforcement Learning</strong>, Large Language Models (LLMs) + RAG, TensorRT</li>
+    <li><strong>Robotics &amp; Systems:</strong> <strong>ROS 2</strong>, SLAM, <strong>Robot Perception</strong>, Teleoperation (LeRobot), Mobile Robotics, <strong style="white-space:nowrap">NVIDIA Jetson</strong>, Intel RealSense, STM32</li>
+    <li><strong>Simulation &amp; Control:</strong> <strong>MuJoCo</strong>, MATLAB / Simulink, <strong>PID / LQR Control</strong>, COMSOL Multiphysics, <span style="white-space:nowrap">SolidWorks Simulation</span></li>
+    <li><strong>CAD &amp; Design:</strong> SolidWorks (<strong>CSWA</strong>, Mechanical Design &amp; Additive Manufacturing)</li>
+    <li><strong>Tools &amp; Platforms:</strong> Git, GitHub, <strong>Docker</strong>, Conda, <strong>Linux (Ubuntu)</strong></li>
+  </ul>
+</section>
+
+<section>
+  <h2>Education</h2>
+  <div class="entry">
+    <div class="entry-head">
+      <span class="entry-title">National University of Singapore<span class="sub">, Bachelor of Engineering</span></span>
+      <span class="entry-date">Aug 2022 – Jun 2026</span>
+    </div>
+    <ul>
+      <li><strong>Honours (Distinction)</strong>, GPA <strong>4.35 / 5.00</strong></li>
+      <li>Major in Engineering Science with a specialisation in <strong>Computational Engineering Science</strong>
+        <ul><li>Minors in Innovation &amp; Design and Computing (Design and Engineering)</li></ul>
+      </li>
+      <li>Exchange semester at the <strong>University of Toronto</strong> (Jan 2025 – May 2025)</li>
+      <li>Summer programme at the <strong>University of Osaka</strong> (May 2025 – Aug 2025)</li>
+      <li>Focus areas: <strong>Robotics, Artificial Intelligence, Human&ndash;Robot Interaction</strong></li>
+    </ul>
+  </div>
+</section>
+
+<section>
+  <h2>Leadership &amp; Activities</h2>
+
+  <div class="entry">
+    <div class="entry-head">
+      <span class="entry-title">President, NUS Engineering Science Student Wing</span>
+      <span class="entry-date">Aug 2023 – Aug 2024</span>
+    </div>
+    <ul>
+      <li>Led a <strong>40-member team</strong>; previously on the planning committee for <strong>MakerMania23</strong>, a national prototyping competition for teams from Junior Colleges, Polytechnics and Universities.</li>
+    </ul>
+  </div>
+
+  <div class="entry">
+    <div class="entry-head">
+      <span class="entry-title">NUS Student Ambassador, National University of Singapore</span>
+      <span class="entry-date">Jan 2023 – May 2026</span>
+    </div>
+    <ul>
+      <li>Represented NUS in communications, outreach and official university events.</li>
+    </ul>
+  </div>
+</section>
+
+</body>
+</html>

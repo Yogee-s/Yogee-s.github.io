@@ -1,0 +1,58 @@
+---
+import Icon from './Icon.astro';
+// The line under the name types out each of these in turn (first one is in the HTML for no-JS / reduced motion).
+const roles = [
+  'ROS 2 Systems Developer',
+  'Computer Vision Engineer',
+  'Reinforcement Learning Researcher',
+  'Perception Pipeline Builder',
+  'Embodied AI Engineer',
+];
+---
+<section class="hero" id="top" aria-labelledby="hero-title">
+  <picture class="hero-scan" aria-hidden="true">
+    <source media="(min-width: 1100px)" srcset="/assets/scan_poster.webp" />
+    <img class="scan-fallback" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'/%3E" alt="" decoding="async" />
+  </picture>
+
+  <div class="container hero-grid">
+    <div class="hero-copy">
+      <p class="eyebrow">Robotics software · Embodied AI</p>
+      <div class="hero-id">
+        <!-- phones only: the About photo moves up here, so the intro and About read as one piece -->
+        <img class="hero-avatar" src="/assets/personal_photo.jpg" alt="" width="1200" height="1200" loading="lazy" decoding="async" />
+        <h1 id="hero-title" class="hero-name">
+          <span>Muthukumaran</span>
+          <span>Yogeeswaran</span>
+        </h1>
+      </div>
+      <p class="hero-role" data-roles={JSON.stringify(roles)}>
+        <span class="sr-only">{roles.join(', ')}</span>
+        <span class="hero-role-text" id="hero-role" aria-hidden="true">{roles[0]}</span><span class="hero-caret" aria-hidden="true"></span>
+      </p>
+      <!-- phones only: the About intro moves up here (About hides it), so it is said once -->
+      <p class="hero-lead">
+        I'm passionate about <strong class="kw">embodied robotics</strong>, with hands-on experience in
+        <span class="kt">perception</span>, <span class="kt">reasoning</span>, <span class="kt">manipulation</span>
+        and <span class="kt">legged balance</span>.
+      </p>
+
+      <div class="hero-cta">
+        <a class="btn btn-primary" href="/assets/resume.pdf" target="_blank" rel="noopener">
+          <Icon name="download" /> Resume
+        </a>
+        <a class="btn btn-icon" href="https://www.linkedin.com/in/yogee-s" target="_blank" rel="noopener" aria-label="LinkedIn">
+          <Icon name="linkedin" /><span class="btn-label">LinkedIn</span>
+        </a>
+        <a class="btn btn-icon" href="https://github.com/Yogee-s" target="_blank" rel="noopener" aria-label="GitHub">
+          <Icon name="github" /><span class="btn-label">GitHub</span>
+        </a>
+      </div>
+
+      <p class="hero-status">
+        <span class="status-dot" aria-hidden="true"></span>
+        <span><b>Available now</b> for full-time robotics software roles<span class="status-where"><span class="status-sep"> · </span>Singapore, open to relocation</span></span>
+      </p>
+    </div>
+  </div>
+</section>

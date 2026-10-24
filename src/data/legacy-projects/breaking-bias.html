@@ -1,0 +1,126 @@
+<article class="detail-project">
+  <div class="project-head">
+    <div>
+      <h2>Breaking Bias in LLMs</h2>
+      <p class="meta"><span class="signal-strong">AI Safety Research</span> · University of Toronto exchange (ECE324) · Jan – May 2025</p>
+      <div class="tech-tags">
+        <span class="tech-tag">Large Language Models</span><span class="tech-tag">Python</span>
+        <span class="tech-tag">PyTorch</span><span class="tech-tag">Prompt Injection</span>
+      </div>
+    </div>
+    <span class="pill">LLM Research</span>
+  </div>
+  <div class="project-body cs bias-body">
+    <div class="bias-overview">
+      <div class="bias-text">
+        <p class="cs-intro">How <mark>biased and easily manipulated</mark> are LLMs when they are used to
+          score written work, and can a committee of judges make them fairer? We attacked LLM judges with
+          adversarial essays, then compared how single judges and committees scored the same inputs.</p>
+        <dl class="bias-facts">
+          <div>
+            <dt>Attacks</dt>
+            <dd class="bias-chips"><span>Prompt injection</span><span>Word-embedding noise</span><span>Scrambled sentences</span><span>Controversial rewrites</span></dd>
+          </div>
+          <div>
+            <dt>Committees</dt>
+            <dd class="bias-chips"><span>Age personas</span><span>Values personas</span><span>Income personas</span><span>Multi-model</span></dd>
+          </div>
+          <div>
+            <dt>Models</dt>
+            <dd class="bias-chips"><span>Phi-4-mini</span><span>Llama 3.2</span></dd>
+          </div>
+        </dl>
+      </div>
+      <figure class="bias-figure">
+        <img class="js-lightbox" src="/assets/breaking_bias/bias_evaluation.svg" width="960" height="540"
+          alt="Research approach: attack LLM judges with adversarial essays, score them with judge committees and compare fairness" loading="lazy">
+        <figcaption>Research approach · attack, judge, compare</figcaption>
+      </figure>
+    </div>
+    <section class="cs-section">
+      <header class="cs-section-head"><h3>Approach</h3></header>
+      <dl class="cs-brief">
+        <div>
+          <dt>Attack</dt>
+          <dd>Write adversarial essays designed to mislead the judges.</dd>
+        </div>
+        <div>
+          <dt>Judge</dt>
+          <dd>Score each essay with single judges and judge committees.</dd>
+        </div>
+        <div>
+          <dt>Compare</dt>
+          <dd>Measure score shifts and disagreement to see which setup resists manipulation.</dd>
+        </div>
+      </dl>
+      <p class="cs-takeaway"><b>Key finding:</b> text with disrupted meaning could still score highly when its
+        wording looked fluent.</p>
+    </section>
+
+    <section class="cs-section">
+      <header class="cs-section-head">
+        <div>
+          <h3>Presentation + report</h3>
+        </div>
+      </header>
+      <div class="pdf-section bias-pdfs">
+        <div class="pdf-item">
+          <div class="pdf-head">
+            <h4 class="pdf-title">Final Presentation</h4>
+            <div class="pdf-tools">
+              <button type="button" class="pdf-tool-btn pdf-fs-btn" data-pdf="/assets/breaking_bias/breaking_bias_final_presentation.pdf">
+                <svg viewBox="0 0 16 16" width="13" height="13" aria-hidden="true"><path fill="none"
+                    stroke="currentColor" stroke-width="1.6" d="M1.5 5.5v-4h4M10.5 1.5h4v4M14.5 10.5v4h-4M5.5 14.5h-4v-4"/></svg>
+                Full screen
+              </button>
+              <a class="pdf-tool-btn" href="/assets/breaking_bias/breaking_bias_final_presentation.pdf" target="_blank" rel="noopener noreferrer">New
+                tab</a>
+            </div>
+          </div>
+          <div class="pdf-actions" aria-label="Final Presentation PDF actions">
+            <a class="pdf-action-btn" href="/assets/breaking_bias/breaking_bias_final_presentation.pdf" target="_blank"
+              rel="noopener noreferrer">Open PDF</a>
+            <a class="pdf-action-btn" href="/assets/breaking_bias/breaking_bias_final_presentation.pdf" download>Download</a>
+          </div>
+          <div class="pdf-embed-container">
+            <button type="button" class="pdf-fs-exit" aria-label="Exit full screen">✕ Exit full screen</button>
+            <object class="pdf-embed" data="/assets/breaking_bias/breaking_bias_final_presentation.pdf#toolbar=0&navpanes=0&zoom=page-width&view=FitH"
+              type="application/pdf">
+              <p class="pdf-fallback">This device cannot preview PDFs inline. <a
+                  href="/assets/breaking_bias/breaking_bias_final_presentation.pdf" target="_blank" rel="noopener noreferrer">Open the presentation
+                  PDF</a>.</p>
+            </object>
+          </div>
+        </div>
+        <div class="pdf-item">
+          <div class="pdf-head">
+            <h4 class="pdf-title">Research Report</h4>
+            <div class="pdf-tools">
+              <button type="button" class="pdf-tool-btn pdf-fs-btn" data-pdf="/assets/breaking_bias/breaking_bias_final_report.pdf">
+                <svg viewBox="0 0 16 16" width="13" height="13" aria-hidden="true"><path fill="none"
+                    stroke="currentColor" stroke-width="1.6" d="M1.5 5.5v-4h4M10.5 1.5h4v4M14.5 10.5v4h-4M5.5 14.5h-4v-4"/></svg>
+                Full screen
+              </button>
+              <a class="pdf-tool-btn" href="/assets/breaking_bias/breaking_bias_final_report.pdf" target="_blank" rel="noopener noreferrer">New
+                tab</a>
+            </div>
+          </div>
+          <div class="pdf-actions" aria-label="Research Report PDF actions">
+            <a class="pdf-action-btn" href="/assets/breaking_bias/breaking_bias_final_report.pdf" target="_blank"
+              rel="noopener noreferrer">Open PDF</a>
+            <a class="pdf-action-btn" href="/assets/breaking_bias/breaking_bias_final_report.pdf" download>Download</a>
+          </div>
+          <div class="pdf-embed-container">
+            <button type="button" class="pdf-fs-exit" aria-label="Exit full screen">✕ Exit full screen</button>
+            <object class="pdf-embed" data="/assets/breaking_bias/breaking_bias_final_report.pdf#toolbar=0&navpanes=0&zoom=page-width&view=FitH"
+              type="application/pdf">
+              <p class="pdf-fallback">This device cannot preview PDFs inline. <a
+                  href="/assets/breaking_bias/breaking_bias_final_report.pdf" target="_blank" rel="noopener noreferrer">Open the report
+                  PDF</a>.</p>
+            </object>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+</article>

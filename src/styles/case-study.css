@@ -1,0 +1,183 @@
+/* ==========================================================
+   Project pages · the overlay shell and the standalone page.
+   The pages themselves are styled by project-legacy.css.
+   ========================================================== */
+
+/* ---------- overlay shell ---------- */
+.case-open,
+.case-open body {
+  overflow: hidden;
+}
+
+.case-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  background: var(--paper);
+  color: var(--ink);
+  opacity: 0;
+  transform: translateY(28px);
+  transition:
+    opacity 0.32s var(--ease),
+    transform 0.42s var(--ease);
+}
+
+.case-overlay.is-open {
+  opacity: 1;
+  transform: none;
+}
+
+.case-overlay[hidden] {
+  display: none;
+}
+
+.case-scroll {
+  position: absolute;
+  inset: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* ---------- standalone page ---------- */
+body.case-page {
+  background: var(--paper);
+  color: var(--ink);
+}
+
+.case-page-main {
+  padding-top: var(--nav-h);
+}
+
+.case-page .footer {
+  color: var(--ink-3);
+}
+
+.case-page .footer-inner {
+  border-color: var(--rule);
+}
+
+/* standalone page: the header bar sits under the site nav */
+.case-page .lp .detail-header-bar {
+  top: var(--nav-h);
+}
+
+/* ---------- small additions to the ported layout ---------- */
+.lp .bar-head {
+  display: flex;
+  align-items: center;
+  min-width: 0;
+}
+
+.lp .bar-close {
+  text-decoration: none;
+}
+
+/* next project, at the end of every page */
+.lp .lp-next {
+  display: grid;
+  gap: 2px;
+  margin-top: 2.5rem;
+  padding: 1.1rem 1.4rem;
+  border: 1px solid var(--glass-border);
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.025);
+  color: var(--text);
+  text-decoration: none;
+  transition:
+    border-color var(--transition),
+    background var(--transition);
+}
+
+.lp .lp-next:hover {
+  border-color: rgba(6, 182, 212, 0.45);
+  background: rgba(6, 182, 212, 0.06);
+}
+
+.lp .lp-next small {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.lp .lp-next span {
+  font-size: 1.25rem;
+  font-weight: 700;
+}
+
+.lp .lp-next span::after {
+  content: ' →';
+  color: var(--accent-1);
+}
+
+.lp .lp-next span.is-back::before {
+  content: '← ';
+  color: var(--accent-1);
+}
+
+.lp .lp-next span.is-back::after {
+  content: none;
+}
+
+.lp .lp-next em {
+  font-style: normal;
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+}
+.case-scroll:focus { outline: none; }
+
+
+/* ---------- phones ---------- */
+@media (max-width: 760px) {
+  /* the standalone page looks like the overlay: the project's own bar (title + Close) is the top
+     bar, instead of stacking the site nav, the project bar and the section chips */
+  .case-page .nav {
+    display: none;
+  }
+
+  .case-page-main {
+    padding-top: 0;
+  }
+
+  .case-page .lp .detail-header-bar {
+    top: 0;
+  }
+
+  /* a readable title and a Close button big enough to tap; the pill repeats the one under the title */
+  .lp .detail-header-bar {
+    gap: 12px;
+  }
+
+  .lp .detail-header-bar .bar-head {
+    flex: 1;
+  }
+
+  .lp .detail-header-bar .bar-title {
+    overflow: hidden;
+    font-size: 0.8rem;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+
+  .lp .detail-header-bar .bar-pill {
+    display: none;
+  }
+
+  .lp .detail-header-bar .bar-close {
+    flex: none;
+    min-height: 44px;
+    padding: 0 12px;
+    font-size: 0.8rem;
+  }
+
+  .lp .tech-tags {
+    gap: 0.35rem;
+  }
+
+  .lp .tech-tag {
+    font-size: 0.68rem;
+    padding: 0.18rem 0.5rem;
+  }
+}

@@ -1,0 +1,53 @@
+---
+import Base from '../../layouts/Base.astro';
+import Nav from '../../components/Nav.astro';
+import Footer from '../../components/Footer.astro';
+import CaseStudy from '../../components/CaseStudy.astro';
+import { projects, projectBySlug, type SceneId } from '../../data/projects';
+import '../../styles/case-study.css';
+import '../../styles/project-legacy.css';
+
+export function getStaticPaths() {
+  return projects.map((p) => ({ params: { slug: p.slug } }));
+}
+
+const slug = Astro.params.slug as SceneId;
+const p = projectBySlug[slug];
+const ogMap: Partial<Record<SceneId, string>> = {
+  boxbunny: '/assets/boxbunny_capstone/cde_fair_setup.jpg',
+  teleco: '/assets/frontier/teleco_detect_open.webp',
+  companion: '/assets/robotic_companion/robot_happy_face.jpg',
+  'rl-hand': '/assets/previews/rl-hand.webp',
+  'legged-balance': '/assets/previews/legged-balance.webp',
+  'breaking-bias': '/assets/breaking_bias/bias_evaluation.png',
+};
+---
+<Base
+  title={`${p.fullTitle} · Muthukumaran Yogeeswaran`}
+  description={p.seoDescription}
+  ogImage={ogMap[slug]}
+  ogImageAlt={p.preview.alt}
+  bodyClass="case-page"
+>
+  <Nav home={false} />
+  <main id="main" class="case-page-main">
+    <div class="case-page-sheet">
+      <CaseStudy slug={slug} />
+    </div>
+  </main>
+  <Footer />
+
+  <div class="lightbox" id="lightbox" aria-hidden="true">
+    <button class="lightbox-close" type="button" id="lightbox-close">Close</button>
+    <img id="lightbox-img" alt="" />
+  </div>
+
+  <script>
+    import { initCaseStudy, initLightbox, initPdfFullscreen, initNavProgress } from '../../scripts/case-study.js';
+    initNavProgress();
+    initLightbox();
+    initPdfFullscreen();
+    const cs = document.querySelector('.lp');
+    if (cs) initCaseStudy(cs, window);
+  </script>
+</Base>

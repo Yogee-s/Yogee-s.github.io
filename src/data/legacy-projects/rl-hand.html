@@ -1,0 +1,127 @@
+<article class="detail-project">
+  <div class="project-head">
+    <div>
+      <h2><span class="signal-tech">RL</span> for Inspire Dexterous Hand</h2>
+      <p class="meta"><span class="signal-strong">Research Intern</span> · A*STAR ARTC · May – Aug 2024</p>
+      <div class="tech-tags">
+        <span class="tech-tag">MuJoCo</span><span class="tech-tag">RL / DAPG</span>
+        <span class="tech-tag">URDF→MJCF</span><span class="tech-tag">Python</span>
+      </div>
+    </div>
+    <span class="pill">Research</span>
+  </div>
+  <div class="project-body cs rl-body">
+    <div class="links cta-top">
+      <a href="/assets/artc_internship/eg3612_final_report.pdf" class="btn btn-primary" target="_blank"
+        rel="noopener noreferrer">Read the Report</a>
+      <a href="/assets/artc_internship/internship_final_presentation.pdf" target="_blank"
+        rel="noopener noreferrer">Presentation</a>
+      <a href="https://github.com/Yogee-s/dexterous_hand-simulation" class="card-repo-btn" target="_blank" rel="noopener noreferrer">
+        <svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true">
+          <path
+            d="M8 0c-4.42 0-8 3.58-8 8 0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38a8.013 8.013 0 0 0-5.55-7.97z">
+          </path>
+        </svg>
+        RL Repo
+      </a>
+      <a href="https://github.com/Yogee-s/dexterous_hand-learning" class="card-repo-btn" target="_blank" rel="noopener noreferrer">
+        <svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true">
+          <path
+            d="M8 0c-4.42 0-8 3.58-8 8 0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38a8.013 8.013 0 0 0-5.55-7.97z">
+          </path>
+        </svg>
+        Algorithm Repo
+      </a>
+    </div>
+
+    <dl class="cs-brief rl-brief">
+      <div>
+        <dt>The goal</dt>
+        <dd>Teach a robot hand to <mark>grasp and move objects</mark> in MuJoCo simulation.</dd>
+      </div>
+      <div>
+        <dt>The method</dt>
+        <dd><mark>DAPG</mark>: reinforcement learning that starts from human demonstrations.</dd>
+      </div>
+      <div>
+        <dt>My part</dt>
+        <dd>The pipeline only ran on the Adroit hand. I <mark>ported it to the Inspire hand</mark>.</dd>
+      </div>
+    </dl>
+
+    <section class="cs-section">
+      <header class="cs-section-head">
+        <div>
+          <h3>What it took to switch hands</h3>
+        </div>
+      </header>
+      <div class="cs-parts rl-parts">
+        <div>
+          <h5>The robot model</h5>
+          <b class="rl-part-key">URDF → MJCF</b>
+          <p>Converted, then tuned collisions and damping so it <mark>behaves like the real hand</mark>.</p>
+        </div>
+        <div>
+          <h5>Model inputs</h5>
+          <b class="rl-part-key">39 → 21 values</b>
+          <p>Remapped Adroit's observations to the Inspire's, so <mark>DAPG can train on it</mark>.</p>
+        </div>
+        <div>
+          <h5>Joints + rewards</h5>
+          <b class="rl-part-key">6 actuators</b>
+          <p>Grouped the hand's joints onto its motors and <mark>debugged the reward shaping</mark>.</p>
+        </div>
+      </div>
+      <div class="rl-map">
+        <div class="rl-map-text">
+          <p class="rl-map-label">Matching the joints</p>
+          <ol class="rl-map-steps">
+            <li><span>Demonstrations were recorded on Adroit's <mark>30 joints</mark>.</span></li>
+            <li><span>Circled joints map to the <mark>same spot</mark> on the Inspire: 12 joints.</span></li>
+            <li><span>Plus 9 hand, object and target positions = <mark>21 values</mark>.</span></li>
+          </ol>
+        </div>
+        <div class="rl-map-hands">
+          <figure><img class="js-lightbox" src="/assets/artc_internship/adroit_joints_mapped.webp"
+              alt="Adroit hand with the mapped joints circled and numbered" loading="lazy">
+            <figcaption>Adroit · 30 joints</figcaption>
+          </figure>
+          <span class="rl-map-arrow" aria-hidden="true">→</span>
+          <figure><img class="js-lightbox" src="/assets/artc_internship/inspire_joints_mapped.webp"
+              alt="Inspire hand with the matching joints circled" loading="lazy">
+            <figcaption>Inspire · 12 joints</figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <section class="cs-section">
+      <header class="cs-section-head">
+        <div>
+          <h3>Watching it learn</h3>
+        </div>
+      </header>
+      <div class="cs-row rl-clips cs-nearmiss">
+        <figure style="--ar: 1.111"><video controls data-autoplay loop muted playsinline preload="none" poster="/assets/artc_internship/reinforcement_learning_model_trying_poster.webp">
+            <source src="/assets/artc_internship/reinforcement_learning_model_trying.mp4" type="video/mp4">
+            <source src="/assets/artc_internship/reinforcement_learning_model_trying.webm" type="video/webm">
+          </video>
+          <figcaption>
+            <b>Training exploration</b>
+            <span>The hand tries different ways to reach and grip the object.</span>
+          </figcaption>
+        </figure>
+        <figure style="--ar: 1.163"><video controls data-autoplay loop muted playsinline preload="none" poster="/assets/artc_internship/reinforcement_learning_model_succeeds_but_wrongly_poster.webp">
+            <source src="/assets/artc_internship/reinforcement_learning_model_succeeds_but_wrongly.mp4"
+              type="video/mp4">
+          </video>
+          <figcaption>
+            <b>Unintended strategy</b>
+            <span>It reaches the goal, but not in the way we wanted.</span>
+          </figcaption>
+        </figure>
+      </div>
+    </section>
+  </div>
+</article>
+

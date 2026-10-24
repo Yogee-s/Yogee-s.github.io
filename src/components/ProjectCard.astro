@@ -1,0 +1,58 @@
+---
+// One project inside the pinned Work stage (stacked list on phones).
+import Icon from './Icon.astro';
+import { projectTone, type Project } from '../data/projects';
+import { rich } from '../lib/rich';
+import { toneFor } from '../lib/tags';
+
+interface Props {
+  project: Project;
+  index: number;
+}
+const { project: p, index } = Astro.props;
+const num = String(index + 1).padStart(2, '0');
+const repo = p.links.find((l) => l.kind === 'repo');
+---
+<article class="sp" style={projectTone[p.slug] && `--tone:${projectTone[p.slug]}`} id={`proj-${p.slug}`} data-scene={p.slug} data-step={index} aria-labelledby={`sp-${p.slug}`}>
+  <a class="sp-media hud" href={`/work/${p.slug}/`} data-case={p.slug} tabindex="-1" aria-hidden="true">
+    {p.preview.video ? (
+      <video muted loop playsinline preload="none" poster={p.preview.poster} data-card-video width="1280" height="720">
+        <source src={p.preview.video} type="video/mp4" />
+      </video>
+    ) : (
+      <img class:list={[p.preview.fit === 'contain' && 'is-contain']} src={p.preview.poster} alt="" loading="lazy" decoding="async" />
+    )}
+    {p.preview.labels?.map((l) => (
+      <span class="pane-label" style={`left:${l.left};top:${l.top}`}>{l.text}</span>
+    ))}
+    <span class="media-open"><Icon name="arrow" size={14} /> View details</span>
+  </a>
+  <div class="sp-body">
+    <p class="sp-kicker">
+      <span class="sp-num">{num}</span>
+      <span class:list={['pill', p.live && 'is-live']}>
+        {p.live && <span class="live-dot" aria-hidden="true"></span>}
+        {p.pill}
+      </span>
+    </p>
+    <div class="sp-head">
+      <h3 id={`sp-${p.slug}`}><a href={`/work/${p.slug}/`} data-case={p.slug}>{p.title}</a></h3>
+      <p class="sp-meta">{p.role} · {p.org} · {p.dates}</p>
+    </div>
+    <p class="sp-sum" set:html={rich(p.summary)} />
+    <ul class="sp-points">
+      {p.points.map((pt) => <li set:html={rich(pt)} />)}
+    </ul>
+    <div class="sp-foot">
+      <a class="btn btn-primary" href={`/work/${p.slug}/`} data-case={p.slug}>View project details <Icon name="arrow" /></a>
+      {repo && (
+        <a class="btn btn-icon" href={repo.href} target="_blank" rel="noopener" aria-label={`${p.title} code on GitHub`}>
+          <Icon name="github" /><span class="btn-label">Code</span>
+        </a>
+      )}
+      <ul class="sp-tags" aria-label="Stack">
+        {p.tags.slice(0, 3).map((t) => <li class={toneFor(t) && `tone-${toneFor(t)}`}>{t}</li>)}
+      </ul>
+    </div>
+  </div>
+</article>

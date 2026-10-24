@@ -1,0 +1,148 @@
+<article class="detail-project">
+  <div class="project-head">
+    <div>
+      <h2>Human Localization for Teleco Robot · <br><span class="signal-event">Osaka Expo 2025</span></h2>
+      <p class="meta"><span class="signal-strong">Research Intern</span> · University of Osaka · May – Aug 2025
+      </p>
+      <div class="tech-tags">
+        <span class="tech-tag">YOLOv12</span><span class="tech-tag">SLAM</span>
+        <span class="tech-tag">Kabsch Solver</span><span class="tech-tag">MQTT</span><span
+          class="tech-tag">Python</span>
+      </div>
+    </div>
+    <span class="pill">Deployed</span>
+  </div>
+  <div class="project-body cs tc-body">
+    <div class="links cta-top">
+      <a href="/assets/frontier/frontier_report.pdf" class="btn btn-primary" target="_blank"
+        rel="noopener noreferrer">Read the Frontier Report</a>
+      <a href="https://github.com/Yogee-s/human_detector_ws" class="card-repo-btn" target="_blank" rel="noopener noreferrer">
+        <svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true">
+          <path
+            d="M8 0c-4.42 0-8 3.58-8 8 0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38a8.013 8.013 0 0 0-5.55-7.97z">
+          </path>
+        </svg>
+        GitHub Repo
+      </a>
+    </div>
+
+    <section class="cs-overview tc-overview">
+      <div class="tc-intro">
+        <dl class="cs-brief tc-brief">
+          <div>
+            <dt>The problem</dt>
+            <dd>Teleco is a social robot that <mark>interacts with visitors</mark>. To make eye contact,
+              it first has to find them in the room.</dd>
+          </div>
+          <div>
+            <dt>My part</dt>
+            <dd>I built the system that tells it <mark>where each person is standing</mark> and how tall
+              they are.</dd>
+          </div>
+          <div>
+            <dt>The result</dt>
+            <dd>It ran live at the <mark>Yoshikawa Lab pavilion</mark>, Osaka Expo 2025.</dd>
+          </div>
+        </dl>
+        <div class="cs-stats cs-stats-3">
+          <div><b>2–6 cm</b><span>Position error on the map</span></div>
+          <div><b>&lt;10 cm</b><span>Height error for eye contact</span></div>
+          <div><b>Live</b><span>Deployed at Osaka Expo 2025</span></div>
+        </div>
+      </div>
+      <figure class="tc-robot">
+        <img class="js-lightbox" src="/assets/frontier/close_up_teleco_robot.jpg" alt="Teleco robot"
+          loading="lazy">
+        <figcaption>Teleco robot</figcaption>
+      </figure>
+    </section>
+
+    <section class="cs-section">
+      <header class="cs-section-head">
+        <div>
+          <h3>From camera pixels to eye contact</h3>
+          <p class="cs-lead">A camera only sees pixels. To make eye contact, Teleco needs two things:
+            <mark>where you stand</mark> on its map, and <mark>how tall you are</mark>.</p>
+        </div>
+      </header>
+      <ol class="tc-steps">
+        <li>
+          <b><i class="tc-step-num">01</i>Find people</b>
+          <span>My <mark>YOLOv12 pose model</mark> marks where each visitor stands, between their
+            <mark>ankles</mark>.</span>
+          <em class="tc-out">→ position in the image</em>
+        </li>
+        <li>
+          <b><i class="tc-step-num">02</i>Place them on the map</b>
+          <span><mark>Kabsch alignment</mark>, calibrated by parking Teleco at a few spots, maps camera
+            points onto its <mark>SLAM map</mark>.</span>
+          <em class="tc-out">→ x, y · <strong>2–6 cm</strong> error</em>
+        </li>
+        <li>
+          <b><i class="tc-step-num">03</i>Look them in the eye</b>
+          <span>A curve fitted on Teleco's known height turns <mark>pixel height</mark> into real
+            height.</span>
+          <em class="tc-out">→ height · <strong>&lt;10 cm</strong> error</em>
+        </li>
+      </ol>
+    </section>
+
+    <section class="cs-section">
+      <header class="cs-section-head">
+        <div>
+          <h3>Why a camera in the room, not on the robot</h3>
+          <p class="cs-lead">A camera on Teleco only sees what is in front of it. One fixed camera
+            overlooking the area sees <mark>everyone around the robot</mark>.</p>
+        </div>
+      </header>
+      <div class="cs-parts cs-parts-2">
+        <div>
+          <h5>No blind spots</h5>
+          <p>Visitors are tracked on <mark>either side of the robot</mark>, even when Teleco partly hides
+            them from view.</p>
+        </div>
+        <div>
+          <h5>Process once, share with every robot</h5>
+          <p>Detection runs on <mark>one central computer</mark>, not on each robot. Results stream over
+            <mark>MQTT</mark> (~5 Hz), so <mark>multiple robots</mark> can use the same detections.</p>
+        </div>
+      </div>
+      <div class="cs-row tc-proof">
+        <figure style="--ar: 2.11"><img class="js-lightbox" src="/assets/frontier/teleco_detect_open.webp"
+            alt="SLAM map with a red marker on a visitor's legs, next to the camera view of the visitor standing between the camera and Teleco"
+            loading="lazy">
+          <figcaption>Near side · the red map marker lands on their legs</figcaption>
+        </figure>
+        <figure style="--ar: 2.11"><img class="js-lightbox" src="/assets/frontier/teleco_detect_behind.webp"
+            alt="SLAM map with a red marker beyond Teleco, next to the camera view of a visitor standing behind the robot"
+            loading="lazy">
+          <figcaption>Far side, partly hidden by Teleco · still found</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section class="cs-section">
+      <header class="cs-section-head">
+        <div>
+          <h3>The system at work</h3>
+        </div>
+      </header>
+      <div class="cs-row">
+        <figure style="--ar: 0.5625"><video controls data-autoplay loop muted playsinline preload="none" poster="/assets/frontier/expo_project_poster.webp">
+            <source src="/assets/frontier/expo_project.mp4" type="video/mp4">
+          </video>
+          <figcaption>System setup</figcaption>
+        </figure>
+        <figure style="--ar: 1.39"><img class="js-lightbox" src="/assets/frontier/teleco_tracking.jpg" alt="Tracking interface"
+            loading="lazy">
+          <figcaption>Tracking interface</figcaption>
+        </figure>
+        <figure style="--ar: 1.55"><img class="js-lightbox" src="/assets/frontier/people_tracking.jpg" alt="Localization view"
+            loading="lazy">
+          <figcaption>Localization view · keypoints on each person</figcaption>
+        </figure>
+      </div>
+    </section>
+  </div>
+</article>
+

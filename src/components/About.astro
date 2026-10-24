@@ -1,0 +1,93 @@
+---
+// Continues straight on from the hero: who I am, quick facts in point form, and the stack by area.
+// Facts support **bold** markup for the part that should catch the eye.
+import { rich } from '../lib/rich';
+const facts = [
+  {
+    label: 'Highlights',
+    items: [
+      '**Built human localization** for Teleco, a social robot deployed at Osaka Expo 2025',
+      '**Real-time punch recognition** running on the robot (final-year capstone)',
+      '**Research** at Osaka, A*STAR and NUS',
+    ],
+  },
+  {
+    label: 'Education',
+    items: [
+      '**NUS BEng, Engineering Science** (2022–26), Computational Eng. Science specialisation',
+      '**Minors:** Innovation & Design, Computing',
+      '**Exchange:** University of Toronto (2025), University of Osaka (2025)',
+    ],
+  },
+  {
+    label: 'Leadership',
+    items: ['**President**, NUS Engineering Science Student Wing (2023–24)', '**Student Ambassador**, NUS'],
+  },
+];
+const [lead, ...folded] = facts;
+const stack = [
+  { group: 'Languages', c: 'violet', items: ['Python', 'C++'] },
+  { group: 'Robotics', c: 'amber', items: ['ROS 2', 'Linux (Ubuntu)', 'Jetson · RealSense'] },
+  { group: 'AI / Vision', c: 'cyan', items: ['PyTorch', 'YOLO', 'Segmentation · Tracking', 'TensorRT', 'LLMs + RAG'] },
+  { group: 'Sim & control', c: 'green', items: ['MuJoCo · RL', 'MATLAB / Simulink'] },
+  { group: 'Hardware', c: 'pink', items: ['SolidWorks (CSWA)', 'STM32 · ESP32'] },
+];
+---
+<section class="section about" id="about" aria-labelledby="about-title">
+  <div class="container">
+    <p class="section-label">About</p>
+    <div class="about-grid">
+      <figure class="about-photo hud" data-reveal>
+        <img src="/assets/personal_photo.jpg" alt="Portrait of Muthukumaran Yogeeswaran" width="1200" height="1200" loading="lazy" decoding="async" />
+      </figure>
+
+      <div class="about-body" data-reveal style="--d:.06s">
+        <h2 id="about-title">Hi, I'm Yogee.</h2>
+        <p class="about-lead">
+          I'm passionate about <strong class="kw">embodied robotics</strong>, with hands-on experience in
+          <span class="kt">perception</span>, <span class="kt">reasoning</span>, <span class="kt">manipulation</span> and
+          <span class="kt">legged balance</span>.
+        </p>
+
+        <div class="about-facts">
+          <div class="about-fact">
+            <div class="about-fact-content">
+              <p class="mono">{lead.label}</p>
+              <ul>{lead.items.map((i) => <li set:html={rich(i)} />)}</ul>
+            </div>
+          </div>
+          {/* phones: Education and Leadership share one fold; on larger screens the wrappers vanish
+              (display: contents) and each stays its own column */}
+          <div class="fold" data-fold>
+            <button type="button" class="fold-toggle" aria-expanded="false" aria-controls="about-more">Education &amp; leadership</button>
+            <div class="fold-body" id="about-more">
+              {folded.map((f) => (
+                <div class="about-fact">
+                  <div class="about-fact-content">
+                    <p class="mono">{f.label}</p>
+                    <ul>{f.items.map((i) => <li set:html={rich(i)} />)}</ul>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="about-stack fold" data-fold>
+      <button type="button" class="fold-toggle" aria-expanded="false" aria-controls="about-stack">Tools &amp; technologies</button>
+      <div class="about-stack-body fold-body" id="about-stack">
+        <p class="mono">Stack</p>
+        <dl class="stack-groups">
+          {stack.map((g) => (
+            <div class="stack-group">
+              <dt>{g.group}</dt>
+              <dd class="chips">{g.items.map((i) => <span class={`chip tone-${g.c}`}>{i}</span>)}</dd>
+            </div>
+          ))}
+        </dl>
+      </div>
+    </div>
+  </div>
+</section>

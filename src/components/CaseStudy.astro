@@ -1,0 +1,74 @@
+---
+// One project page, in the original site's layout: header bar (title, pill, close), then the
+// legacy project markup from src/data/legacy-projects/. Rendered inside a <template> on the
+// homepage (overlay) and on /work/<slug>/.
+import { projects, type SceneId } from '../data/projects';
+import { plain } from '../lib/rich';
+import { toneFor } from '../lib/tags';
+import boxbunny from '../data/legacy-projects/boxbunny.html?raw';
+import teleco from '../data/legacy-projects/teleco.html?raw';
+import companion from '../data/legacy-projects/companion.html?raw';
+import rlHand from '../data/legacy-projects/rl-hand.html?raw';
+import leggedBalance from '../data/legacy-projects/legged-balance.html?raw';
+import breakingBias from '../data/legacy-projects/breaking-bias.html?raw';
+
+interface Props {
+  slug: SceneId;
+}
+const { slug } = Astro.props;
+const markup: Record<SceneId, string> = {
+  boxbunny,
+  teleco,
+  companion,
+  'rl-hand': rlHand,
+  'legged-balance': leggedBalance,
+  'breaking-bias': breakingBias,
+};
+// the header bar, as on the original site
+const bar: Record<SceneId, [string, string]> = {
+  boxbunny: ['BoxBunny · Intelligent Boxing Robot', 'Final Year Project'],
+  teleco: ['Teleco Localization', 'Deployed'],
+  companion: ['Robotic Companion', 'UREx · Solo'],
+  'rl-hand': ['RL Dexterous Hand', 'Research'],
+  'legged-balance': ['Legged Balancing Robot (IDP)', 'Foundation'],
+  'breaking-bias': ['Breaking Bias in LLMs', 'LLM Research'],
+};
+const i = projects.findIndex((x) => x.slug === slug);
+const next = projects[(i + 1) % projects.length];
+const featured = projects.filter((x) => x.featured);
+const lastFeatured = featured[featured.length - 1].slug === slug;
+// end of the page: the next project, except after the last featured one, where the reader goes
+// back to the homepage to choose (the rest are optional extras)
+const nextLink = lastFeatured
+  ? `
+<a class="lp-next" href="/#work" data-close data-then="more">
+  <small>That's the featured work</small>
+  <span class="is-back">Back to all projects</span>
+  <em>Pick another project, or see the smaller ones under “More”.</em>
+</a>
+`
+  : `
+<a class="lp-next" href="/work/${next.slug}/" data-case="${next.slug}">
+  <small>Next project</small>
+  <span>${next.title}</span>
+  <em>${plain(next.summary)}</em>
+</a>
+`;
+// tags take the site-wide colour for their area
+const html = markup[slug].replace(/<span class="tech-tag">([^<]*)<\/span>/g, (m, t) =>
+  toneFor(t) ? `<span class="tech-tag tone-${toneFor(t)}">${t}</span>` : m,
+);
+const at = html.lastIndexOf('</article>');
+const body = html.slice(0, at) + nextLink + html.slice(at);
+const [title, pill] = bar[slug];
+---
+<div class="lp" data-slug={slug}>
+  <div class="detail-header-bar">
+    <div class="bar-head">
+      <span class="bar-title">{title}</span>
+      <span class="bar-pill">{pill}</span>
+    </div>
+    <a class="bar-close" href="/#work" data-close aria-label="Close and go back to the homepage">✕ Close</a>
+  </div>
+  <div class="detail-content" set:html={body} />
+</div>

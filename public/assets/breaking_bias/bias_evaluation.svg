@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="540" viewBox="0 0 960 540" role="img" aria-labelledby="title desc">
+  <title id="title">Breaking Bias: attacking LLM judges</title>
+  <desc id="desc">Attack LLM judges with adversarial essays (prompt injection, embedding noise), score them with persona and multi-model committees (Phi-4-mini, Llama 3.2), and compare fairness against a single judge.</desc>
+  <defs>
+    <pattern id="grid" width="32" height="32" patternUnits="userSpaceOnUse"><path d="M32 0H0V32" fill="none" stroke="#dce5ec" stroke-width="0.7"/></pattern>
+    <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="m2 1 6 4-6 4" fill="none" stroke="#168a9c" stroke-width="1.5"/></marker>
+  </defs>
+  <rect width="960" height="540" rx="18" fill="#f4f8fb"/>
+  <rect width="960" height="540" rx="18" fill="url(#grid)" opacity="0.65"/>
+  <g font-family="Arial, Helvetica, sans-serif">
+    <path d="M48 52h28" stroke="#168a9c" stroke-width="4"/>
+    <text x="88" y="58" fill="#526474" font-size="16" letter-spacing="2">LLM RESEARCH</text>
+    <text x="48" y="112" fill="#152b3b" font-size="38" font-weight="700">Breaking Bias</text>
+    <text x="48" y="148" fill="#526474" font-size="22">Can LLM judges be manipulated? Can committees make them fairer?</text>
+    <g fill="#fff" stroke="#ccdbe5" stroke-width="1.5">
+      <rect x="48" y="208" width="264" height="190" rx="12"/>
+      <rect x="348" y="208" width="264" height="190" rx="12"/>
+      <rect x="648" y="208" width="264" height="190" rx="12"/>
+    </g>
+    <g fill="none" stroke="#168a9c" stroke-width="2" marker-end="url(#arrow)"><path d="M318 303h24"/><path d="M618 303h24"/></g>
+    <g fill="#168a9c" font-size="15" font-weight="700" letter-spacing="1.5">
+      <text x="70" y="242">01 / ATTACK</text>
+      <text x="370" y="242">02 / JUDGE</text>
+      <text x="670" y="242">03 / COMPARE</text>
+    </g>
+    <g fill="#152b3b" font-size="23" font-weight="700">
+      <text x="70" y="283">Adversarial essays</text>
+      <text x="370" y="283">LLM committees</text>
+      <text x="670" y="283">Fairer scoring?</text>
+    </g>
+    <g fill="#526474" font-size="20">
+      <text x="70" y="329">Prompt injection</text><text x="70" y="360">Embedding noise</text>
+      <text x="370" y="329">Persona panels</text><text x="370" y="360">Phi-4-mini · Llama 3.2</text>
+      <text x="670" y="329">Score shifts</text><text x="670" y="360">Judge disagreement</text>
+    </g>
+    <text x="48" y="476" fill="#526474" font-size="18">Research approach · ECE324, University of Toronto</text>
+  </g>
+</svg>

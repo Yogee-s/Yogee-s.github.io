@@ -1,0 +1,255 @@
+<!-- Outline · its own rail on the left of the panel (chip strip on phones) -->
+<nav class="cs-toc" aria-label="Sections in this project">
+  <span class="cs-toc-label">On this page</span>
+  <ol>
+    <li class="cs-toc-top"><a href="#rc-overview">Overview</a></li>
+    <li><a href="#rc-reacts"><b>01</b> How it reacts</a></li>
+    <li><a href="#rc-turn"><b>02</b> One conversation turn</a></li>
+    <li><a href="#rc-hardware"><b>03</b> The hardware</a>
+      <ol>
+        <li><a href="#rc-hardware-mech">Mechanism</a></li>
+        <li><a href="#rc-hardware-wiring">Wiring</a></li>
+      </ol>
+    </li>
+  </ol>
+</nav>
+<article class="detail-project companion-detail">
+  <div class="project-head">
+    <div>
+      <h2>Robotic Companion · Offline AI for Elderly Care</h2>
+      <p class="meta"><span class="signal-strong">Solo Researcher</span> · NUS Immersive Reality Lab (UREx) · Aug
+        2025 – May 2026</p>
+      <div class="tech-tags">
+        <span class="tech-tag">Jetson Orin Nano</span><span class="tech-tag">On-device LLM</span>
+        <span class="tech-tag">YOLO26n-pose</span><span class="tech-tag">HSEmotion</span>
+        <span class="tech-tag">ESP32</span><span class="tech-tag">Piper / Parakeet</span>
+        <span class="tech-tag">SolidWorks</span>
+      </div>
+    </div>
+    <span class="pill">UREx · Solo</span>
+  </div>
+  <div class="project-body boxing-body cs">
+    <div class="links cta-top" style="align-items: center;">
+      <a href="https://yogee-s.github.io/robotic-companion/" class="btn btn-primary" target="_blank"
+        rel="noopener noreferrer">Read the Full Docs</a>
+      <a href="https://github.com/Yogee-s/robotic-companion" class="card-repo-btn" target="_blank"
+        rel="noopener noreferrer">
+        <svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true">
+          <path
+            d="M8 0c-4.42 0-8 3.58-8 8 0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38a8.013 8.013 0 0 0-5.55-7.97z">
+          </path>
+        </svg>
+        GitHub Repo
+      </a>
+    </div>
+
+    <!-- Overview · problem → my part → result, then the headline numbers -->
+    <section class="cs-overview" id="rc-overview">
+      <dl class="cs-brief">
+        <div>
+          <dt>The problem</dt>
+          <dd>An elderly-care companion has to feel personal, but cloud assistants <mark>send private
+              conversations off the device</mark> and stop working without Wi-Fi.</dd>
+        </div>
+        <div>
+          <dt>My part</dt>
+          <dd>I built the <mark>whole robot solo</mark>: the moving head, the electronics, and the vision, voice
+            and AI software.</dd>
+        </div>
+        <div>
+          <dt>The result</dt>
+          <dd>A robot that <mark>reads your mood and replies with a matching face</mark>, running fully offline
+            on one Jetson Orin Nano.</dd>
+        </div>
+      </dl>
+      <div class="cs-stats">
+        <div><b>≤800 ms</b><span>From your last word to its reply</span></div>
+        <div><b>Offline</b><span>Nothing leaves the robot</span></div>
+        <div><b>13</b><span>Mood-matched expressions</span></div>
+        <div><b>6</b><span>Hardware versions of the head</span></div>
+      </div>
+      <div class="cs-hero" style="--ar-sum: 1.559">
+        <figure style="--ar: 0.75">
+          <img class="js-lightbox" src="/assets/robotic_companion/robot_happy_face.jpg"
+            alt="Final prototype" loading="lazy">
+          <figcaption>Final prototype</figcaption>
+        </figure>
+        <figure style="--ar: 0.809">
+          <img class="js-lightbox" src="/assets/robotic_companion/final_side.png"
+            alt="Robotic Companion head design in SolidWorks, side view" loading="lazy">
+          <figcaption>Head design in SolidWorks</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <!-- 01 · What the user experiences -->
+    <section class="cs-section" id="rc-reacts">
+      <header class="cs-section-head">
+        <span class="cs-num">01</span>
+        <div>
+          <h3>It doesn't just listen · it reacts</h3>
+          <p class="cs-lead">The robot's mood is a <mark>direct response to yours</mark>.</p>
+        </div>
+      </header>
+      <div class="cs-parts rc-loop">
+        <div>
+          <h5>Sees you</h5>
+          <p>The camera finds your face and keeps it in view.</p>
+        </div>
+        <div>
+          <h5>Reads your mood</h5>
+          <p>It measures <mark>how positive and how energetic</mark> you look, and passes that to the AI.</p>
+        </div>
+        <div>
+          <h5>Shows how it feels</h5>
+          <p>Every reply carries a mood tag that picks one of <mark>13 animated faces</mark> on its screen.</p>
+        </div>
+      </div>
+      <div class="media-layout media-layout-2 cs-face-pair">
+        <figure>
+          <img class="js-lightbox" src="/assets/robotic_companion/robot_neutral_face.jpg"
+            alt="ESP32 touchscreen face with neutral expression" loading="lazy">
+          <figcaption>Neutral face · one of 13 expressions</figcaption>
+        </figure>
+        <figure>
+          <img class="js-lightbox media-fit-contain" src="/assets/robotic_companion/gui_emotion_circumplex.png"
+            alt="Emotion circumplex plot with live valence/arousal data" loading="lazy">
+          <figcaption>Live mood readout · positive → right, energetic → up</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <!-- 02 · Software: voice loop + face in parallel -->
+    <section class="cs-section" id="rc-turn">
+      <header class="cs-section-head">
+        <span class="cs-num">02</span>
+        <div>
+          <h3>What happens in one conversation turn</h3>
+          <p class="cs-lead">You stop talking, and it starts replying <mark>in under 0.8 seconds</mark>, all on
+            the robot.</p>
+        </div>
+      </header>
+      <div class="rc-turn-grid">
+        <div class="rc-turn-col">
+          <p class="cs-sub-label">The voice loop</p>
+          <ol class="cs-flow">
+            <li><b>Hears you finish</b> and cuts out the clip of your speech.</li>
+            <li><b>Writes down</b> what you said, as you say it.</li>
+            <li><b>Thinks of a reply</b>, with your mood and the chat so far in the prompt.</li>
+            <li><b>Speaks it</b> sentence by sentence, so it <mark>starts talking before the full reply is
+                ready</mark>.</li>
+          </ol>
+        </div>
+        <div class="rc-turn-col rc-turn-side">
+          <p class="cs-sub-label">Meanwhile, the face</p>
+          <ul class="cs-list">
+            <li><b>Expression</b> switches to match the reply's mood tag.</li>
+            <li><b>Lips move</b> in time with the voice, about 30 times a second.</li>
+          </ul>
+          <p class="cs-note">It runs on a separate branch, so the face <mark>never holds up the voice</mark>.</p>
+        </div>
+      </div>
+      <figure class="arch-figure">
+        <img class="js-lightbox media-fit-contain" src="/assets/robotic_companion/turn_sequence.svg"
+          alt="Conversation turn sequence · voice pipeline from microphone to TTS, with face branch for affect and visemes"
+          loading="lazy">
+        <figcaption>One turn · voice runs left to right, the face branch drops down in parallel</figcaption>
+      </figure>
+      <div class="media-layout media-layout-2 rc-pipes">
+        <figure>
+          <img class="js-lightbox media-fit-contain" src="/assets/robotic_companion/audio_pipeline.svg"
+            alt="Audio pipeline · mic array to speech output" loading="lazy">
+          <figcaption>Audio pipeline · mic to speaker</figcaption>
+        </figure>
+        <figure>
+          <img class="js-lightbox media-fit-contain" src="/assets/robotic_companion/vision_pipeline.svg"
+            alt="Vision pipeline · face detection to emotion classification" loading="lazy">
+          <figcaption>Vision pipeline · camera to mood</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <!-- 03 · Hardware: mechanism + wiring -->
+    <section class="cs-section" id="rc-hardware">
+      <header class="cs-section-head">
+        <span class="cs-num">03</span>
+        <div>
+          <h3>The hardware · designed and built solo</h3>
+          <p class="cs-lead">A custom head that can <mark>nod and turn</mark>, and one computer wired to every
+            part.</p>
+        </div>
+      </header>
+
+      <div class="cs-step" id="rc-hardware-mech">
+        <h4><span class="cs-step-tag">Mechanism</span> Two motors, one gear, a head that nods and turns</h4>
+        <p class="cs-takeaway">Both motors drive a shared gear, so together they control both directions of
+          movement.</p>
+        <div class="cs-parts rc-motion">
+          <div>
+            <h5>Nod (tilt)</h5>
+            <p>Both motors turn <mark>the same way</mark>.</p>
+          </div>
+          <div>
+            <h5>Turn (pan)</h5>
+            <p>The motors turn <mark>opposite ways</mark>.</p>
+          </div>
+        </div>
+        <div class="cs-mech-row">
+          <figure class="companion-video">
+            <video controls data-autoplay loop muted playsinline preload="none" poster="/assets/robotic_companion/live_motor_control_with_kinematics_poster.webp">
+              <source src="/assets/robotic_companion/live_motor_control_with_kinematics.mp4" type="video/mp4">
+            </video>
+            <figcaption>I move the 3D head on screen · the real head follows live</figcaption>
+          </figure>
+          <figure>
+            <img class="js-lightbox media-fit-contain"
+              src="/assets/robotic_companion/differential_bevel.svg"
+              alt="Differential bevel-gear head mechanism" loading="lazy">
+            <figcaption>The gear layout + the maths behind it</figcaption>
+          </figure>
+        </div>
+        <div class="cs-sub">
+          <p class="cs-sub-label">Six versions to get it smooth</p>
+          <p>Designed in SolidWorks. Each version fixed a problem: <mark>cable routing, pivot alignment and
+              3D-print warping</mark>.</p>
+        </div>
+        <div class="cs-media-3 rc-evolution">
+          <figure>
+            <img class="js-lightbox media-fit-contain" src="/assets/robotic_companion/prototype_1.png"
+              alt="Head design, version 1" loading="lazy">
+            <figcaption>Version 1</figcaption>
+          </figure>
+          <figure>
+            <img class="js-lightbox media-fit-contain" src="/assets/robotic_companion/prototype_5.png"
+              alt="Head design, version 5" loading="lazy">
+            <figcaption>Version 5</figcaption>
+          </figure>
+          <figure>
+            <img class="js-lightbox media-fit-contain" src="/assets/robotic_companion/final_front.png"
+              alt="Final head mechanism, front view" loading="lazy">
+            <figcaption>Final</figcaption>
+          </figure>
+        </div>
+      </div>
+
+      <div class="cs-step" id="rc-hardware-wiring">
+        <h4><span class="cs-step-tag">Wiring</span> The full robot at a glance</h4>
+        <p class="cs-takeaway">One Jetson Orin Nano in the middle. The camera, mic, face screen, speaker and
+          both motors each plug straight into it.</p>
+        <p>Every line below is a <mark>real cable on the robot today</mark>. Both motors share a single bus
+          adapter (CH343).</p>
+        <figure class="arch-figure">
+          <img class="js-lightbox media-fit-contain" src="/assets/robotic_companion/hardware_topology.svg"
+            alt="Hardware topology · Jetson Orin Nano hub connected to camera, mic, ESP32 face, speaker, bus adapter and two servos"
+            loading="lazy">
+          <figcaption>Hardware map · every part is a direct link to the Jetson</figcaption>
+        </figure>
+      </div>
+
+      <p class="callout-strip"><span class="callout-chip">6 hardware iterations</span><span
+          class="callout-chip">Config-swappable LLM/STT/TTS</span><span class="callout-chip">Watchdog + graceful
+          degradation</span><span class="callout-chip">Jetson + ESP32 multi-MCU</span></p>
+    </section>
+  </div>
+</article>
+

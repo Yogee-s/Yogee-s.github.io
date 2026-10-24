@@ -1,0 +1,64 @@
+---
+import Icon from './Icon.astro';
+interface Props {
+  home?: boolean;
+}
+const { home = true } = Astro.props;
+const base = home ? '' : '/';
+---
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="nav" id="nav">
+  <div class="nav-inner">
+    <a class="nav-brand" href={home ? '#top' : '/'} aria-label="Yogee, back to top">
+      <span class="nav-mark" aria-hidden="true"><span class="nav-mark-head"><i></i><i></i></span></span>
+      <span>Yogee<i>.</i></span>
+    </a>
+    <nav class="nav-links" id="nav-links" aria-label="Primary">
+      <a href={`${base}#about`} data-nav="about">About</a>
+      <a href={`${base}#work`} data-nav="work">Work</a>
+      <a href={`${base}#experience`} data-nav="experience">Experience</a>
+      <a href={`${base}#contact`} data-nav="contact">Contact</a>
+    </nav>
+    <a class="btn nav-cta" href="/assets/resume.pdf" target="_blank" rel="noopener">
+      <Icon name="download" /> <span>Resume</span>
+    </a>
+    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="nav-links" aria-label="Menu">
+      <span></span><span></span>
+    </button>
+  </div>
+  <div class="nav-progress" aria-hidden="true"><span id="nav-progress"></span></div>
+</header>
+
+<script>
+  const nav = document.getElementById('nav');
+  const toggle = nav?.querySelector('.nav-toggle');
+  toggle?.addEventListener('click', () => {
+    const open = nav.classList.toggle('is-open');
+    toggle.setAttribute('aria-expanded', String(open));
+  });
+  const close = () => {
+    nav?.classList.remove('is-open');
+    toggle?.setAttribute('aria-expanded', 'false');
+  };
+  nav?.querySelectorAll('.nav-links a').forEach((a) => a.addEventListener('click', close));
+  // a tap anywhere outside the open menu closes it
+  document.addEventListener('click', (e) => {
+    if (nav?.classList.contains('is-open') && !nav.contains(e.target as Node)) close();
+  });
+
+  // phones: the bar tucks away while reading down the page and comes back on any upward scroll
+  const phone = window.matchMedia('(max-width: 760px)');
+  let lastY = window.scrollY;
+  let raf = 0;
+  const tuck = () => {
+    raf = 0;
+    const y = window.scrollY;
+    const dy = y - lastY;
+    if (Math.abs(dy) < 6) return;
+    const hide = phone.matches && dy > 0 && y > 120 && !nav?.classList.contains('is-open');
+    document.documentElement.classList.toggle('nav-tucked', hide);
+    lastY = y;
+  };
+  window.addEventListener('scroll', () => raf || (raf = requestAnimationFrame(tuck)), { passive: true });
+  phone.addEventListener('change', () => document.documentElement.classList.remove('nav-tucked'));
+</script>

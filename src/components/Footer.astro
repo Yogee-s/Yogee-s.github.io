@@ -1,0 +1,9 @@
+---
+const built = new Date().toLocaleDateString('en-GB', { month: 'long', year: 'numeric', timeZone: 'Asia/Singapore' });
+---
+<footer class="footer">
+  <div class="container footer-inner">
+    <p>© {new Date().getFullYear()} Muthukumaran Yogeeswaran · Built with Astro &amp; three.js</p>
+    <p class="mono">Last updated {built} · <a href="https://poly.pizza/m/qbDLeTtb8K" target="_blank" rel="noopener">Humanoid mesh</a> by madtrollstudio (CC-BY 3.0)</p>
+  </div>
+</footer>

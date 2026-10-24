@@ -1,0 +1,120 @@
+---
+import ProjectCard from './ProjectCard.astro';
+import Icon from './Icon.astro';
+import { projects, projectTone } from '../data/projects';
+import { rich } from '../lib/rich';
+const featured = projects.filter((p) => p.featured);
+const more = projects.filter((p) => !p.featured);
+const companion = more.find((p) => p.slug === 'companion')!;
+const otherProjects = more.filter((p) => p.slug !== 'companion');
+const steps = featured.length + 1;
+const compactTitles: Record<string, string> = {
+  boxbunny: 'BoxBunny', teleco: 'Teleco', 'rl-hand': 'RL Hand', 'legged-balance': 'Legged',
+};
+
+---
+<section class="work" id="work" aria-labelledby="work-title">
+  <div class="work-track" id="work-track" style={`--steps:${steps}`}>
+    <div class="work-stage">
+      <div class="container stage-inner">
+        <p class="section-label">Work</p>
+        <header class="stage-head">
+          <div class="stage-title">
+            <h2 id="work-title">Robots that perceive, learn and act.</h2>
+          </div>
+          <nav class="stage-tabs" aria-label="Projects">
+            {featured.map((p, i) => (
+              <button type="button" class="stage-tab" data-step={i} style={`--tone:${projectTone[p.slug]}`} aria-label={p.title}>
+                <span class="stage-tab-num">{String(i + 1).padStart(2, '0')}</span>
+                <span class="stage-tab-title">{p.title}</span>
+                <span class="stage-tab-short" aria-hidden="true">{compactTitles[p.slug]}</span>
+              </button>
+            ))}
+            <button type="button" class="stage-tab" data-step={featured.length}>
+              <span class="stage-tab-num">+</span>More
+            </button>
+            <span class="stage-progress" aria-hidden="true"><i id="stage-progress"></i></span>
+            <span class="stage-glider" aria-hidden="true"></span>
+          </nav>
+        </header>
+
+        <div class="stage-body">
+          <div class="stage-projects">
+            {featured.map((p, i) => <ProjectCard project={p} index={i} />)}
+
+            <article class="sp sp-more fold" id="proj-more" data-scene="breaking-bias" data-step={featured.length} data-fold aria-labelledby="sp-more">
+              <div class="sp-body">
+                <p class="sp-kicker"><span class="sp-num">+</span><span class="pill">Research, builds &amp; design</span></p>
+                <h3 id="sp-more">More projects</h3>
+              </div>
+              {/* phones: a quick look stays on the four main projects; the rest open from here */}
+              <button type="button" class="fold-toggle more-toggle" aria-expanded="false" aria-controls="more-body">
+                <span><b>More projects</b><small>Breaking Bias · Robotic Companion · LifeQuest</small></span>
+              </button>
+              <div class="fold-body more-body" id="more-body">
+                <ul class="more-list">
+                  {otherProjects.map((p) => (
+                    <li class="more-row" data-scene={p.slug}>
+                      <img src={p.preview.poster} alt="" loading="lazy" decoding="async" class:list={[p.preview.fit === 'contain' && 'is-contain']} />
+                      <div>
+                        <h4><a href={`/work/${p.slug}/`} data-case={p.slug}>{p.title}</a> <span class="more-pill"><span class="more-sep">· </span>{p.pill}</span></h4>
+                        <p set:html={rich(p.summary)} />
+                      </div>
+                      <a class="btn" href={`/work/${p.slug}/`} data-case={p.slug}>View details <Icon name="arrow" /></a>
+                    </li>
+                  ))}
+                </ul>
+
+                <div class="more-companion" data-scene="companion">
+                  <figure class="companion-preview">
+                    <video muted loop playsinline preload="none" poster={companion.preview.poster} data-card-video width="1280" height="720" aria-label="Companion robot head following the on-screen control model">
+                      <source src={companion.preview.video} type="video/mp4" />
+                    </video>
+                    <figcaption>Head control · model to robot</figcaption>
+                  </figure>
+                  <div class="companion-copy">
+                    <p class="pill">Solo research · UREx</p>
+                    <h4><a href="/work/companion/" data-case="companion">Robotic Companion</a></h4>
+                    <p>An offline eldercare companion, built solo: voice, vision, an expressive face and a custom moving head.</p>
+                    <a class="btn" href="/work/companion/" data-case="companion">Explore the build <Icon name="arrow" /></a>
+                  </div>
+                </div>
+
+                <div class="more-creative">
+                  <div class="lifequest">
+                    <h4>LifeQuest <span class="more-pill">NUS Orbital · Co-lead · 2023</span></h4>
+                    <p>A gamified productivity app built with React Native + Firebase.</p>
+                    <div class="more-links">
+                      <a class="btn" href="/assets/orbital/orbital_final_demo.mp4" target="_blank" rel="noopener"><Icon name="play" /> Demo</a>
+                      <a class="btn" href="https://github.com/Yogee-s/NUS-Orbital-2023" target="_blank" rel="noopener"><Icon name="github" /> Code</a>
+                    </div>
+                  </div>
+                  <div class="poster-strip">
+                    <p class="poster-label"><span class="mono">Poster design</span> I enjoy designing posters, too.</p>
+                    <div class="poster-row">
+                      <img class="js-lightbox" src="/assets/orbital/orbital_first_poster.jpg" alt="LifeQuest poster for NUS Orbital, designed by Yogee" loading="lazy" decoding="async" />
+                      <img class="js-lightbox" src="/assets/orbital/orbital_final_poster.jpg" alt="LifeQuest final poster" loading="lazy" decoding="async" />
+                      <img class="js-lightbox" src="/assets/idp_projects/balancing_robot_poster.webp" alt="Balancing Standard robot poster" loading="lazy" decoding="async" />
+                    </div>
+                    <p class="poster-note">LifeQuest &amp; RoboMaster · tap to enlarge</p>
+                  </div>
+                </div>
+              </div>
+            </article>
+          </div>
+
+          <p class="stage-hint" aria-hidden="true"><b id="stage-count">1</b> / {steps} · Swipe for the next project <i class="hint-arrow">→</i></p>
+
+          <aside class="stage-scan hud" id="rail-frame" aria-hidden="true">
+            <div class="scan-head">
+              <span class="hud-label">Scan · scene <b id="rail-index">01</b></span>
+              <span class="hud-label scan-title" id="rail-title">{featured[0].title}</span>
+            </div>
+            <p class="rail-caption" id="rail-caption" set:html={rich(featured[0].sceneCaption)} />
+            <div class="scan-view" id="scan-view"></div>
+          </aside>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

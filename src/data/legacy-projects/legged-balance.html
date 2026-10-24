@@ -1,0 +1,143 @@
+<article class="detail-project">
+  <div class="project-head">
+    <div>
+      <h2>Innovation Design Programme</h2>
+      <p class="meta">NUS IDP · 2022–2024</p>
+      <div class="tech-tags">
+        <span class="tech-tag">PID/LQR</span><span class="tech-tag">SolidWorks</span>
+        <span class="tech-tag">MATLAB/Simulink</span><span class="tech-tag">STM32</span><span
+          class="tech-tag">COMSOL</span>
+      </div>
+    </div>
+    <span class="pill">Foundation</span>
+  </div>
+  <div class="project-body cs idp-body">
+    <div class="links cta-top">
+      <a href="https://github.com/BookSWave/EG3301R_BalancingStandard" class="card-repo-btn" target="_blank" rel="noopener noreferrer">
+        <svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true">
+          <path
+            d="M8 0c-4.42 0-8 3.58-8 8 0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38a8.013 8.013 0 0 0-5.55-7.97z">
+          </path>
+        </svg>
+        Balancing Repo
+      </a>
+    </div>
+
+    <p class="cs-intro">NUS Innovation &amp; Design Programme, <mark>my entry point into robotics</mark>. Where I
+      first learned to design, build and program physical systems from scratch.</p>
+
+    <!-- My first robotics project · its own small section, video beside a short note -->
+    <section class="cs-section idp-first">
+      <figure class="idp-first-video"><video controls data-autoplay loop muted playsinline preload="none" poster="/assets/idp_projects/eg2310_first_ever_project_idp_poster.webp">
+          <source src="/assets/idp_projects/eg2310_first_ever_project_idp.mp4" type="video/mp4">
+        </video>
+      </figure>
+      <div class="idp-first-text">
+        <p class="idp-first-eyebrow">Where it started</p>
+        <h3>My first robotics project</h3>
+        <p>A <mark>TurtleBot running ROS</mark>: my first time programming a real robot.</p>
+        <div class="tech-tags">
+          <span class="tech-tag">TurtleBot</span><span class="tech-tag">ROS</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- The highlight · the balancing robot and how it evolved -->
+    <section class="cs-section">
+      <header class="cs-section-head">
+        <div>
+          <h3>The highlight: a two-legged balancing robot</h3>
+          <p class="cs-lead">How it evolved over three chassis versions, and how it was <mark>simulated and
+              tuned</mark> until it could stand on its own.</p>
+        </div>
+      </header>
+
+      <div class="cs-step">
+        <h4><span class="cs-step-tag">Evolution</span> Three chassis versions</h4>
+        <div class="cs-row">
+          <figure style="--ar: 0.5625"><video controls data-autoplay loop muted playsinline preload="none" poster="/assets/idp_projects/evolution_of_balancing_robot/eg2606_balancing_robot_1st_prototype_poster.webp">
+              <source src="/assets/idp_projects/evolution_of_balancing_robot/eg2606_balancing_robot_1st_prototype.mp4" type="video/mp4">
+            </video>
+            <figcaption>v1</figcaption>
+          </figure>
+          <figure style="--ar: 0.5625"><video controls data-autoplay loop muted playsinline preload="none" poster="/assets/idp_projects/evolution_of_balancing_robot/eg3301r_2_legged_balancing_2nd_prototype_poster.webp">
+              <source src="/assets/idp_projects/evolution_of_balancing_robot/eg3301r_2_legged_balancing_2nd_prototype.mp4" type="video/mp4">
+            </video>
+            <figcaption>v2</figcaption>
+          </figure>
+          <figure style="--ar: 1.778"><video controls data-autoplay loop muted playsinline preload="none" poster="/assets/idp_projects/evolution_of_balancing_robot/eg3301r_2_legged_balancing_final_poster.webp">
+              <source src="/assets/idp_projects/evolution_of_balancing_robot/eg3301r_2_legged_balancing_final.mp4" type="video/mp4">
+            </video>
+            <figcaption>v3 (final)</figcaption>
+          </figure>
+        </div>
+        <div class="idp-idea">
+          <div class="cs-row">
+            <figure style="--ar: 1"><img class="js-lightbox" src="/assets/idp_projects/3_axis_gimbal.jpg" alt="3-axis gimbal" loading="lazy">
+              <figcaption>3-axis gimbal</figcaption>
+            </figure>
+            <figure style="--ar: 1"><img class="js-lightbox" src="/assets/idp_projects/initial_prototype.jpg" alt="Chassis prototype" loading="lazy">
+              <figcaption>Chassis prototype</figcaption>
+            </figure>
+          </div>
+          <p class="idp-idea-text">The key idea: a <mark>3-axis gimbal</mark> that keeps the robot's
+            first-person camera steady, so pilots can track opponents and aim during competition.</p>
+        </div>
+      </div>
+
+      <div class="cs-step">
+        <h4><span class="cs-step-tag">Simulation</span> Simulate before building</h4>
+        <div class="idp-sim">
+          <div class="idp-sim-card">
+            <h5>Structure · FEA</h5>
+            <p>Checked <mark>chassis stiffness and stress</mark> before anything was fabricated.</p>
+            <div class="cs-row">
+          <figure style="--ar: 1.534"><img class="js-lightbox" src="/assets/idp_projects/simulation/structural_analysis_chassis_final_balancing_robot.jpg" alt="Chassis structural analysis" loading="lazy">
+            <figcaption>Chassis structural analysis</figcaption>
+          </figure>
+            </div>
+          </div>
+          <div class="idp-sim-card">
+            <h5>Control · MATLAB / Simulink</h5>
+            <p>Modelled the robot and <mark>tuned LQR in simulation</mark> before putting the gains on
+              hardware.</p>
+            <div class="cs-row">
+          <figure style="--ar: 1.778"><video controls data-autoplay loop muted playsinline preload="none" poster="/assets/idp_projects/simulation/simulink_before_tuning_poster.webp">
+              <source src="/assets/idp_projects/simulation/simulink_before_tuning.mp4" type="video/mp4">
+            </video>
+            <figcaption>Before LQR tuning</figcaption>
+          </figure>
+          <figure style="--ar: 1.778"><video controls data-autoplay loop muted playsinline preload="none" poster="/assets/idp_projects/simulation/simulink_after_tuning_poster.webp">
+              <source src="/assets/idp_projects/simulation/simulink_after_tuning.mp4" type="video/mp4">
+            </video>
+            <figcaption>After LQR tuning</figcaption>
+          </figure>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="cs-step">
+        <h4><span class="cs-step-tag">Tuning</span> Tuning it to stand</h4>
+        <p>PID/LQR tuning, from the first prototype to a robot that <mark>stands and balances on its
+            own</mark>.</p>
+        <div class="cs-row">
+          <figure style="--ar: 1.778"><video controls data-autoplay loop muted playsinline preload="none" poster="/assets/idp_projects/tuning/prototype_pid_tuning_poster.webp">
+              <source src="/assets/idp_projects/tuning/prototype_pid_tuning.mp4" type="video/mp4">
+            </video>
+            <figcaption>First prototype PID/LQR tuning</figcaption>
+          </figure>
+          <figure style="--ar: 0.891"><video controls data-autoplay loop muted playsinline preload="none" poster="/assets/idp_projects/tuning/standing_balancing_poster.webp">
+              <source src="/assets/idp_projects/tuning/standing_balancing.mp4" type="video/mp4">
+            </video>
+            <figcaption>Final prototype standing balance</figcaption>
+          </figure>
+          <figure style="--ar: 1.333"><img class="js-lightbox" src="/assets/idp_projects/eg3301r_2_legged_balancing.jpg" alt="Self-balancing 2-legged robot" loading="lazy">
+            <figcaption>Self-balancing 2-legged robot</figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+  </div>
+</article>
+
