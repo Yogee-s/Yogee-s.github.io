@@ -1,0 +1,17 @@
+/IS431
+/robotic-companion
+
+# build output
+dist/
+# generated types
+.astro/
+# dependencies
+node_modules/
+# environment
+.env
+.env.production
+# OS/editor
+.DS_Store
+
+# local resume source (PDF is published to public/assets/)
+resume-draft/

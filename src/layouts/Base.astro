@@ -1,0 +1,87 @@
+---
+import '../styles/global.css';
+
+interface Props {
+  title?: string;
+  description?: string;
+  ogImage?: string;
+  ogImageAlt?: string;
+}
+
+const {
+  title = 'Muthukumaran Yogeeswaran — Robotics Software Engineer',
+  description = 'Robotics software engineer (NUS BEng \'26, Singapore, open to relocation). Shipped human localization at Osaka Expo 2025 (0.02–0.06 m), 96.8% real-time action recognition on Jetson, and a fully offline conversational robot. Available now.',
+  ogImage = '/assets/personal_photo.jpg',
+  ogImageAlt = 'Portrait of Muthukumaran Yogeeswaran',
+} = Astro.props;
+
+const canonical = new URL(Astro.url.pathname, Astro.site);
+const ogImageAbs = new URL(ogImage, Astro.site);
+
+const personSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  name: 'Muthukumaran Yogeeswaran',
+  url: Astro.site?.href,
+  image: new URL('/assets/personal_photo.jpg', Astro.site).href,
+  jobTitle: 'Robotics Software Engineer',
+  email: 'mailto:yogeeswaran99@gmail.com',
+  alumniOf: {
+    '@type': 'CollegeOrUniversity',
+    name: 'National University of Singapore',
+  },
+  address: {
+    '@type': 'PostalAddress',
+    addressLocality: 'Singapore',
+    addressCountry: 'SG',
+  },
+  sameAs: ['https://www.linkedin.com/in/yogee-s', 'https://github.com/Yogee-s'],
+  knowsAbout: ['ROS2', 'Computer Vision', 'Reinforcement Learning', 'MATLAB/Simulink', 'Embodied AI'],
+};
+---
+
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content={description} />
+  <meta name="robots" content="index,follow,max-image-preview:large" />
+  <meta name="keywords"
+    content="Muthukumaran Yogeeswaran, robotics software engineer, ROS2, computer vision, reinforcement learning, embodied AI, MATLAB, Simulink" />
+  <meta name="theme-color" content="#06060b" />
+  <title>{title}</title>
+  <link rel="canonical" href={canonical} />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="sitemap" href="/sitemap-index.xml" />
+
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content={title} />
+  <meta property="og:description" content={description} />
+  <meta property="og:url" content={canonical} />
+  <meta property="og:site_name" content="Yogee Portfolio" />
+  <meta property="og:image" content={ogImageAbs} />
+  <meta property="og:image:alt" content={ogImageAlt} />
+  <meta property="og:locale" content="en_US" />
+
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content={title} />
+  <meta name="twitter:description" content={description} />
+  <meta name="twitter:image" content={ogImageAbs} />
+  <meta name="twitter:image:alt" content={ogImageAlt} />
+
+  <script type="application/ld+json" set:html={JSON.stringify(personSchema)} />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap"
+    rel="stylesheet" />
+</head>
+
+<body>
+  <slot />
+</body>
+
+</html>
